@@ -1,0 +1,38 @@
+# OS and editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Local secrets and environment overrides
+.env
+.env.*
+
+# Office temporary lock files
+~$*
+
+# Generated pipeline outputs
+outputs/
+
+# Historical/debug logs are large and not part of the portable runner package
+sessions/
+openclaw_vllm_request.json
+openclaw_vllm_responses.jsonl
+
+# Original unscreened workbook is kept local; the filtered workbook is the official input
+EL Agent测试集_260529.xlsx
+
+# Duplicate root-level copy; canonical test attachment lives under 测试集相关文件/
+/EL260529F-0001 输入图片.png

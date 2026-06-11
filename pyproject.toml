@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "el-agent-evaluation"
+version = "0.1.0"
+description = "EL Agent test-set preprocessing, trajectory parsing, and evaluation pipeline."
+requires-python = ">=3.10"
+dependencies = [
+  "openai>=1.0",
+  "openpyxl>=3.1",
+  "tqdm>=4.65",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+rich-preflight = ["pypdf>=4", "python-docx>=1"]
+
+[project.scripts]
+el-eval-pipeline = "el_eval_pipeline.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
