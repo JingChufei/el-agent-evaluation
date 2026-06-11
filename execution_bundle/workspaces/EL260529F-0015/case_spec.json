@@ -1,0 +1,189 @@
+{
+  "case_id": "EL260529F-0015",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 17,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "ivl-chart-generator",
+  "skill_description": "从 OLED 实验 Excel 生成 IVL 曲线工作簿。",
+  "user_query": "请在同一个图内绘出12-P4和15-P1的IVL曲线",
+  "input_file_cell": "TE-SHB-96测试原始数据.xlsx",
+  "attachments": [
+    {
+      "name": "TE-SHB-96测试原始数据.xlsx",
+      "relative_path": "器件IVL-LT数据样本/TE-SHB-96测试原始数据.xlsx",
+      "original_relative_path": "测试集相关文件/器件IVL-LT数据样本/TE-SHB-96测试原始数据.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "extension": ".xlsx",
+      "size_bytes": 8586277,
+      "sha256": "4d91710eb382b989b63db37123cb8a4ffc3398fa7c8ba9b44ccae2f892bea71b",
+      "preflight": {
+        "kind": "xlsx",
+        "readable": true,
+        "sheets": [
+          {
+            "name": "IVL-12-P1",
+            "max_row": 427,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-12-P2",
+            "max_row": 427,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-12-P3",
+            "max_row": 427,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-12-P4",
+            "max_row": 428,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-13-P3",
+            "max_row": 430,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-14-P2",
+            "max_row": 426,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-15-P1",
+            "max_row": 426,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-15-P2",
+            "max_row": 426,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-15-P3",
+            "max_row": 426,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-15-P4",
+            "max_row": 426,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-17-P2",
+            "max_row": 427,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-17-P4",
+            "max_row": 427,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-18-P1",
+            "max_row": 427,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-18-P2",
+            "max_row": 428,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-18-P3",
+            "max_row": 427,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-18-P4",
+            "max_row": 427,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-19-P3",
+            "max_row": 428,
+            "max_column": 30
+          },
+          {
+            "name": "IVL-20-P1",
+            "max_row": 426,
+            "max_column": 30
+          }
+        ]
+      },
+      "source_token": "TE-SHB-96测试原始数据.xlsx",
+      "sandbox_repo_relative_path": "execution_bundle/workspaces/EL260529F-0015/inputs/TE-SHB-96测试原始数据.xlsx",
+      "sandbox_relative_path": "inputs/TE-SHB-96测试原始数据.xlsx",
+      "materialized": false
+    }
+  ],
+  "attachment_errors": [],
+  "reference_answer": "",
+  "answer_image": "",
+  "target_state": {
+    "required_files": [
+      {
+        "path": "汇总.xlsx",
+        "must_exist": true,
+        "source": "file_state"
+      },
+      {
+        "path": "TE-SHB-96测试原始数据_IVL曲线.xlsx",
+        "must_exist": true,
+        "source": "file_state"
+      }
+    ],
+    "required_db_states": [],
+    "required_tool_artifacts": [],
+    "forbidden_states": []
+  },
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "ivl-chart-generator"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "ivl_pipeline.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": true,
+  "expected_answer": null,
+  "d3_candidate": false,
+  "d3_priority": "not_applicable",
+  "raw_annotations": {
+    "文件状态": "汇总.xlsx\nTE-SHB-96测试原始数据_IVL曲线.xlsx",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "ivl-chart-generator",
+    "Tool": "ivl_pipeline.py",
+    "是否可明确匹配的": "是",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [
+    "d2_expected_answer_missing"
+  ],
+  "evaluable_dimensions": [
+    "D1",
+    "D2",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0015"
+}

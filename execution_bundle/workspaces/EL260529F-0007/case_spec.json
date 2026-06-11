@@ -1,0 +1,74 @@
+{
+  "case_id": "EL260529F-0007",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 9,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "rdkit-molecule-drawer",
+  "skill_description": "用 RDKit 根据 SMILES 绘制分子结构图。",
+  "user_query": "请帮我画出这个smiles式对应的分子结构。\nSmiles式：C1=CC=C(C=C1)C2=C3C=CC=CC3=C(C4=C2C=CC=C4)C5=C6C7=C(C8=C(C=CC=C8)C=C7)OC6=CC=C5",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "已根据你给的 SMILES 画出 2D 分子结构，并用 RDKit 校验通过。\n分子式：C₃₆H₂₂O\n精确分子量：470.1671\nCanonical SMILES：c1ccc(-c2c3ccccc3c(-c3cccc4oc5c6ccccc6ccc5c34)c3ccccc23)cc1",
+  "answer_image": "",
+  "target_state": {
+    "required_files": [
+      {
+        "path": "C36H22O.png",
+        "must_exist": true,
+        "source": "file_state"
+      }
+    ],
+    "required_db_states": [],
+    "required_tool_artifacts": [],
+    "forbidden_states": []
+  },
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "rdkit-molecule-drawer"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "draw_molecule.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": true,
+  "expected_answer": null,
+  "d3_candidate": false,
+  "d3_priority": "not_applicable",
+  "raw_annotations": {
+    "文件状态": "C36H22O.png",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "rdkit-molecule-drawer",
+    "Tool": "draw_molecule.py",
+    "是否可明确匹配的": "是",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [
+    "d2_expected_answer_missing"
+  ],
+  "evaluable_dimensions": [
+    "D1",
+    "D2",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0007"
+}

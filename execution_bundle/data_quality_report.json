@@ -1,0 +1,212 @@
+{
+  "case_count": 35,
+  "attachment_count": 14,
+  "explicit_attachment_case_count": 12,
+  "attachment_error_count": 0,
+  "coverage": {
+    "D1": 14,
+    "D2": 16,
+    "D2_runnable": 10,
+    "D3": 19,
+    "D3_rubric_synthesis_ready": 19,
+    "D4": 28,
+    "D5": 35,
+    "D8": 35
+  },
+  "d2_missing_answer_count": 6,
+  "d2_missing_answer_cases": [
+    {
+      "case_id": "EL260529F-0007",
+      "source_row": 9,
+      "skill": "rdkit-molecule-drawer",
+      "user_query": "请帮我画出这个smiles式对应的分子结构。\nSmiles式：C1=CC=C(C=C1)C2=C3C=CC=CC3=C(C4=C2C=CC=C4)C5=C6C7=C(C8=C(C=CC=C8)C=C7)OC6=CC=C5"
+    },
+    {
+      "case_id": "EL260529F-0009",
+      "source_row": 11,
+      "skill": "rdkit-molecule-drawer",
+      "user_query": "请你画出带原子编号的 DABNA-1 分子结构， 以图片的形式发给我。"
+    },
+    {
+      "case_id": "EL260529F-0015",
+      "source_row": 17,
+      "skill": "ivl-chart-generator",
+      "user_query": "请在同一个图内绘出12-P4和15-P1的IVL曲线"
+    },
+    {
+      "case_id": "EL260529F-0017",
+      "source_row": 19,
+      "skill": "ivl-chart-generator",
+      "user_query": "画出12-P2, 13-P3, 14-P2 的CE-J曲线"
+    },
+    {
+      "case_id": "EL260529F-0018",
+      "source_row": 20,
+      "skill": "lt-lifetime-plotter",
+      "user_query": "用这个数据画出LT曲线。"
+    },
+    {
+      "case_id": "EL260529F-0020",
+      "source_row": 22,
+      "skill": "lt-lifetime-plotter",
+      "user_query": "请对比分析这两个器件的LT曲线数据"
+    }
+  ],
+  "d3_candidate_count": 19,
+  "d3_candidates": [
+    {
+      "case_id": "EL260529F-0010",
+      "source_row": 12,
+      "skill": "ijp-blue-material-advisor",
+      "user_query": "在当前的印刷蓝光器件中，降低b-prime的HOMO能级可能会带来效果和风险？",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0011",
+      "source_row": 13,
+      "skill": "ijp-blue-material-advisor",
+      "user_query": "DABNA-1在B原子的对位连接二苯胺单元，会对分子整体结构有何影响？",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0012",
+      "source_row": 14,
+      "skill": "ijp-blue-material-advisor",
+      "user_query": "如何设计BH分子，帮助溶液法IJP OLED的EML中的BD分子获得更高水平取向度？",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0013",
+      "source_row": 15,
+      "skill": "ijp-blue-oled-rca",
+      "user_query": "相同一套材料体系下，蓝光 TOP emission 器件比 bottom emission器件的J25 寿命低 30-40% 的原因可能是什么？",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0014",
+      "source_row": 16,
+      "skill": "ijp-blue-oled-rca",
+      "user_query": "使用根因分析技能基于以前的经验和最近的验证实验结果分析B-prime层研发没有达到预期效果的原因",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0022",
+      "source_row": 24,
+      "skill": "private-document-parser",
+      "user_query": "请分析我接下来上传的一份报告，解释为什么EML 厚度变化没有明显改变发光主体光谱，峰位和半峰宽？",
+      "d3_priority": "secondary_to_d1"
+    },
+    {
+      "case_id": "EL260529F-0023",
+      "source_row": 25,
+      "skill": "private-document-parser",
+      "user_query": "我将上传一份报告，是关于GH组分变化验证的， 请你帮忙解读和分析，重点指出电压，效率和寿命的差异的原因。",
+      "d3_priority": "secondary_to_d1"
+    },
+    {
+      "case_id": "EL260529F-0024",
+      "source_row": 26,
+      "skill": "ijp-blue-oled-rca",
+      "user_query": "请解读接下来上传的这份报告， 从根因分析的角度，剖析说明厚度变化对BI和寿命变化影响的底层原因。",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0025",
+      "source_row": 27,
+      "skill": "gh-blend-design-advisor",
+      "user_query": "针对我即将发送的一份报告，请调用“gh-blend-design-advisor”这个skill进行分析和解读。然后输出⼀个最优绿光 EML 层组合⽅案，表格列出。要求：(1) ⻓寿命⽅案 效率>210 cd/A、LT95@J25>90h；(2) ⾼效率⽅案 效率>240 cd/A、LT95@J25>70h。",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0026",
+      "source_row": 28,
+      "skill": "molecular-structure-generator",
+      "user_query": "请根据以下分子和条件，生成5个新的分子。\n“c1ccc(N2c3ccccc3B3c4ccccc4N(c4ccccc4)c4cccc2c43)cc1”；\"HOMO\": -5.4,\n\"LUMO\": -2.45,\n\"S1\": 2.74,\n\"T1\": 2.93",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0027",
+      "source_row": 29,
+      "skill": "molecular-structure-generator",
+      "user_query": "请根据以下分子和条件，生成5个新的分子。“c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1”\n\"HOMO\": -5.55,\n\"LUMO\": -2.73,\n\"S1\": 3.09,\n\"T1\": 1.65",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0028",
+      "source_row": 30,
+      "skill": "molecular-structure-generator",
+      "user_query": "请根据以下分子和条件，生成5个新的分子。 \"c1ccc2c(-c3ccc4c(c3)Sc3c(ccc5ccc6ccccc6c35)O4)cccc2c1“\n\"HOMO\": -5.20,\n\"LUMO\": -2.70,\n\"S1\": 2.93,\n\"T1\": 2.54",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0029",
+      "source_row": 31,
+      "skill": "",
+      "user_query": "HOMO 能级深浅与氧化难易到底是什么关系？同时，为什么蓝光 OLED 材料在器件中仍然常被认为稳定性更差？",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0030",
+      "source_row": 32,
+      "skill": "",
+      "user_query": "蓝光 OLED 器件是否可以取消 L-aging / electrical aging？应该如何判断 aging 带来的寿命、稳定性和良率收益，是否值得用效率损失、产线时间和部分寿命消耗来交换？",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0031",
+      "source_row": 33,
+      "skill": "",
+      "user_query": "印刷 OLED 的真正瓶颈，是发光材料本身，还是“墨水化之后的成膜物理”？",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0032",
+      "source_row": 34,
+      "skill": "",
+      "user_query": "对印刷 RGB OLED 来说，蓝光寿命问题是否仍然是决定产业化节奏的第一瓶颈？",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0033",
+      "source_row": 35,
+      "skill": "",
+      "user_query": "正交溶剂体系是否足以解决多层印刷 OLED 的界面问题？",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0034",
+      "source_row": 36,
+      "skill": "",
+      "user_query": "印刷 OLED 的发光层，是应该追求“均匀混合”，还是有意利用可控相分离？",
+      "d3_priority": "primary"
+    },
+    {
+      "case_id": "EL260529F-0035",
+      "source_row": 37,
+      "skill": "",
+      "user_query": "IJP OLED 的优势到底是低成本，还是它能打开蒸镀 OLED 做不到的新器件/像素设计？",
+      "d3_priority": "primary"
+    }
+  ],
+  "d3_missing_reference_answer_count": 0,
+  "d3_missing_reference_answer_cases": [],
+  "unknown_skill_count": 1,
+  "unknown_skills": [
+    "rdkit-molecule-drawer"
+  ],
+  "skill_counts": {
+    "ept-service-user": 3,
+    "setfos-user": 3,
+    "rdkit-molecule-drawer": 3,
+    "ijp-blue-material-advisor": 3,
+    "ijp-blue-oled-rca": 3,
+    "ivl-chart-generator": 3,
+    "lt-lifetime-plotter": 3,
+    "private-document-parser": 3,
+    "gh-blend-design-advisor": 1,
+    "molecular-structure-generator": 3,
+    "": 7
+  },
+  "attachment_errors": [],
+  "ignored_attachment_rule": "files named ~$* or .DS_Store are ignored"
+}

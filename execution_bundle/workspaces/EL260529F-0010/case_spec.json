@@ -1,0 +1,53 @@
+{
+  "case_id": "EL260529F-0010",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 12,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "ijp-blue-material-advisor",
+  "skill_description": "IJP 蓝光 OLED 材料设计与优化建议。",
+  "user_query": "在当前的印刷蓝光器件中，降低b-prime的HOMO能级可能会带来效果和风险？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "降低 B-prime 的 HOMO 能级，本质上是在调节 HTL/B-prime/EML 之间的空穴注入与界面复合。可能有好处，但风险也很明显。\n\n可能带来的效果：\n抑制过量空穴注入\n如果当前印刷蓝光器件偏“空穴过剩”，B-prime HOMO 降低后，HTL → B-prime 的空穴注入势垒增大。\n空穴通量下降，可能改善电子/空穴平衡。\n表现上可能看到：\nEQE 提升；\nroll-off 降低；\n复合区更集中在 EML 内部；\n激子/极化子淬灭减弱。\n减少界面空穴积累或客体过度 trapping\n如果原 B-prime HOMO 过浅，容易在 HTL/B-prime 或 B-prime/EML 附近形成空穴富集。\n适当降低 HOMO 后，可降低界面局部高电荷密度。\n对蓝光寿命可能有利，尤其是降低 HTL/EML 界面降解。\n增强电子/激子阻挡能力的协同作用\n若 B-prime 同时承担电子阻挡或激子管理功能，较深 HOMO 可能帮助限制空穴过度穿透，使复合区位置更可控。\n对印刷器件中界面不够 sharp 的情况，可能有一定缓冲作用。\n主要风险：\n驱动电压上升\nHOMO 降低会增加 HTL → B-prime 的空穴注入势垒。\n最直接风险是电压升高，尤其在低亮度和中高亮度区都会体现。\n空穴不足，复合区反向偏移\n如果本来不是空穴过剩，而是电子不足或空穴传输已受限，再降低 B-prime HOMO 会进一步削弱空穴注入。\n可能导致复合区靠近 HTL/B-prime 界面，反而增加界面淬灭和寿命劣化。\n界面电荷积累加重\n势垒过大时，空穴会堆积在 HTL/B-prime 界面。\n这会带来：\n电压升高；\n界面极化；\n局部 Joule heating；\nHTL 或 B-prime 氧化态降解；\nLT95/LT97 变差。\n效率可能先升后降\n轻微降低 HOMO：可能改善电荷平衡，EQE 上升。\n过度降低 HOMO：空穴注入受阻，复合效率下降，EQE/CE 下降，电压升高。\n所以它通常不是单调优化项，而是存在最佳窗口。\n印刷膜层风险\n印刷 B-prime 若 HOMO 降低来自更强吸电子结构或更极性基团，可能改变溶解性、成膜形貌、与 HTL/EML 的界面混溶。\n需要同步看 U%、pin point、AFM、PL quenching 和残留溶剂，不然电性改善可能被成膜问题抵消。\n我的判断：\n如果当前蓝光器件表现为 低电压但效率/寿命受限、roll-off 明显、疑似空穴过剩，降低 B-prime HOMO 是值得尝试的方向。\n但如果当前已经 电压偏高、J-V 电流偏低、空穴注入不足，继续降低 HOMO 风险较大，可能直接牺牲电压和寿命。\n\n建议把 B-prime HOMO 做成 阶梯式 DOE，比如相对当前材料下调 0.1 / 0.2 / 0.3 eV，同时监控：\nJ-V-L；\nEQE-roll-off；\nLT95/LT97；\nEML/界面 PL quenching；\n阻抗或 transient EL；\nHTL/B-prime/EML 单载流子器件。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "ijp-blue-material-advisor"
+        ],
+        "step_type": "skill"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "ijp-blue-material-advisor",
+    "Tool": "无",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0010"
+}

@@ -1,0 +1,128 @@
+{
+  "case_id": "EL260529F-0001",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 3,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "ept-service-user",
+  "skill_description": "发光材料能级预测，支持 SMILES/CSV/分子结构图。",
+  "user_query": "请将图片中的BD分子式转成SMILES表达式，并进行能级预测。",
+  "input_file_cell": "EL260529F-0001 输入图片.png",
+  "attachments": [
+    {
+      "name": "EL260529F-0001 输入图片.png",
+      "relative_path": "EL260529F-0001 输入图片.png",
+      "original_relative_path": "测试集相关文件/EL260529F-0001 输入图片.png",
+      "mime_type": "image/png",
+      "extension": ".png",
+      "size_bytes": 5787,
+      "sha256": "94b59bae57d5ad6d5cdd7bcb9e156e1e3a9e30c729b6e97cced5343504b84b73",
+      "preflight": {
+        "kind": "png",
+        "readable": true
+      },
+      "source_token": "EL260529F-0001 输入图片.png",
+      "sandbox_repo_relative_path": "execution_bundle/workspaces/EL260529F-0001/inputs/EL260529F-0001 输入图片.png",
+      "sandbox_relative_path": "inputs/EL260529F-0001 输入图片.png",
+      "materialized": false
+    }
+  ],
+  "attachment_errors": [],
+  "reference_answer": "\"HOMO\": -5.4,\n\"LUMO\": -2.45,\n\"S1\": 2.74,\n\"T1\": 2.93",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "ept-service-user"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "decimer_client.py",
+          "client.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": true,
+  "expected_answer": {
+    "type": "multi_assertion",
+    "raw": "\"HOMO\": -5.4,\n\"LUMO\": -2.45,\n\"S1\": 2.74,\n\"T1\": 2.93",
+    "assertions": [
+      {
+        "type": "numeric_contains",
+        "label": "HOMO",
+        "value": -5.4,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "HOMO\": -5.4,"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "LUMO",
+        "value": -2.45,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "LUMO\": -2.45,"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "S1",
+        "value": 2.74,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "S1\": 2.74,"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "T1",
+        "value": 2.93,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "T1\": 2.93"
+      }
+    ]
+  },
+  "d3_candidate": false,
+  "d3_priority": "not_applicable",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "ept-service-user",
+    "Tool": "decimer_client.py\nclient.py",
+    "是否可明确匹配的": "是",
+    "若是，答案是什么": "\"HOMO\": -5.4,\n\"LUMO\": -2.45,\n\"S1\": 2.74,\n\"T1\": 2.93"
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D2",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0001"
+}

@@ -1,0 +1,73 @@
+{
+  "case_id": "EL260529F-0025",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 27,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "gh-blend-design-advisor",
+  "skill_description": "EL Agent 辅助多组分 GH 共混方案设计",
+  "user_query": "针对我即将发送的一份报告，请调用“gh-blend-design-advisor”这个skill进行分析和解读。然后输出⼀个最优绿光 EML 层组合⽅案，表格列出。要求：(1) ⻓寿命⽅案 效率>210 cd/A、LT95@J25>90h；(2) ⾼效率⽅案 效率>240 cd/A、LT95@J25>70h。",
+  "input_file_cell": "02 多组分GH报告.pdf",
+  "attachments": [
+    {
+      "name": "02 多组分GH报告.pdf",
+      "relative_path": "02 多组分GH报告.pdf",
+      "original_relative_path": "测试集相关文件/02 多组分GH报告.pdf",
+      "mime_type": "application/pdf",
+      "extension": ".pdf",
+      "size_bytes": 3915684,
+      "sha256": "0fef14bf9030788063c1a54d9590e286f64a9ac00bcf41dbd737ef078fb904ce",
+      "preflight": {
+        "kind": "pdf",
+        "readable": true,
+        "parser": "header_only",
+        "error": "No module named 'pypdf'"
+      },
+      "source_token": "02 多组分GH报告.pdf",
+      "sandbox_repo_relative_path": "execution_bundle/workspaces/EL260529F-0025/inputs/02 多组分GH报告.pdf",
+      "sandbox_relative_path": "inputs/02 多组分GH报告.pdf",
+      "materialized": false
+    }
+  ],
+  "attachment_errors": [],
+  "reference_answer": "收到，正在处理。结论先说：按报告内实测数据，没有一个已验证方案同时满足你给的两个硬指标。\n所以我给出的是“最优推荐方案 + 达标置信度”，其中长寿命方案可通过 P:N 微调接近/冲击达标；高效率方案需要新 N-host 或三元 N-host 共混，属于外推方案，必须实验验证。\n\n证据回显 / 数据边界\n报告读取到：材料物性表 + 8 组器件结果。\n当前主体系：SGH5549:SGH5516 + SPGD508:SFGD5563=12%:0.7%\n已验证 P:N：\n6:4：CE≈202–206 cd/A，LT95@J25≈104–110 h\n5:5：CE≈222–232 cd/A，LT95@J25≈44–52 h\n4:6：CE≈230–232 cd/A，LT95@J25≈25–33 h\n风险点：\n报告结论里写了 SGH5519，但表格主体是 SGH5516，我按 SGH5516 理解。\nREF 用的是 SFGD5501，目标体系用 SFGD5563，两者不能直接作为同一基准排序。\n最优绿光 EML 层组合推荐\n\n一句话建议：\n长寿命优先走 SGH5549:SGH5516≈5.7:4.3 微调；高效率目标仅靠现有 SGH5549:SGH5516 二元 P:N 很难达到，需要引入高 T1、浅 LUMO 的 N981 做三元 N-host 共混。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "gh-blend-design-advisor"
+        ],
+        "step_type": "skill"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "gh-blend-design-advisor",
+    "Tool": "无",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0025"
+}

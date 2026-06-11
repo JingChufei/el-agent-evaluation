@@ -228,7 +228,8 @@ def test_run_agent_cases_uses_external_command_and_writes_trajectory(tmp_path: P
         ],
     }
     cases_path.write_text(json.dumps(case, ensure_ascii=False) + "\n", encoding="utf-8")
-    prepare_case_workspaces(cases_path, output_dir, repo_root=tmp_path)
+    prepare_case_workspaces(cases_path, output_dir, repo_root=tmp_path, copy_attachments=False, portable_paths=True)
+    assert not (output_dir / "workspaces" / "c1" / "inputs").exists()
 
     fake_agent = tmp_path / "fake_agent.py"
     fake_agent.write_text(
@@ -256,5 +257,6 @@ def test_run_agent_cases_uses_external_command_and_writes_trajectory(tmp_path: P
     assert trajectory["case_id"] == "c1"
     assert trajectory["final_response"] == "agent final"
     assert trajectory["status"] == "executed"
+    assert any(item["path"] == "inputs/input.txt" for item in trajectory["sandbox_initial_files"])
     assert any(item["path"] == "result.txt" for item in trajectory["sandbox_final_files"])
     assert (output_dir / "trajectories.jsonl").exists()

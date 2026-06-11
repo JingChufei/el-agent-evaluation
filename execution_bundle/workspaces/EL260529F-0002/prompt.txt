@@ -1,0 +1,1 @@
+帮我预测“c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1”这个BH分子的能级

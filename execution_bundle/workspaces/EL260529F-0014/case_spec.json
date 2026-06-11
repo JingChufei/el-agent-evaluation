@@ -1,0 +1,62 @@
+{
+  "case_id": "EL260529F-0014",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 16,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "ijp-blue-oled-rca",
+  "skill_description": "",
+  "user_query": "使用根因分析技能基于以前的经验和最近的验证实验结果分析B-prime层研发没有达到预期效果的原因",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "基于以前经验 + 最近验证结果，我的判断是：**B-prime 层研发不是“方向错误”，而是目前没有把“界面保护、激子限制、电荷平衡、溶剂耐受、厚度窗口”同时调到同一个窗口里。**\\n\\n**核心结论：B-prime 已验证能提升 BI/EQE，但没有稳定兑现寿命收益，且常伴随升压、寿命离散或 CIEy 波动。**\\n\\n---\\n\\n**一、已看到的实验事实**\\n\\n1. **PFB301 / PFB303 能提升效率**\\n   - SHB-96 体系中，Ref BI 约 180；\\n   - PFB301 可到约 207；\\n   - PFB303 可到约 203；\\n   - EQE 也明显提升。\\n   说明 B-prime 对激子限制、界面淬灭抑制或无效电流降低是有效的。\\n\\n2. **但寿命没有同步提升**\\n   - PFB301 效率提升明显，但寿命低于 Ref；\\n   - PFB303 寿命离散；\\n   - 早期结果中 PFB303 10 nm、15 nm 仍出现寿命下降趋势。\\n   Source: memory/2026-05-12.md#L17-L24\\n\\n3. **PFB303 厚度优化出现积极信号**\\n   - 4–6 nm 时效果有限；\\n   - 12–15 nm 时 BI/EQE 和寿命均改善，且电压基本不变；\\n   - 这说明 PFB303 不是“材料天然无效”，而是强依赖厚度、结构和电荷匹配窗口。\\n\\n4. **外部文献/经验支持 B-prime 要很薄且窗口窄**\\n   SID P-218 类似 robust layer 的经验是：**1–2 nm 可改善电荷平衡/复合区/寿命，过厚 3 nm 反而造成阻挡和退化**。\\n   Source: memory/2026-05-15.md#L24-L26\\n   这说明 B-prime 不是简单越厚越好，不同体系存在完全不同的最优厚度。\\n\\n---\\n\\n**二、根因贡献比例：为什么没有达到预期**\\n\\n这是基于现有实验的证据加权估计，不是严格 ANOVA 计算。\\n\\n1. **电荷阻挡过强 / 复合区过度集中：25%**\\n   B-prime 提升 BI/EQE，说明它确实增强了激子或载流子限制；但同时电压上升、寿命下降，说明局部载流子/激子密度可能过高。\\n   表现为：效率上升，但 LT95 不升反降。\\n\\n2. **厚度窗口和覆盖性没有稳定锁定：22%**\\n   过薄时覆盖不足，界面保护不连续；过厚时形成传输阻力。\\n   PFB303 12–15 nm 有改善，说明当前主要问题不是“有没有 B-prime”，而是“厚度和结构窗口是否匹配”。\\n\\n3. **B-prime / EML 溶剂兼容和界面互溶：18%**\\n   PFB 系列对苯甲酸甲酯、叔丁基苯的耐受性差异明显。\\n   如果后续 EML 墨水部分溶胀或破坏 B-prime，初始效率可能提升，但寿命和重复性会变差。\\n\\n4. **材料本征稳定性 / 残留 / 交联问题：12%**\\n   交联型 B-prime 有潜力，但未交联残留、交联度不清、残余小分子都会成为寿命风险。\\n   这类问题通常不一定立刻体现在 J-V-L 上，但会体现在 LT95 离散上。\\n\\n5. **没有和 HB / ET / LiQ 电荷体系协同优化：12%**\\n   B-prime 改变复合区后，原来的 ETL、HB、LiQ 比例可能不再最优。\\n   慢传输 HB/ET 能提升寿命但牺牲 BI，说明电荷动力学是关键矛盾。\\n\\n6. **光学腔和 CIEy 副作用：6%**\\n   B-prime 厚度改变后，CIEy、Peak、FWHM 会轻微漂移。\\n   PFB303 12 nm CIEy 偏高，15 nm 相对更好，说明光学补偿也需要纳入。\\n\\n7. **批次 / 工艺 / 测试可比性不足：5%**\\n   部分结果跨批次、跨结构、同光色控制不完全，导致“寿命下降”与“厚度改善”之间存在表观矛盾，需要同批次复验拆分。\\n\\n---\\n\\n**三、根因排序后的判断**\\n\\nB-prime 层研发没有达到预期，最可能不是因为：\\n\\n> B-prime 方向无效。\\n\\n而是因为：\\n\\n> 当前 B-prime 主要实现了“效率增强”，但还没有稳定实现“低升压 + 复合区不过度集中 + 抗溶剂界面稳定 + 寿命提升”的综合窗口。\\n\\n也就是说，B-prime 现在更像一个**强界面调节器**，不是一个天然安全的寿命增强层。\\n\\n---\\n\\n**四、下一步验证建议**\\n\\n**1. DOE 实验验证**\\n\\n优先做同批次矩阵：\\n\\n- B-prime：PFB301 / PFB303 / Ref\\n- 厚度：0 / 4 / 8 / 12 / 15 nm\\n- ET/LiQ 或 ET 强度：低 / 中 / 高\\n- 固定 BD、BH、HTL、EML 溶剂和测试条件\\n\\n重点看：\\n\\n- BI / EQE 是否提升；\\n- J10 电压是否控制在 +0.1 V 内；\\n- CIEy 是否不恶化；\\n- LT95 是否提升且离散变小。\\n\\n**2. 电学验真**\\n\\n建议做：\\n\\n- HOD / EOD；\\n- C-V；\\n- 阻抗谱；\\n- 瞬态 EL；\\n- 电学仿真分解电压来源和复合区位置。\\n\\n目标是确认：B-prime 是造成空穴阻挡、电子泄漏抑制，还是复合区过度压缩。\\n\\n**3. 光学验真**\\n\\n对 8 / 12 / 15 nm B-prime 做 Setfos 或数据驱动光学检查：\\n\\n- CIEy；\\n- FWHM；\\n- Peak；\\n- 发光区位置；\\n- 光学腔补偿厚度。\\n\\n尤其要确认 12 nm CIEy 偏高是否可通过 HTL/CPL/ETL 补偿。\\n\\n**4. 界面稳定性验证**\\n\\n必须补充：\\n\\n- B-prime 纯膜溶剂浸泡前后 UV/PL；\\n- AFM Rq；\\n- PL quenching；\\n- EML 涂布后界面深度剖析；\\n- 交联型材料 gel fraction / 残留组分测试。\\n\\n---\\n\\n**五、我建议的研发主线**\\n\\n优先不要再泛泛筛 B-prime，而是聚焦：\\n\\n> **PFB303 12–15 nm 厚度窗口 + ET/LiQ 电荷补偿 + 同光色 LT95 复验**\\n\\n同时保留 PFB301 作为高效率候选，但要重点解决升压和寿命下降。\\n\\n一句话总结：\\n**B-prime 已经证明能拉高效率，但失败点在于电荷和界面稳定没有被一起锁住；下一阶段要从“找材料”转向“找厚度-电荷-溶剂-光学的共同窗口",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "ijp-blue-oled-rca"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "root_cause_scoring.py",
+          "contribution_analysis.py",
+          "evidence_weight_update.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "ijp-blue-oled-rca",
+    "Tool": "root_cause_scoring.py\ncontribution_analysis.py\nevidence_weight_update.py",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0014"
+}

@@ -1,0 +1,92 @@
+{
+  "case_id": "EL260529F-0023",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 25,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "private-document-parser",
+  "skill_description": "解析图片、Word、PPT、Excel、PDF私有文档。",
+  "user_query": "我将上传一份报告，是关于GH组分变化验证的， 请你帮忙解读和分析，重点指出电压，效率和寿命的差异的原因。",
+  "input_file_cell": "印刷蓝光OLED材料项目技术开发报告.docx",
+  "attachments": [
+    {
+      "name": "印刷蓝光OLED材料项目技术开发报告.docx",
+      "relative_path": "印刷蓝光OLED材料项目技术开发报告.docx",
+      "original_relative_path": "测试集相关文件/印刷蓝光OLED材料项目技术开发报告.docx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "extension": ".docx",
+      "size_bytes": 774457,
+      "sha256": "5eda6ef6eac4855775632d81ec7ba08966a114be97ad6cdd275adcc8864184f3",
+      "preflight": {
+        "kind": "docx",
+        "readable": true,
+        "parser": "zip_only",
+        "entries": 46
+      },
+      "source_token": "印刷蓝光OLED材料项目技术开发报告.docx",
+      "sandbox_repo_relative_path": "execution_bundle/workspaces/EL260529F-0023/inputs/印刷蓝光OLED材料项目技术开发报告.docx",
+      "sandbox_relative_path": "inputs/印刷蓝光OLED材料项目技术开发报告.docx",
+      "materialized": false
+    }
+  ],
+  "attachment_errors": [],
+  "reference_answer": "这份报告的主线是：围绕可印刷蓝光 OLED 材料，先解决溶解性，再评价旋涂器件性能，最终明确高稳定蓝光主体和高效率窄谱蓝光客体的开发方向。\n\n一、项目目标与阶段任务\n总体目标：开发适用于印刷 OLED 的蓝光发光材料及配套功能材料/墨水，包括：\n高效率蓝光发光客体材料；\n高稳定性蓝光主体材料；\n适配印刷工艺的功能材料和墨水体系。\n本阶段目标：完成新型印刷蓝光 OLED 主客体材料的：\n溶解性评价；\n旋涂器件性能评价。\n核心工作逻辑：\n先筛选满足印刷需求的可溶材料；\n再对溶解性较好的材料进行器件验证；\n由此确定主体材料和客体材料的开发方向。\n二、材料溶解性评价结论\n\n报告采用 Hansen 溶解度参数 HSP 作为理论依据，强调 EML 溶剂需与 HTL 溶剂正交，避免破坏下层 HTL 薄膜。\nHTL 主溶剂：弱极性的二甲苯；\nEML 主溶剂：极性的苯甲酸酯类溶剂；\n实验溶剂：苯甲酸甲酯；\n配液浓度：\n蓝光 Host：20 mg/mL；\n蓝光 Dopant：5 mg/mL。\n关键溶解性结果：\nHost 材料：\nHRF-280：刚性平面、共轭性较大，不溶；\nXZM-009：刚性平面、引入烷基，1 day 未析出，但 2 day 析出；\nHRF-352：引入位阻、降低刚性，1 day、2 day、1 week 均未析出，溶解性最好。\nDopant 材料：\nHRF-307：刚性较大、烷基较少，不溶；\nSXL-051：刚性较大、烷基适中，1 day 未析出，2 day 析出；\nHRF-283：降低刚性、烷基较多，1 week\nAgent: main | Model: gpt-5.5 | Provider: openai\n仍未析出，溶解性最好。\n\n溶解性设计规律：\n蓝光主体 Host：应通过引入位阻、增加结构扭曲、降低平面刚性改善溶解性。\n蓝光客体 Dopant：应通过降低刚性、增加柔性链段如烷基改善溶解性。\n三、高稳定性蓝光主体材料开发\n\n报告从两个方向提升蓝光器件寿命：\n1. 氘代主体提升寿命\n对比材料：\n非氘代主体：ZTB017；\n氘代主体：XYG075。\n关键器件数据：\n非氘代 ZTB017：\nEQE：5.52%；\nCE：5.70 cd/A；\nLT95@1000 nit：236 h。\n氘代 XYG075：\nEQE：5.32%；\nCE：5.57 cd/A；\nLT95@1000 nit：449 h。\n结论：\n氘代后效率基本相当；\nLT95 从 236 h 提升到 449 h，提升约 90%，接近 1.9 倍；\n说明重氢取代是提升蓝光主体稳定性的有效手段。\n2. 空穴型主体改善复合区，提高寿命\n报告认为现有 HT 材料传输较弱，激子复合区靠近 HT 一侧，导致寿命较差。因此通过在传统电子型蓝光主体中增加传空穴基团，开发出 HRF352。\n\n对比材料：\n电子型主体：XYG075；\n空穴型主体：HRF352。\n关键器件数据：\nXYG075:BD：\nCE：6.7 cd/A；\nEQE：12.5%；\nCIEy：0.0552；\nFWHM：16.0 nm；\nT95@1000 nit：450 h。\nHRF352:BD：\nCE：6.7 cd/A；\nEQE：12.1%；\nCIEy：0.0587；\nFWHM：16.\nAgent: main | Model: gpt-5.5 | Provider: openai\n8 nm；\nT95@1000 nit：684 h。\n结论：\nHRF352 与 XYG075 效率基本相当；\nT95@1000 nit 从 450 h 提升至 684 h，提升约 52%；\nT95@J50 从 65 h 提升至 100 h，提升约 54%；\n说明增加主体材料的空穴传输能力有利于优化复合区并提升寿命。\n四、窄光谱蓝光客体材料开发\n\n报告目标是提高蓝光色纯度，并提升顶发射器件效率。\n1. BN 多重共振材料具备窄谱优势\n报告对比：\n传统荧光材料 BD；\n硼氮多重共振延迟荧光材料 BN-BD。\n关键数据：\nBN-BD 发光光谱 FWHM：约 22 nm；\n传统 BD 发光光谱 FWHM：约 42 nm；\n顶发射光学模拟显示：\nBN-BD 发射峰强度相比传统 BD 提升约 45%。\n结论：\n\nBN 多重共振材料具有明显窄谱优势，理论上更适合高色域顶发射蓝光器件。\n2. 新开发客体 HRF371 器件表现\n对比：\n参比客体 Ref-BD；\n新开发 B-N 窄谱客体 HRF371。\n关键器件数据：\nRef-BD：\nCE：6.45 cd/A；\nEQE：12.10%；\nCIEy：0.055；\nFWHM：15.8 nm；\nLT95@1000 nit：135 h。\nHRF371：\nCE：5.86 cd/A；\nEQE：11.48%；\nCIEy：0.052；\nFWHM：14.3 nm；\nLT95@1000 nit：121 h。\n结论：\nHRF371 光谱更窄，FWHM 从 15.8 nm\nAgent: main | Model: gpt-5.5 | Provider: openai\n降至 14.3 nm；\nCIEy 从 0.055 降至 0.052，蓝色更深；\n但效率略低，CE 下降约 9%，EQE 下降约 5%；\n寿命也略低，LT95@1000 nit 从 135 h 降至 121 h。\n因此，HRF371 证明了窄谱方向可行，但还需要进一步提升发光效率和稳定性。\n五、总体结论\n溶解性方面\nHost 需要通过结构扭曲、位阻设计降低刚性；\nDopant 需要增加柔性链段，如烷基，以提高溶解性和放置稳定性。\n蓝光主体方面\n氘代主体 XYG075 显著提升寿命，LT95@1000 nit 达到 449 h；\n空穴型主体 HRF352 进一步提升寿命，LT95@1000 nit 达到 684 h；\n主体材料开发方向应聚焦：氘代 + 空穴传输能力增强 + 良好溶解性。\n蓝光客体方面\nBN 多重共振材料具有窄谱优势；\n新客体 HRF371 已实现更窄 FWHM 和更低 CIEy；\n但效率和寿命仍低于参比 BD，后续需要开发更高效率、更高稳定性的窄谱蓝光客体。\n一句话总结：\n报告认为，印刷蓝光 OLED 材料开发的关键路径是：通过分子结构设计提升溶解性，以氘代和空穴传输型主体提升寿命，再以 BN 多重共振窄谱客体提升色纯度和顶发射效率。",
+  "answer_image": "",
+  "target_state": {
+    "required_files": [
+      {
+        "path": "印刷蓝光OLED材料项目技术开发报告_汇总.md",
+        "must_exist": true,
+        "source": "file_state"
+      }
+    ],
+    "required_db_states": [],
+    "required_tool_artifacts": [],
+    "forbidden_states": []
+  },
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "private-document-parser"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "parse_document.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "secondary_to_d1",
+  "raw_annotations": {
+    "文件状态": "印刷蓝光OLED材料项目技术开发报告_汇总.md",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "private-document-parser",
+    "Tool": "parse_document.py",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D1",
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0023"
+}

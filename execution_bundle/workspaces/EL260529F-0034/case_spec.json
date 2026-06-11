@@ -1,0 +1,39 @@
+{
+  "case_id": "EL260529F-0034",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 36,
+  "task_type": "单任务",
+  "requires_skill": false,
+  "skill_name": "",
+  "skill_description": "",
+  "user_query": "印刷 OLED 的发光层，是应该追求“均匀混合”，还是有意利用可控相分离？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "传统器件设计倾向于认为发光层越均匀越好，但在 solution-processed OLED 中，主客体相容性、干燥速率和分子扩散会天然产生微相结构。问题不一定是“如何完全消除相分离”，而是能否把它变成有利因素。\n\n更尖锐的问题是：能否通过分子侧链、溶剂挥发速率、表面能和退火工艺，构造一种有利于载流子平衡与激子限制的纳米相结构？\n\n这会把印刷 OLED 从“缺陷控制”推进到“形貌工程”。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": null,
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "",
+    "数据库状态": "",
+    "工具产物": "",
+    "禁止状态": "",
+    "Skill": "",
+    "Tool": "",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0034"
+}

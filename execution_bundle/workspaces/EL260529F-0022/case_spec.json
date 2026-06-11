@@ -1,0 +1,91 @@
+{
+  "case_id": "EL260529F-0022",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 24,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "private-document-parser",
+  "skill_description": "解析图片、Word、PPT、Excel、PDF私有文档。",
+  "user_query": "请分析我接下来上传的一份报告，解释为什么EML 厚度变化没有明显改变发光主体光谱，峰位和半峰宽？",
+  "input_file_cell": "EML膜层厚度对比实验.pptx",
+  "attachments": [
+    {
+      "name": "EML膜层厚度对比实验.pptx",
+      "relative_path": "EML膜层厚度对比实验.pptx",
+      "original_relative_path": "测试集相关文件/EML膜层厚度对比实验.pptx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "extension": ".pptx",
+      "size_bytes": 1836856,
+      "sha256": "126d36943317853ab537b88aa4e0043c6f2029d70e1ca4f38e2ea194cf800698",
+      "preflight": {
+        "kind": "pptx",
+        "readable": true,
+        "slides": 1
+      },
+      "source_token": "EML膜层厚度对比实验.pptx",
+      "sandbox_repo_relative_path": "execution_bundle/workspaces/EL260529F-0022/inputs/EML膜层厚度对比实验.pptx",
+      "sandbox_relative_path": "inputs/EML膜层厚度对比实验.pptx",
+      "materialized": false
+    }
+  ],
+  "attachment_errors": [],
+  "reference_answer": "报告里这个现象是合理的：EML 厚度 20→25→30→35 nm 明显影响了电压、BI、寿命，但没有明显改变发光主体的本征光谱。\n\n核心原因有 4 个：\n发光峰位/FWHM主要由 BM2216 的分子本征发射决定\n本报告里 EML 都是 BM2216 1.0%，主客体体系、掺杂浓度没有变。\n因此发光中心的局域激发态能级基本不变，峰位自然稳定在 约 463 nm。\nFWHM 也主要由 MR/窄谱发光分子的振动耦合和局域极化环境决定，所以只在 14.3–15.0 nm 小范围波动。\nEML变厚时，HTL同时变薄，整体光学腔长几乎被补偿了所以虽然 EML 在变厚，但 HTL+EML 的光学距离基本没大幅变化。对顶发射/微腔器件来说，峰位和谱形更受整体光学腔长、发光区位置影响；这里光学腔长被部分抵消，因此不会明显红移或蓝移。\n20 nm EML 对应 HTL 约 56 nm，总厚度约 76 nm；\n25 nm EML 对应 HTL 约 51 nm，总厚度约 76 nm；\n30 nm EML 对应 HTL 约 43 nm，总厚度约 73 nm；\n35 nm EML 对应 HTL 约 38 nm，总厚度约 73 nm。\n复合区可能没有随EML厚度明显移动\n如果载流子复合主要被界面势垒、载流子迁移率或陷阱位置“钉扎”在某一区域，例如 HTL/EML 附近或 EML 内固定区域，那么 EML加厚只是增加一部分非主要发光区域。\n这样会导致：\n电压升高；\n电荷平衡变化；\nBI、效率、寿命变化；",
+  "answer_image": "",
+  "target_state": {
+    "required_files": [
+      {
+        "path": "EML膜层厚度对比实验_汇总.md",
+        "must_exist": true,
+        "source": "file_state"
+      }
+    ],
+    "required_db_states": [],
+    "required_tool_artifacts": [],
+    "forbidden_states": []
+  },
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "private-document-parser"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "parse_document.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "secondary_to_d1",
+  "raw_annotations": {
+    "文件状态": "EML膜层厚度对比实验_汇总.md",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "private-document-parser",
+    "Tool": "parse_document.py",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D1",
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0022"
+}

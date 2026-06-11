@@ -1,0 +1,96 @@
+{
+  "case_id": "EL260529F-0008",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 10,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "rdkit-molecule-drawer",
+  "skill_description": "用 RDKit 根据 SMILES 绘制分子结构图。",
+  "user_query": "O=C(NCC1=CC=CC=C1)C2=CC=C(N3CCN(C4=CC=CC=C4)CC3)C=C2\n\n这是一个什么分子？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "这是一个芳基哌嗪苯甲酰胺类分子。\n推荐名称：N-benzyl-4-(4-phenylpiperazin-1-yl)benzamide\n中文可写作：N-苄基-4-(4-苯基哌嗪-1-基)苯甲酰胺\n结构特征：\n中心是对位取代苯甲酰胺\n酰胺 N 上连一个 苄基 –CH₂–Ph\n苯甲酰胺环对位连一个 4-苯基哌嗪基\n分子式：C₂₄H₂₅N₃O\n精确分子量：371.1998\n我已用 RDKit 校验并绘制了 2D 结构，和你给的 SMILES 一致。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "rdkit-molecule-drawer"
+        ],
+        "step_type": "skill"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": true,
+  "expected_answer": {
+    "type": "multi_assertion",
+    "raw": "N-benzyl-4-(4-phenylpiperazin-1-yl)benzamide\n中文可写作：N-苄基-4-(4-苯基哌嗪-1-基)苯甲酰胺",
+    "assertions": [
+      {
+        "type": "text_contains",
+        "value": "N-benzyl-4-(4-phenylpiperazin-1-yl)benzamide",
+        "raw": "N-benzyl-4-(4-phenylpiperazin-1-yl)benzamide"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "中文可写作[0]",
+        "value": -4.0,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "中文可写作：N-苄基-4-(4-苯基哌嗪-1-基)苯甲酰胺"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "中文可写作[1]",
+        "value": 4.0,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "中文可写作：N-苄基-4-(4-苯基哌嗪-1-基)苯甲酰胺"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "中文可写作[2]",
+        "value": -1.0,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "中文可写作：N-苄基-4-(4-苯基哌嗪-1-基)苯甲酰胺"
+      }
+    ]
+  },
+  "d3_candidate": false,
+  "d3_priority": "not_applicable",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "rdkit-molecule-drawer",
+    "Tool": "无",
+    "是否可明确匹配的": "是",
+    "若是，答案是什么": "N-benzyl-4-(4-phenylpiperazin-1-yl)benzamide\n中文可写作：N-苄基-4-(4-苯基哌嗪-1-基)苯甲酰胺"
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D2",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0008"
+}

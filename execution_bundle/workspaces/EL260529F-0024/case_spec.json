@@ -1,0 +1,81 @@
+{
+  "case_id": "EL260529F-0024",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 26,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "ijp-blue-oled-rca",
+  "skill_description": "IJP/溶液法蓝光 OLED 器件失效与性能根因分析。",
+  "user_query": "请解读接下来上传的这份报告， 从根因分析的角度，剖析说明厚度变化对BI和寿命变化影响的底层原因。",
+  "input_file_cell": "EML膜层厚度对比实验.pptx",
+  "attachments": [
+    {
+      "name": "EML膜层厚度对比实验.pptx",
+      "relative_path": "EML膜层厚度对比实验.pptx",
+      "original_relative_path": "测试集相关文件/EML膜层厚度对比实验.pptx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "extension": ".pptx",
+      "size_bytes": 1836856,
+      "sha256": "126d36943317853ab537b88aa4e0043c6f2029d70e1ca4f38e2ea194cf800698",
+      "preflight": {
+        "kind": "pptx",
+        "readable": true,
+        "slides": 1
+      },
+      "source_token": "EML膜层厚度对比实验.pptx",
+      "sandbox_repo_relative_path": "execution_bundle/workspaces/EL260529F-0024/inputs/EML膜层厚度对比实验.pptx",
+      "sandbox_relative_path": "inputs/EML膜层厚度对比实验.pptx",
+      "materialized": false
+    }
+  ],
+  "attachment_errors": [],
+  "reference_answer": "先看现象\n\nEML 厚度从 20 → 25 → 30 → 35 nm：\nBI/CE/CIEy 持续下降：约 142 → 138~140 → 134~135 → 132~134\n1000 nit 电压持续升高：约 3.71 → 3.80 → 4.05 → 4.17 V\nEQE 下降：约 13.7% → 13.5% → 13.1% → 12.7%\n寿命 LT95 先升后降：约 15.3 h → 17 h → 16.8 h → 16 h\nCIEy、FWHM 变化不大，说明光色/光谱不是主因，核心问题在 电荷平衡、复合区位置、电应力和缺陷/淬灭机制。\n核心结论\nEML 加厚后 BI 下降的根因，不是发光颜色变差，而是单位电流/单位激子的有效发光效率下降。\n针对 BI 下降的贡献估算\n根因因素\n贡献估算\n证据强度\n说明\nEML 加厚导致传输阻抗上升/电压升高\n35–45%\n高\n1000 nit 电压随 EML 厚度持续上升，CE/EQE 同步下降\n电荷平衡与复合区位置变化\n25–35%\n中高\nEQE、CE 下降，说明有效复合/辐射效率下降\nHTL 同步减薄带来的混杂影响\n15–25%\n中\n表中 EML 加厚同时 HTL 变薄，不能完全归因于 EML 单因子\n光学腔/出光位置变化\n5–15%\n中低\n厚度变化会影响 top-emission 光学腔，但 CIEy/FWHM 基本稳定，主导性不强\n膜质/局部缺陷/厚膜形貌变化\n5–10%\n低-中\n可能影响效率与寿命，但当前 PPT 没有 AFM/PLQY/漏电图支撑\n针对寿命先升后降的贡献估算\n根因因素\n贡献估算\n证据强度\n说明\n复合区远离界面，界面淬灭降低\nAgent: main | Model: gpt-5.5 | Provider: openai\n| 35–45% | 中高 | 20 → 25/30 nm 寿命提升，符合薄 EML 界面损伤降低逻辑 |\n| 电压升高带来的电/热应力增加 | 25–35% | 高 | 30/35 nm 电压明显升高，寿命不再继续提升 |\n| 电荷不平衡/极化子积累/激子-极化子淬灭 | 15–25% | 中 | CE/EQE 下降且寿命在厚 EML 端回落 |\n| HTL 同步减薄混杂影响 | 10–20% | 中 | HTL 由约 56 nm 降到 38 nm，影响空穴传输和电场分布 |\n| 膜厚均匀性/缺陷敏感性变化 | 5–10% | 低-中 | 薄层可能更受 pin point 影响，厚层可能残留/形貌变化，但缺少直接表征 |\n\n更严谨地说：\n这些贡献值目前只能作为“证据加权估算范围”，不能当成定量模型结果。 因为实验不是纯单变量：EML 增厚的同时 HTL 也在减薄，且每组样本数有限，没有完整 DOE/重复统计/仿真分解。\n\n如果需要，我可以把刚才那版分析重写成一版完整的 ijp-blue-oled-rca 标准格式：包含问题定义、证据链、贡献值、置信度、验证 DOE、光学仿真计划",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "ijp-blue-oled-rca"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "root_cause_scoring.py",
+          "contribution_analysis.py",
+          "evidence_weight_update.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "ijp-blue-oled-rca",
+    "Tool": "root_cause_scoring.py\ncontribution_analysis.py\nevidence_weight_update.py",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0024"
+}

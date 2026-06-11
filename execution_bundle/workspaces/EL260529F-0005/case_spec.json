@@ -1,0 +1,169 @@
+{
+  "case_id": "EL260529F-0005",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 7,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "setfos-user",
+  "skill_description": "Setfos光学模拟",
+  "user_query": "请用红光的标准器件对应的par文件进行光学仿真，并返回结果。",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "CE：47.80 cd/A\nEQE Lambertian：0.3266 / 32.66%\nCIE：(0.6839, 0.3157)\nPeak wavelength：620 nm\nLuminance：4780 cd/m²",
+  "answer_image": "",
+  "target_state": {
+    "required_files": [
+      {
+        "path": "generated_par/<color>_<run_id>.par",
+        "must_exist": true,
+        "source": "file_state"
+      },
+      {
+        "path": "reports/<color>_<run_id>_summary.md",
+        "must_exist": true,
+        "source": "file_state"
+      },
+      {
+        "path": "reports/<color>_<run_id>_metrics.json",
+        "must_exist": true,
+        "source": "file_state"
+      },
+      {
+        "path": "optical_results/<run_id>/opt2D.txt",
+        "must_exist": true,
+        "source": "file_state"
+      }
+    ],
+    "required_db_states": [],
+    "required_tool_artifacts": [],
+    "forbidden_states": []
+  },
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "setfos-user"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "setfos-kernel.exe"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": true,
+  "expected_answer": {
+    "type": "multi_assertion",
+    "raw": "CE：47.80 cd/A\nEQE Lambertian：0.3266 / 32.66%\nCIE：(0.6839, 0.3157)\nPeak wavelength：620 nm\nLuminance：4780 cd/m²",
+    "assertions": [
+      {
+        "type": "numeric_contains",
+        "label": "CE",
+        "value": 47.8,
+        "unit": "cd/A",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "CE：47.80 cd/A"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "EQE Lambertian[0]",
+        "value": 0.3266,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "EQE Lambertian：0.3266 / 32.66%"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "EQE Lambertian[1]",
+        "value": 32.66,
+        "unit": "%",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "EQE Lambertian：0.3266 / 32.66%"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "CIE[0]",
+        "value": 0.6839,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "CIE：(0.6839, 0.3157)"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "CIE[1]",
+        "value": 0.3157,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "CIE：(0.6839, 0.3157)"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "Peak wavelength",
+        "value": 620.0,
+        "unit": "nm",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "Peak wavelength：620 nm"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "Luminance",
+        "value": 4780.0,
+        "unit": "cd/m²",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "Luminance：4780 cd/m²"
+      }
+    ]
+  },
+  "d3_candidate": false,
+  "d3_priority": "not_applicable",
+  "raw_annotations": {
+    "文件状态": "generated_par/<color>_<run_id>.par\nreports/<color>_<run_id>_summary.md\nreports/<color>_<run_id>_metrics.json\noptical_results/<run_id>/opt2D.txt",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "setfos-user",
+    "Tool": "setfos-kernel.exe",
+    "是否可明确匹配的": "是",
+    "若是，答案是什么": "CE：47.80 cd/A\nEQE Lambertian：0.3266 / 32.66%\nCIE：(0.6839, 0.3157)\nPeak wavelength：620 nm\nLuminance：4780 cd/m²"
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D1",
+    "D2",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0005"
+}

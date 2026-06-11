@@ -1,0 +1,111 @@
+{
+  "case_id": "EL260529F-0021",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 23,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "private-document-parser",
+  "skill_description": "解析图片、Word、PPT、Excel、PDF私有文档。",
+  "user_query": "请分析请解读接下来上传的这份报告，EML厚度的变化对器件的哪些性能产生了影响。",
+  "input_file_cell": "EML膜层厚度对比实验.pptx",
+  "attachments": [
+    {
+      "name": "EML膜层厚度对比实验.pptx",
+      "relative_path": "EML膜层厚度对比实验.pptx",
+      "original_relative_path": "测试集相关文件/EML膜层厚度对比实验.pptx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "extension": ".pptx",
+      "size_bytes": 1836856,
+      "sha256": "126d36943317853ab537b88aa4e0043c6f2029d70e1ca4f38e2ea194cf800698",
+      "preflight": {
+        "kind": "pptx",
+        "readable": true,
+        "slides": 1
+      },
+      "source_token": "EML膜层厚度对比实验.pptx",
+      "sandbox_repo_relative_path": "execution_bundle/workspaces/EL260529F-0021/inputs/EML膜层厚度对比实验.pptx",
+      "sandbox_relative_path": "inputs/EML膜层厚度对比实验.pptx",
+      "materialized": false
+    }
+  ],
+  "attachment_errors": [],
+  "reference_answer": "1. 电压明显升高\n\nEML 越厚，器件驱动电压越高。从 20 → 35 nm，@1000nit 电压约增加 0.46 V。\n说明 EML 加厚后，载流子传输阻抗增加，器件更难驱动。\n\n2. 效率下降，BI 持续变差\n\n报告中给出的 BI 趋势是：\n\n142 → 140 → 135 → 134 @ CIEy 0.046\n\n也就是 EML 越厚，单位色坐标下的效率收益下降。\n\n3. 寿命先改善，过厚后变差\n\n寿命不是单调变化，而是存在最佳区间。可以理解为：\n20 nm 偏薄：复合区可能更靠近界面，界面激子/载流子淬灭更明显，寿命较短。\n25–30 nm 较合适：复合区被适当拉入 EML 内部，寿命改善。\n35 nm 偏厚：电压升高、载流子不平衡/热负荷增加，寿命又下降。\n所以寿命最佳点大概率在 25–30 nm，不是越厚越好。\n\n4. 光色 / 光谱基本稳定\n说明 EML 厚度变化没有明显改变发光主体光谱，峰位和半峰宽基本稳定。\n主要问题不是光色漂移，而是电学和效率/寿命平衡。\n5. 我的判断\n\n这组数据说明：\n\nEML 加厚的主要影响顺序是：\n电压升高 —— 最明显、单调恶化\n效率 / BI 下降 —— 加厚后发光效率损失\n寿命存在最佳厚度 —— 25–30 nm 较优，35 nm 开始变差\n光色和光谱影响较小 —— CIE、WP、FWHM 基本稳定\n**推荐厚度窗口：25–30",
+  "answer_image": "",
+  "target_state": {
+    "required_files": [
+      {
+        "path": "EML膜层厚度对比实验_汇总.md",
+        "must_exist": true,
+        "source": "file_state"
+      }
+    ],
+    "required_db_states": [],
+    "required_tool_artifacts": [],
+    "forbidden_states": []
+  },
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "private-document-parser"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "parse_document.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": true,
+  "expected_answer": {
+    "type": "multi_assertion",
+    "raw": "1. 电压明显升高\n\n2. 效率下降，BI 持续变差\n\n3. 寿命先改善，过厚后变差",
+    "assertions": [
+      {
+        "type": "text_contains",
+        "value": "1. 电压明显升高",
+        "raw": "1. 电压明显升高"
+      },
+      {
+        "type": "text_contains",
+        "value": "2. 效率下降，BI 持续变差",
+        "raw": "2. 效率下降，BI 持续变差"
+      },
+      {
+        "type": "text_contains",
+        "value": "3. 寿命先改善，过厚后变差",
+        "raw": "3. 寿命先改善，过厚后变差"
+      }
+    ]
+  },
+  "d3_candidate": false,
+  "d3_priority": "not_applicable",
+  "raw_annotations": {
+    "文件状态": "EML膜层厚度对比实验_汇总.md",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "private-document-parser",
+    "Tool": "parse_document.py",
+    "是否可明确匹配的": "是",
+    "若是，答案是什么": "1. 电压明显升高\n\n2. 效率下降，BI 持续变差\n\n3. 寿命先改善，过厚后变差"
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D1",
+    "D2",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0021"
+}

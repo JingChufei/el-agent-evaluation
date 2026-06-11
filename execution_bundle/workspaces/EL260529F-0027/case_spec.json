@@ -1,0 +1,61 @@
+{
+  "case_id": "EL260529F-0027",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 29,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "molecular-structure-generator",
+  "skill_description": "调用分子生成模型根据约束条件生成OLED分子",
+  "user_query": "请根据以下分子和条件，生成5个新的分子。“c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1”\n\"HOMO\": -5.55,\n\"LUMO\": -2.73,\n\"S1\": 3.09,\n\"T1\": 1.65",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "已基于该高刚性多芳环 / 二苯并呋喃类骨架生成 5 个新分子，并用 RDKit 校验 SMILES 可解析。\n\n母体条件：\nHOMO -5.55 / LUMO -2.73 / S1 3.09 / T1 1.65 eV\nM1｜F 取代：轻度降低 HOMO，保持高 S1\nFc1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1\n设计点：单 F 吸电子，轻微降低 HOMO/LUMO。\n预期：对 S1 扰动小，适合作为低风险对照。\nFormula / MW / clogP：C44H25FO2 / 604.68 / 12.93\nM2｜CF3 取代：更强吸电子，进一步降低 LUMO\nFC(F)(F)c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1\n设计点：CF3 显著吸电子。\n预期：HOMO、LUMO 同时降低，电子稳定性提升。\n风险：分子疏水性和空间体积增加，成膜需验证。\nFormula / MW / clogP：C45H25F3O2 / 654.69 / 13.81\nM3｜CN 取代：强化 LUMO 下拉，提高电子亲和性\nN#Cc1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1\n设计点：CN 是强吸电子基团。\n预期：LUMO 降低更明显，可能改善电子注入/稳定性。\n风险：可能增强分子间偶极相互作用，导致聚集或红移。\nAgent: main | Model: gpt-5.5 | Provider: openai\nFormula / MW / clogP：C45H25NO2 / 611.70 / 12.66\nM4｜Me 取代：温和给电子，提升成膜与抗聚集\nCc1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1\n设计点：甲基增加空间位阻，轻微给电子。\n预期：HOMO 略升，S1 可能轻微下降；有助于降低 π-π 堆积。\nFormula / MW / clogP：C45H28O2 / 600.72 / 13.10\nM5｜tBu 取代：增强溶解性和抗聚集\nCC(C)(C)c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1\n设计点：叔丁基提供大位阻。\n预期：改善溶解性，抑制 excimer / aggregation。\n风险：clogP 很高，湿法成膜可能更依赖溶剂体系。\nFormula / MW / clogP：C48H34O2 / 642.80 / 14.09\n优先建议：\nM1-F：最稳妥，适合先算。\nM3-CN：最可能有效下拉 LUMO。\nM4-Me：适合改善聚集和成膜。\nM2-CF3：电子调控强，但疏水性偏高。\nM5-tBu：抗聚集强，但分子过疏水，需谨慎。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "molecular-structure-generator"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "analyze_generated_smiles.py",
+          "client_mol_gen.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "molecular-structure-generator",
+    "Tool": "analyze_generated_smiles.py\nclient_mol_gen.py",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0027"
+}

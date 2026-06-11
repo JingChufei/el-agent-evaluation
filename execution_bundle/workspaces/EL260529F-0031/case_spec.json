@@ -1,0 +1,39 @@
+{
+  "case_id": "EL260529F-0031",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 33,
+  "task_type": "单任务",
+  "requires_skill": false,
+  "skill_name": "",
+  "skill_description": "",
+  "user_query": "印刷 OLED 的真正瓶颈，是发光材料本身，还是“墨水化之后的成膜物理”？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "高效率 TADF / MR-TADF / 磷光材料在蒸镀器件中可以表现很好，但一旦进入溶液加工，问题会变成：溶解性、聚集态、干燥动力学、相分离、咖啡环效应、取向、膜内浓度梯度等。最新综述也把 solution-processed TADF OLED 作为独立问题讨论，而不是简单等同于“把蒸镀材料溶进溶剂”。\n\n关键问题是：我们到底应该优化分子本征发光性能，还是应该优先设计“可印刷、可成膜、可自组装”的发光材料体系？",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": null,
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "",
+    "数据库状态": "",
+    "工具产物": "",
+    "禁止状态": "",
+    "Skill": "",
+    "Tool": "",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0031"
+}

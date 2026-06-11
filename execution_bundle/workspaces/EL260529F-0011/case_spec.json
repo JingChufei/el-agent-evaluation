@@ -1,0 +1,53 @@
+{
+  "case_id": "EL260529F-0011",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 13,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "ijp-blue-material-advisor",
+  "skill_description": "IJP 蓝光 OLED 材料设计与优化建议。",
+  "user_query": "DABNA-1在B原子的对位连接二苯胺单元，会对分子整体结构有何影响？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "会明显把 DABNA-1 从“纯 MR-TADF 窄谱骨架”推向 MR-CT 混合型分子。核心影响如下：\n电子结构：增强 donor–acceptor 推拉\nB 原子是强缺电子中心，B 对位接 二苯胺 DPA 这种给电子单元，会形成更强的 para 共轭推拉。\nHOMO 会向二苯胺单元外延，LUMO 仍主要集中在 DABNA 的 B/N 多重共振核心。\n结果是 HOMO–LUMO 重叠降低，CT 成分增加。\n光谱：大概率红移、FWHM 变宽\nDPA 给电子性会抬高 HOMO，降低能隙，发射容易红移。\nMR 特征被 CT 成分稀释后，振动耦合增强，窄谱优势可能下降，FWHM 可能变宽。\n对深蓝色纯度不利，CIEy 可能升高。\n构型：外围更立体、非平面化\n二苯胺本身是扭转的 propeller-like 结构，两个苯环通常不与主骨架完全共平面。\nDABNA 核心仍可能保持较高刚性和平面性，但外围 DPA 会引入明显三维体积。\n这种扭曲有利于降低分子间 π–π 堆积，但也会削弱主骨架有效共轭的可控性。\n分子间作用：可能抑制聚集和 excimer\nDPA 体积大，可以作为空间屏蔽基团，降低 DABNA 核心 face-to-face 堆叠。\n对高掺杂薄膜、IJP 成膜中的聚集淬灭可能有帮助。\n但如果 CT 态太强，薄膜中极性环境/构象分布会带来发射展宽。\n电荷行为：更偏空穴捕获\nDPA 是典型空穴传输/给电子单元，会提高分子的空穴亲和性。\n作为蓝光客体时，可能增强空穴 trapping，改变复合区位置。\n但 DPA 氧化态稳定性一般要重点评估，长期电应力下可能成为寿命风险点。\n\n一句话判断：\nDABNA-1 在 B 对位接二苯胺，会让分子更“给受体化”、更立体、聚集更弱，但代价通常是 红移、谱带变宽、MR 窄谱特征下降、蓝色纯度变差。如果目标是深蓝窄谱，这个设计风险偏高；如果目标是改善溶解性、成膜和抗聚集，可以考虑，但最好用较弱 donor、间位连接或加大扭转隔离来控制 CT 成分。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "ijp-blue-material-advisor"
+        ],
+        "step_type": "skill"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "ijp-blue-material-advisor",
+    "Tool": "无",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0011"
+}

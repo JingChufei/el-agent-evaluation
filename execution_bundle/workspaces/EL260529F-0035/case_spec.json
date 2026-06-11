@@ -1,0 +1,39 @@
+{
+  "case_id": "EL260529F-0035",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 37,
+  "task_type": "单任务",
+  "requires_skill": false,
+  "skill_name": "",
+  "skill_description": "",
+  "user_query": "IJP OLED 的优势到底是低成本，还是它能打开蒸镀 OLED 做不到的新器件/像素设计？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "目前产业报道常强调 IJP OLED 相比 FMM 蒸镀可能降低成本、提高材料利用率和大尺寸适应性。近期报道中也提到 IJP OLED 相对 FMM 可能带来显著成本下降，并指向笔电、显示器、平板和未来电视应用。\n\n但更前沿的问题是：印刷 OLED 是否只是“更便宜的蒸镀替代品”，还是可以利用数字化沉积实现像素级材料配方调控、局部厚度补偿、梯度发光层、甚至面内异质结构器件？\n\n如果答案是后者，那么 IJP OLED 的价值就不只是降本，而是重新定义 OLED 器件设计自由度。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": null,
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "",
+    "数据库状态": "",
+    "工具产物": "",
+    "禁止状态": "",
+    "Skill": "",
+    "Tool": "",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0035"
+}

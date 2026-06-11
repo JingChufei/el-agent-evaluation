@@ -1,0 +1,39 @@
+{
+  "case_id": "EL260529F-0029",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 31,
+  "task_type": "单任务",
+  "requires_skill": false,
+  "skill_name": "",
+  "skill_description": "",
+  "user_query": "HOMO 能级深浅与氧化难易到底是什么关系？同时，为什么蓝光 OLED 材料在器件中仍然常被认为稳定性更差？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "不能简单地说“蓝光材料 HOMO 能级深，所以更容易被氧化”，因为这句话把两个不同问题混在了一起：热力学上的氧化难易和器件工作状态下的降解稳定性。\n\n首先，从能级和氧化热力学角度看，HOMO 越浅，也就是能级越高、越接近真空能级，材料越容易失去电子，被氧化形成 radical cation。例如 HOMO 为 -5.1 eV 的材料，通常比 HOMO 为 -5.8 eV 的材料更容易被氧化。\n\n相反，HOMO 越深，电子束缚通常越强，氧化电位越高，热力学上反而更不容易被氧化。因此，正确关系应当是：\n\nHOMO 浅 → 更容易氧化；\nHOMO 深 → 热力学上更抗氧化。\n\n但是，蓝光 OLED 材料的稳定性确实常常更具挑战。原因并不是“深 HOMO 导致更容易氧化”，而是来自器件工作状态下更复杂的降解机制。\n\n蓝光材料通常带隙更大，激发态能量更高，激子能量也更高。这些高能激发态更容易诱发分子局部化学键断裂或副反应，例如 C–N、C–B、B–N 以及芳胺结构附近的键可能在极化子态或激发态下变得不稳定。\n\n此外，蓝光 host 和 dopant 往往需要较高的三线态能级，这会明显压缩材料设计空间。为了维持蓝光发射和激子限制，材料结构选择受到更多限制，稳定性优化也更困难。\n\n另外，较深的 HOMO 虽然不代表更易氧化，但可能带来空穴注入困难。如果空穴注入势垒较大，就可能导致局部载流子积累，进一步引发 polaron/exciton quenching、界面降解或局部发热。如果器件为了克服注入困难而提高驱动电压，还会增加电场和焦耳热压力，加速器件老化。\n\n所以，更准确的表述应该是：\n\n蓝光材料通常 HOMO 较深，热力学上不一定更容易被氧化；但深 HOMO 可能导致空穴注入困难和局部电荷积累。同时，蓝光材料高激发态能量更容易诱发极化子/激子相关降解，因此蓝光 OLED 的器件稳定性更具挑战。\n\n核心区别是：氧化电位/HOMO 能级讨论的是热力学上的失电子难易；而蓝光器件寿命问题更多涉及工作态下的降解动力学，包括高能激子、极化子、键解离、载流子积累和界面应力等因素。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": null,
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "",
+    "数据库状态": "",
+    "工具产物": "",
+    "禁止状态": "",
+    "Skill": "",
+    "Tool": "",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0029"
+}

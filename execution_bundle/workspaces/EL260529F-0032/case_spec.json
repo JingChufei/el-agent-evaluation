@@ -1,0 +1,39 @@
+{
+  "case_id": "EL260529F-0032",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 34,
+  "task_type": "单任务",
+  "requires_skill": false,
+  "skill_name": "",
+  "skill_description": "",
+  "user_query": "对印刷 RGB OLED 来说，蓝光寿命问题是否仍然是决定产业化节奏的第一瓶颈？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "IJP OLED 产业化报道中反复提到蓝光寿命和功耗仍是关键问题；例如近期报道提到 TCL CSOT 的 IJP 蓝光寿命虽已有明显改善，但仍被视为量产化挑战之一。\n\n所以真正值得追问的是：印刷蓝光 OLED 的寿命劣化，主要来自材料三线态/极化子损伤，还是来自印刷膜形貌、界面粗糙、残留溶剂、相分离导致的局部电流集中？\n\n这个问题比单纯问“蓝光材料效率够不够”更前沿。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": null,
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "",
+    "数据库状态": "",
+    "工具产物": "",
+    "禁止状态": "",
+    "Skill": "",
+    "Tool": "",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0032"
+}

@@ -1,0 +1,39 @@
+{
+  "case_id": "EL260529F-0033",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 35,
+  "task_type": "单任务",
+  "requires_skill": false,
+  "skill_name": "",
+  "skill_description": "",
+  "user_query": "正交溶剂体系是否足以解决多层印刷 OLED 的界面问题？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "印刷 OLED 要做多层结构，最大难点之一是：后一层溶剂不能破坏前一层。传统思路是使用正交溶剂、交联型 HTL/ETL、聚合物或可固化材料。但这会引入新问题：交联残留、能级改变、迁移率下降、界面偶极变化、陷阱增加。\n\n因此可以问：未来印刷 OLED 的多层结构，应该继续模仿蒸镀 OLED 的 HIL/HTL/EML/ETL/EIL 精细叠层，还是应该发展更适合溶液加工的“少层化、梯度化、混合功能层”器件架构？",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": null,
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "",
+    "数据库状态": "",
+    "工具产物": "",
+    "禁止状态": "",
+    "Skill": "",
+    "Tool": "",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0033"
+}

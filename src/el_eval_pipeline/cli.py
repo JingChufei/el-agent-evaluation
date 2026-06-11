@@ -13,6 +13,7 @@ from .workspaces import prepare_case_workspaces
 DEFAULT_EXCEL = Path("EL Agent测试集_260529_筛选后.xlsx")
 DEFAULT_ATTACHMENTS = Path("测试集相关文件")
 DEFAULT_OUTPUT = Path("outputs/pipeline")
+DEFAULT_BUNDLE = Path("execution_bundle")
 
 
 def _add_common_paths(parser: argparse.ArgumentParser) -> None:
@@ -76,6 +77,29 @@ def cmd_summarize_d3_rubrics(args: argparse.Namespace) -> None:
     print(
         f"summarized D3 rubrics: cases={summary['case_count_with_rubrics']} "
         f"rubrics={summary['rubric_count']} -> {args.output}"
+    )
+
+
+def cmd_prepare_execution_bundle(args: argparse.Namespace) -> None:
+    result = preprocess_dataset(
+        args.excel,
+        args.attachments,
+        args.bundle_dir,
+        skills_workbook=args.skills_workbook if args.skills_workbook.exists() else None,
+        sessions_json=args.sessions_json if args.sessions_json.exists() else None,
+        portable_paths=True,
+    )
+    cases_path = args.bundle_dir / "cases.jsonl"
+    manifest = prepare_case_workspaces(
+        cases_path,
+        args.bundle_dir,
+        copy_attachments=False,
+        portable_paths=True,
+    )
+    write_d3_rubric_inputs(cases_path, args.bundle_dir / "d3_rubric_inputs.json")
+    print(
+        f"prepared portable execution bundle under {args.bundle_dir}; "
+        f"cases={len(result['cases'])} runs={len(manifest)}"
     )
 
 
@@ -151,8 +175,16 @@ def build_parser() -> argparse.ArgumentParser:
     d3_summary.add_argument("--output", type=Path, default=DEFAULT_OUTPUT / "d3_rubric_summary.json")
     d3_summary.set_defaults(func=cmd_summarize_d3_rubrics)
 
+    bundle = subparsers.add_parser("prepare-execution-bundle", help="Build portable execution bundle without copying attachment inputs")
+    bundle.add_argument("--excel", type=Path, default=DEFAULT_EXCEL)
+    bundle.add_argument("--attachments", type=Path, default=DEFAULT_ATTACHMENTS)
+    bundle.add_argument("--bundle-dir", type=Path, default=DEFAULT_BUNDLE)
+    bundle.add_argument("--skills-workbook", type=Path, default=Path("EL agent 专业技能清单.xlsx"))
+    bundle.add_argument("--sessions-json", type=Path, default=Path("sessions/sessions.json"))
+    bundle.set_defaults(func=cmd_prepare_execution_bundle)
+
     run_agent = subparsers.add_parser("run-agent", help="Run prepared cases through an external EL Agent/OpenClaw command")
-    run_agent.add_argument("--manifest", type=Path, default=DEFAULT_OUTPUT / "run_manifest.json")
+    run_agent.add_argument("--manifest", type=Path, default=DEFAULT_BUNDLE / "run_manifest.json")
     run_agent.add_argument("--output", type=Path, default=DEFAULT_OUTPUT / "trajectories.jsonl")
     run_agent.add_argument("--command", required=True, help="shell command template; receives EL_EVAL_* env vars and {workspace}/{prompt_path}/{case_spec}/{agent_output}")
     run_agent.add_argument("--case-id", action="append", default=[], help="run only this case_id; can be repeated")

@@ -1,0 +1,109 @@
+{
+  "case_id": "EL260529F-0003",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 5,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "ept-service-user",
+  "skill_description": "发光材料能级预测，支持 SMILES/CSV/分子结构图。",
+  "user_query": "帮我预测ht材料c1ccc(N(c2ccccc2)c2cccc(N(c3ccccc3)c3cc(N(c4ccccc4)c4ccccc4)c4c(ccc5ccccc54)c3)c2)cc1的能级",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "\"HOMO\":-5.26,\n\"LUMO\":-2.3,\n\"S1\":3.21,\n\"T1\":2.49",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "ept-service-user"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "client.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": true,
+  "expected_answer": {
+    "type": "multi_assertion",
+    "raw": "\"HOMO\":-5.26,\n\"LUMO\":-2.3,\n\"S1\":3.21,\n\"T1\":2.49",
+    "assertions": [
+      {
+        "type": "numeric_contains",
+        "label": "HOMO",
+        "value": -5.26,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "HOMO\":-5.26,"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "LUMO",
+        "value": -2.3,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "LUMO\":-2.3,"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "S1",
+        "value": 3.21,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "S1\":3.21,"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "T1",
+        "value": 2.49,
+        "unit": "",
+        "tolerance": {
+          "abs": 0.01,
+          "rel": 0.02
+        },
+        "raw": "T1\":2.49"
+      }
+    ]
+  },
+  "d3_candidate": false,
+  "d3_priority": "not_applicable",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "ept-service-user",
+    "Tool": "client.py",
+    "是否可明确匹配的": "是",
+    "若是，答案是什么": "\"HOMO\":-5.26,\n\"LUMO\":-2.3,\n\"S1\":3.21,\n\"T1\":2.49"
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D2",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0003"
+}

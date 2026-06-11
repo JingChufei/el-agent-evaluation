@@ -259,6 +259,22 @@ def build_quality_report(
     }
 
 
+def _portable_manifest(manifest: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [{key: value for key, value in entry.items() if key != "absolute_path"} for entry in manifest]
+
+
+def _portable_cases(cases: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    portable_cases: list[dict[str, Any]] = []
+    for case in cases:
+        portable_case = dict(case)
+        portable_attachments: list[dict[str, Any]] = []
+        for attachment in case.get("attachments", []):
+            portable_attachments.append({key: value for key, value in attachment.items() if key != "original_path"})
+        portable_case["attachments"] = portable_attachments
+        portable_cases.append(portable_case)
+    return portable_cases
+
+
 def preprocess_dataset(
     excel_path: Path,
     attachments_root: Path,
@@ -267,9 +283,12 @@ def preprocess_dataset(
     skills_workbook: Path | None = None,
     sessions_json: Path | None = None,
     repo_root: Path | None = None,
+    portable_paths: bool = False,
 ) -> dict[str, Any]:
     repo_root = repo_root or Path.cwd()
     cases, manifest, attachment_errors = load_cases_from_excel(excel_path, attachments_root, repo_root=repo_root)
+    cases_to_write = _portable_cases(cases) if portable_paths else cases
+    manifest_to_write = _portable_manifest(manifest) if portable_paths else manifest
     domain_skills = load_domain_skill_registry(skills_workbook) if skills_workbook else {}
     runtime_skills = load_runtime_skill_registry(sessions_json) if sessions_json else {}
     report = build_quality_report(
@@ -279,8 +298,8 @@ def preprocess_dataset(
         domain_skills=domain_skills,
         runtime_skills=runtime_skills,
     )
-    write_jsonl(output_dir / "cases.jsonl", cases)
-    write_json(output_dir / "attachment_manifest.json", manifest)
+    write_jsonl(output_dir / "cases.jsonl", cases_to_write)
+    write_json(output_dir / "attachment_manifest.json", manifest_to_write)
     write_json(output_dir / "data_quality_report.json", report)
     write_csv(
         output_dir / "cases.csv",

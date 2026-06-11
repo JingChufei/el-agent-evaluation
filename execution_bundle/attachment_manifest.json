@@ -1,0 +1,341 @@
+[
+  {
+    "basename": "01-1 数据分析与解读.pdf",
+    "relative_path": "01-1 数据分析与解读.pdf",
+    "repo_relative_path": "测试集相关文件/01-1 数据分析与解读.pdf",
+    "extension": ".pdf",
+    "size_bytes": 482689,
+    "mime_type": "application/pdf",
+    "sha256": "cfc280860db0ac9df717941e6545a5e9e47ae915104433df15ffbd4c744edac8",
+    "preflight": {
+      "kind": "pdf",
+      "readable": true,
+      "parser": "header_only",
+      "error": "No module named 'pypdf'"
+    }
+  },
+  {
+    "basename": "01-2 基本材料物性输入—辅助数据分析.pdf",
+    "relative_path": "01-2 基本材料物性输入—辅助数据分析.pdf",
+    "repo_relative_path": "测试集相关文件/01-2 基本材料物性输入—辅助数据分析.pdf",
+    "extension": ".pdf",
+    "size_bytes": 422389,
+    "mime_type": "application/pdf",
+    "sha256": "2950f7eb9ca75a77cf588e6912f123100af1d42768071b5340ea78f4cd2600ad",
+    "preflight": {
+      "kind": "pdf",
+      "readable": true,
+      "parser": "header_only",
+      "error": "No module named 'pypdf'"
+    }
+  },
+  {
+    "basename": "02 多组分GH报告.pdf",
+    "relative_path": "02 多组分GH报告.pdf",
+    "repo_relative_path": "测试集相关文件/02 多组分GH报告.pdf",
+    "extension": ".pdf",
+    "size_bytes": 3915684,
+    "mime_type": "application/pdf",
+    "sha256": "0fef14bf9030788063c1a54d9590e286f64a9ac00bcf41dbd737ef078fb904ce",
+    "preflight": {
+      "kind": "pdf",
+      "readable": true,
+      "parser": "header_only",
+      "error": "No module named 'pypdf'"
+    }
+  },
+  {
+    "basename": "EL260529F-0001 输入图片.png",
+    "relative_path": "EL260529F-0001 输入图片.png",
+    "repo_relative_path": "测试集相关文件/EL260529F-0001 输入图片.png",
+    "extension": ".png",
+    "size_bytes": 5787,
+    "mime_type": "image/png",
+    "sha256": "94b59bae57d5ad6d5cdd7bcb9e156e1e3a9e30c729b6e97cced5343504b84b73",
+    "preflight": {
+      "kind": "png",
+      "readable": true
+    }
+  },
+  {
+    "basename": "EML膜层厚度对比实验.pptx",
+    "relative_path": "EML膜层厚度对比实验.pptx",
+    "repo_relative_path": "测试集相关文件/EML膜层厚度对比实验.pptx",
+    "extension": ".pptx",
+    "size_bytes": 1836856,
+    "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "sha256": "126d36943317853ab537b88aa4e0043c6f2029d70e1ca4f38e2ea194cf800698",
+    "preflight": {
+      "kind": "pptx",
+      "readable": true,
+      "slides": 1
+    }
+  },
+  {
+    "basename": "印刷蓝光OLED材料项目技术开发报告.docx",
+    "relative_path": "印刷蓝光OLED材料项目技术开发报告.docx",
+    "repo_relative_path": "测试集相关文件/印刷蓝光OLED材料项目技术开发报告.docx",
+    "extension": ".docx",
+    "size_bytes": 774457,
+    "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "sha256": "5eda6ef6eac4855775632d81ec7ba08966a114be97ad6cdd275adcc8864184f3",
+    "preflight": {
+      "kind": "docx",
+      "readable": true,
+      "parser": "zip_only",
+      "entries": 46
+    }
+  },
+  {
+    "basename": "CH161-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-1-1-CC0.79mA.csv",
+    "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH161-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-1-1-CC0.79mA.csv",
+    "repo_relative_path": "测试集相关文件/器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH161-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-1-1-CC0.79mA.csv",
+    "extension": ".csv",
+    "size_bytes": 17927,
+    "mime_type": "text/csv",
+    "sha256": "c3c04db317a84c7a23a8976ed6501b3b218311f31acb1cf6a938214ccafe1523",
+    "preflight": {
+      "kind": "csv",
+      "readable": true,
+      "encoding": "gb18030",
+      "rows": 234,
+      "max_columns": 8,
+      "sample_header": [
+        "[CC] 0.785000mA",
+        ""
+      ],
+      "errors": []
+    }
+  },
+  {
+    "basename": "CH163-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-3-3-CC0.79mA.csv",
+    "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH163-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-3-3-CC0.79mA.csv",
+    "repo_relative_path": "测试集相关文件/器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH163-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-3-3-CC0.79mA.csv",
+    "extension": ".csv",
+    "size_bytes": 17927,
+    "mime_type": "text/csv",
+    "sha256": "dcf3ea99104c1ebbc74e4ce1f4ee4bf5868277f5782b732e50499b143f25700d",
+    "preflight": {
+      "kind": "csv",
+      "readable": true,
+      "encoding": "gb18030",
+      "rows": 234,
+      "max_columns": 8,
+      "sample_header": [
+        "[CC] 0.785000mA",
+        ""
+      ],
+      "errors": []
+    }
+  },
+  {
+    "basename": "CH164-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-4-1-CC0.79mA.csv",
+    "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH164-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-4-1-CC0.79mA.csv",
+    "repo_relative_path": "测试集相关文件/器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH164-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-4-1-CC0.79mA.csv",
+    "extension": ".csv",
+    "size_bytes": 17927,
+    "mime_type": "text/csv",
+    "sha256": "341b9775a9037e0632aed1d22402c0a63ded2dd808d73d81fcaccbbfb86fbd65",
+    "preflight": {
+      "kind": "csv",
+      "readable": true,
+      "encoding": "gb18030",
+      "rows": 234,
+      "max_columns": 8,
+      "sample_header": [
+        "[CC] 0.785000mA",
+        ""
+      ],
+      "errors": []
+    }
+  },
+  {
+    "basename": "CH165-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-5-4-CC0.79mA.csv",
+    "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH165-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-5-4-CC0.79mA.csv",
+    "repo_relative_path": "测试集相关文件/器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH165-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-5-4-CC0.79mA.csv",
+    "extension": ".csv",
+    "size_bytes": 17927,
+    "mime_type": "text/csv",
+    "sha256": "90edf3d4ac5f9a364c1a39fae749a6f1fa7a1c159bf13d7d524c419467051f6b",
+    "preflight": {
+      "kind": "csv",
+      "readable": true,
+      "encoding": "gb18030",
+      "rows": 234,
+      "max_columns": 8,
+      "sample_header": [
+        "[CC] 0.785000mA",
+        ""
+      ],
+      "errors": []
+    }
+  },
+  {
+    "basename": "CH166-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-6-1-CC0.79mA.csv",
+    "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH166-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-6-1-CC0.79mA.csv",
+    "repo_relative_path": "测试集相关文件/器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH166-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-6-1-CC0.79mA.csv",
+    "extension": ".csv",
+    "size_bytes": 17927,
+    "mime_type": "text/csv",
+    "sha256": "e0340e2421e62b2fee884d342d19ed62904dd3f56a4c92497dbe744002e4b05c",
+    "preflight": {
+      "kind": "csv",
+      "readable": true,
+      "encoding": "gb18030",
+      "rows": 234,
+      "max_columns": 8,
+      "sample_header": [
+        "[CC] 0.785000mA",
+        ""
+      ],
+      "errors": []
+    }
+  },
+  {
+    "basename": "CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+    "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+    "repo_relative_path": "测试集相关文件/器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+    "extension": ".csv",
+    "size_bytes": 17927,
+    "mime_type": "text/csv",
+    "sha256": "5f57238b6b8fdcada37d892d573e6c888357e49db8b94d5901b3e0be5d0f9ab1",
+    "preflight": {
+      "kind": "csv",
+      "readable": true,
+      "encoding": "gb18030",
+      "rows": 234,
+      "max_columns": 8,
+      "sample_header": [
+        "[CC] 0.785000mA",
+        ""
+      ],
+      "errors": []
+    }
+  },
+  {
+    "basename": "CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+    "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+    "repo_relative_path": "测试集相关文件/器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+    "extension": ".csv",
+    "size_bytes": 17927,
+    "mime_type": "text/csv",
+    "sha256": "e1a17f5e670d5c3823c56767ea550a70c0b197e456f41a63a8b842cf3666b330",
+    "preflight": {
+      "kind": "csv",
+      "readable": true,
+      "encoding": "gb18030",
+      "rows": 234,
+      "max_columns": 8,
+      "sample_header": [
+        "[CC] 0.785000mA",
+        ""
+      ],
+      "errors": []
+    }
+  },
+  {
+    "basename": "TE-SHB-96测试原始数据.xlsx",
+    "relative_path": "器件IVL-LT数据样本/TE-SHB-96测试原始数据.xlsx",
+    "repo_relative_path": "测试集相关文件/器件IVL-LT数据样本/TE-SHB-96测试原始数据.xlsx",
+    "extension": ".xlsx",
+    "size_bytes": 8586277,
+    "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "sha256": "4d91710eb382b989b63db37123cb8a4ffc3398fa7c8ba9b44ccae2f892bea71b",
+    "preflight": {
+      "kind": "xlsx",
+      "readable": true,
+      "sheets": [
+        {
+          "name": "IVL-12-P1",
+          "max_row": 427,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-12-P2",
+          "max_row": 427,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-12-P3",
+          "max_row": 427,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-12-P4",
+          "max_row": 428,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-13-P3",
+          "max_row": 430,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-14-P2",
+          "max_row": 426,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-15-P1",
+          "max_row": 426,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-15-P2",
+          "max_row": 426,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-15-P3",
+          "max_row": 426,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-15-P4",
+          "max_row": 426,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-17-P2",
+          "max_row": 427,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-17-P4",
+          "max_row": 427,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-18-P1",
+          "max_row": 427,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-18-P2",
+          "max_row": 428,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-18-P3",
+          "max_row": 427,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-18-P4",
+          "max_row": 427,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-19-P3",
+          "max_row": 428,
+          "max_column": 30
+        },
+        {
+          "name": "IVL-20-P1",
+          "max_row": 426,
+          "max_column": 30
+        }
+      ]
+    }
+  }
+]

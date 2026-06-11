@@ -1,0 +1,53 @@
+{
+  "case_id": "EL260529F-0012",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 14,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "ijp-blue-material-advisor",
+  "skill_description": "IJP 蓝光 OLED 材料设计与优化建议。",
+  "user_query": "如何设计BH分子，帮助溶液法IJP OLED的EML中的BD分子获得更高水平取向度？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "可以从 BH 主体分子的“形状、刚性、极性、相容性、成膜动力学” 去设计，让 BD 在 IJP-EML 中更容易以“躺平”方式取向。核心不是单纯提高 BH 的 Tg，而是让 BD 在干燥成膜过程中受到一个有利于水平排列的局部环境。\n\n1. BH 分子形状：优先设计“扁平/盘状/短棒状”主体\n\nBD 水平取向通常受周围基质的各向异性约束影响。BH 如果本身是完全球形、强扭曲、无方向性的三维结构，对 BD 的取向诱导较弱。\n\n建议 BH 具备：\n刚性芳香骨架；\n较高长宽比或盘状结构；\n分子厚度不要太大；\n避免过度 spiro/四面体化导致局部环境各向同性。\n较优方向：\n蒽、芴、咔唑、二苯并呋喃、二苯并噻吩等刚性芳香单元组合；\n非完全共平面，但要有明确主平面；\n主体分子自身倾向水平堆积，可带动 BD 水平取向。\n2. BH 刚性：提高玻璃态下的取向冻结能力\n\nIJP 成膜过程中，BD 在溶剂挥发末期仍有一定构象/取向重排空间。BH 如果太软，薄膜干燥后局部环境容易无序化。\n\nBH 应该：\n高 Tg；\n高构象刚性；\n低自由体积塌缩；\n干燥过程中不强烈结晶。\n但要注意：\n刚性太高 + 溶解性差 会导致 IJP 膜质变差、pin point 或相分离，反而降低器件性能。\n\n3. BH–BD 相互作用：中等相容，不要强 CT/强偶极束缚\n\n想让 BD 水平取向提高，BH 需要“托住”BD，而不是强烈拉扯 BD。\n\n建议：\nBH 与 BD 有适度 π–π / CH–π 相互作用；\n极性不要太强；\n避免强 donor–acceptor 相互作用导致 BD 局部 CT 态增强；\n避免 BH 上强偶极基团随机取向，打乱 BD 的跃迁偶极取向。\n如果 BH 与 BD 相互作用太弱：BD自聚集，形成 excimer/肩峰。\n如果太强：BD 构象被扭曲，FWHM 变宽、PLQY 下降、取向不一定更好。\n\n4. BH 能级和电荷陷阱：不要为了取向牺牲电荷平衡\n\nBH 设计不能只看取向。对蓝光 EML，BH 还要保证：\nTriplet energy 足够高，避免反向能量转移；\nHOMO/LUMO 与 BD、sensitizer 或 transport 层匹配；\n不形成过强空穴/电子陷阱；\n不把复合区推到界面。\n否则即使 BD 水平取向提高，器件也可能表现为：\n电压升高；\nroll-off 变差；\nLT95 下降；\n界面淬灭增强。\n5. 溶液法/IJP 特有设计：BH 要控制干燥过程中的分子排列\n\nIJP 和蒸镀不同，BH 还要影响液滴干燥、溶剂挥发和相分离。\n\n建议 BH 具备：\n良好溶解性，但不过度柔性烷基化；\n与 BD、sensitizer 溶解参数接近；\n干燥过程中不先析出；\n不诱导 BD 向表面或边缘富集；\n可形成均匀 amorphous film。\n取代基建议：\n可用短支链烷基、芳基、环烷基改善溶解性；\n避免长直链烷基过多，否则膜软、取向冻结差；\n避免强极性柔性链过多，否则残留溶剂和形貌风险增加。\n6. 结构设计方向\n\n我会优先考虑这几类 BH：\n\n方向 A：刚性芳香平面型 BH\n\n目标：提高局部各向异性，诱导 BD 水平排列。\n\n结构特征：\n蒽/芴/二苯并呋喃/二苯并噻吩为核心；\n两侧接芳基或咔唑类单元；\n保持一定扭转，避免结晶；\n分子整体有明显主平面。\n优点：有利于取向、PLQY、能量传递。\n风险：溶解性、结晶、IJP 膜均匀性要控制。\n\n方向 B：弱三维但保留主平面的 BH\n\n目标：兼顾高取向和抗聚集。\n结构特征：\n主骨架较刚性；\n外围引入 ortho-alkyl、cycloalkyl 或 bulky aryl；\n让 BH 不强 π–π 堆积，但仍有主平面方向。\n优点：降低相分离和结晶风险。\n风险：外围太 bulky 会削弱对 BD 的取向诱导。\n\n方向 C：BH 混合体系\n\n用两种 BH 协同：\nBH1：刚性、平面、诱导取向；\nBH2：高 Tg、抗结晶、改善成膜；\nBD 分散在 BH1/BH2 形成的稳定 amorphous matrix 中。\n这个对 IJP 比单一 BH 更现实，因为单一材料很难同时满足取向、溶解、膜质、能级和寿命。\n\n7. 不建议的 BH 设计\n\n尽量避免：\n过度球形化的主体；\n大量 spiro/四面体结构导致各向同性太强；\n长烷基链太多，膜太软；\n强极性基团过多，导致溶剂残留和局部场扰动；\n与 BD 形成强 CT 复合的 donor/acceptor 组合；\n过度平面导致结晶或 BD 聚集。\n推荐验证 DOE\n\n建议做一个小矩阵：\nBH 分子形状：平面型 / 半扭曲型 / 三维型；\nBH Tg：中 / 高；\nBH:BD 相容性：弱 / 中 / 强；\nBD 掺杂浓度：低 / 中 / 高；\n溶剂挥发速率：快 / 中 / 慢。\n关键表征：\n角分辨 PL 或 p-polarized/s-polarized PL，提取水平取向比例 Θh；\n薄膜 PLQY；\nFWHM / CIEy / 长波肩峰；\nGIWAXS 看主体取向和聚集；\nAFM/SEM 看膜形貌；\nToF-SIMS 或深度 PL 看 BD 是否垂直分布不均；\n器件 EQE、roll-off、LT95、J-V-L。\n一句话结论：\nBH 要帮助 BD获得更高水平取向，最优设计不是“越平越好”，而是 刚性主平面 + 适度扭转防结晶 + 中等 BH–BD 相互作用 + 高 Tg 冻结取向 + IJP 友好成膜性。对于印刷蓝光，我更推荐先做 平面诱导型 BH + 抗结晶辅助 BH 的混合主体体系，比单一极端平面 BH 更稳。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "ijp-blue-material-advisor"
+        ],
+        "step_type": "skill"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "ijp-blue-material-advisor",
+    "Tool": "无",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0012"
+}

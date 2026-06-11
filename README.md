@@ -43,12 +43,12 @@ flowchart TD
   Y --> Z["一次性 rubric 合成输入<br/>d3_rubric_inputs.json"]
   Z --> AA["LLM 合成 + 人工复核<br/>fixed_d3_rubrics.json"]
 
-  J --> L["准备每条 case 的 workspace<br/>prepare-workspaces"]
+  J --> L["准备 portable execution bundle<br/>prepare-execution-bundle"]
   D --> L
-  L --> M["workspaces/&lt;case_id&gt;/<br/>case_spec.json + prompt.txt + inputs/"]
-  L --> N["执行清单骨架<br/>run_manifest.json"]
+  L --> M["execution_bundle/workspaces/&lt;case_id&gt;/<br/>case_spec.json + prompt.txt"]
+  L --> N["portable 执行清单<br/>execution_bundle/run_manifest.json"]
 
-  M --> O["真实 Agent 执行<br/>待接入"]
+  M --> O["真实 Agent 执行<br/>run-agent 自动 materialize inputs"]
   N --> O
   O --> P["标准 trajectory<br/>必须包含 case_id"]
 
@@ -181,16 +181,18 @@ flowchart TD
 
 输入形式：
 
-- 每条 case 的 workspace。
+- 每条 case 的 portable workspace。
 - `prompt.txt`。
-- `inputs/` 中复制好的附件。
+- repo 中的原始附件目录 `测试集相关文件/`。
 - `run_manifest.json` 中的 `case_id` / `run_id`。
 - 一条开发同事提供的 EL Agent / OpenClaw 启动命令。
 
 处理逻辑：
 
-- `run-agent` 会逐条读取 `run_manifest.json`。
-- 每条 case 在自己的 workspace 下执行，命令的工作目录就是 `outputs/pipeline/workspaces/<case_id>/`。
+- `run-agent` 会逐条读取 `execution_bundle/run_manifest.json`。
+- bundle 中默认不提交重复附件副本，因此每条 case 执行前，runner 会根据 `case_spec.json` 中的 `original_relative_path` 自动把附件复制到当前 workspace 的 `inputs/`。
+- runner 会生成运行时 `runtime_case_spec.json`，其中包含 materialized 后的 `sandbox_path`、`sandbox_relative_path` 和 sha256；外部命令拿到的 `EL_EVAL_CASE_SPEC` 指向这个运行时文件。
+- 每条 case 在自己的 workspace 下执行，命令的工作目录就是 `execution_bundle/workspaces/<case_id>/`。
 - runner 会通过环境变量把执行上下文传给外部命令：
   - `EL_EVAL_CASE_ID`
   - `EL_EVAL_RUN_ID`
@@ -228,7 +230,7 @@ flowchart TD
 
 ```bash
 PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent \
-  --manifest outputs/pipeline/run_manifest.json \
+  --manifest execution_bundle/run_manifest.json \
   --output outputs/pipeline/trajectories.jsonl \
   --command 'python /path/to/openclaw_runner.py --case-spec "$EL_EVAL_CASE_SPEC" --prompt "$EL_EVAL_PROMPT_PATH" --output "$EL_EVAL_AGENT_OUTPUT"'
 ```
@@ -351,6 +353,14 @@ PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent \
 - `parsed_vllm_calls.jsonl`：从历史 vLLM SSE 日志重建出的模型调用记录。
 - `evaluation_results.jsonl` 与 `evaluation_summary.json`：当前已实现 evaluator 的输出。如果没有真实的 `case_id -> trajectory` 映射，相关维度会明确标记为 blocked，而不是猜测评分。
 
+portable 执行包目录：`execution_bundle/`。
+
+- `execution_bundle/cases.jsonl`：可跨机器使用的标准化 case，不包含本机绝对附件路径。
+- `execution_bundle/run_manifest.json`：开发同事直接用于 `run-agent` 的执行清单。
+- `execution_bundle/workspaces/<case_id>/prompt.txt`：每题 prompt。
+- `execution_bundle/workspaces/<case_id>/case_spec.json`：每题执行规格，附件通过 `original_relative_path` 指向 repo 内的 `测试集相关文件/`。
+- `execution_bundle/workspaces/<case_id>/inputs/`：不入库，`run-agent` 在目标机器执行前自动生成。
+
 ## 常用命令
 
 ```bash
@@ -359,18 +369,22 @@ PYTHONPATH=src python3 -m el_eval_pipeline.cli prepare-workspaces
 PYTHONPATH=src python3 -m el_eval_pipeline.cli parse-sessions
 PYTHONPATH=src python3 -m el_eval_pipeline.cli parse-vllm
 PYTHONPATH=src python3 -m el_eval_pipeline.cli prepare-d3-rubric-inputs
+PYTHONPATH=src python3 -m el_eval_pipeline.cli prepare-execution-bundle
 PYTHONPATH=src python3 -m el_eval_pipeline.cli summarize-d3-rubrics --d3-rubrics path/to/fixed_d3_rubrics.json
-PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent --command 'python /path/to/openclaw_runner.py'
+PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent --manifest execution_bundle/run_manifest.json --command 'python /path/to/openclaw_runner.py'
 PYTHONPATH=src python3 -m el_eval_pipeline.cli evaluate
 ```
 
-跨机器运行时，建议开发同事 clone repo 后在目标机器重新执行：
+跨机器运行时，开发同事 clone repo 后可以直接执行：
 
 ```bash
-PYTHONPATH=src python3 -m el_eval_pipeline.cli run-all --output-dir outputs/pipeline
+PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent \
+  --manifest execution_bundle/run_manifest.json \
+  --output outputs/pipeline/trajectories.jsonl \
+  --command 'python /path/to/openclaw_runner.py --case-spec "$EL_EVAL_CASE_SPEC" --prompt "$EL_EVAL_PROMPT_PATH" --output "$EL_EVAL_AGENT_OUTPUT"'
 ```
 
-当前输出会尽量记录 repo 相对路径，例如 `workspace_repo_relative_path`、`prompt_repo_relative_path`、`original_relative_path`。`absolute_path` / `workspace_path` 只作为当前机器调试辅助，不应作为跨机器接口依赖。
+只有在筛选后 Excel 或附件发生变化时，才需要重新执行 `prepare-execution-bundle`。portable bundle 使用 repo 相对路径，例如 `workspace_repo_relative_path`、`prompt_repo_relative_path`、`original_relative_path`，不依赖本机绝对路径。
 
 如果使用当前目录下的 `synthesize_rubrics.py` 合成 D3 rubrics，可以把 `outputs/pipeline/d3_rubric_inputs.json` 作为输入：
 

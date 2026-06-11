@@ -1,0 +1,39 @@
+{
+  "case_id": "EL260529F-0030",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 32,
+  "task_type": "单任务",
+  "requires_skill": false,
+  "skill_name": "",
+  "skill_description": "",
+  "user_query": "蓝光 OLED 器件是否可以取消 L-aging / electrical aging？应该如何判断 aging 带来的寿命、稳定性和良率收益，是否值得用效率损失、产线时间和部分寿命消耗来交换？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "这个问题建议不要简单问“要不要 aging”，而是转成一个量化判据：\n\naging 损失的效率，是否换来了足够大的寿命、稳定性和量产良率收益。\n\n我会这样拆：\n\n1）aging 的本质收益\n\n蓝光 L-aging / electrical aging 通常是在出厂前提前消耗掉器件的早期不稳定阶段，可能带来：\n\n初期亮度衰减变缓\nLT95 / LT97 表观提升\n电压、色点、亮度更稳定\n剔除早期失效点，降低 mura / dark spot / burn-in 风险\n\n代价是：\n\n初始 EQE / CE / PE 损失\n电压可能上升\nCIE 可能漂移\n产线时间和能耗增加\n实际上消耗了一部分可用寿命\n\n所以 aging 不是“提升材料性能”，而是用效率和初期寿命换稳定性。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": null,
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "",
+    "数据库状态": "",
+    "工具产物": "",
+    "禁止状态": "",
+    "Skill": "",
+    "Tool": "",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0030"
+}

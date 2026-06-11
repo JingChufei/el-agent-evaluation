@@ -26,6 +26,13 @@ env/
 # Generated pipeline outputs
 outputs/
 
+# Runtime artifacts produced when executing the portable bundle
+execution_bundle/workspaces/*/inputs/
+execution_bundle/workspaces/*/agent_output.json
+execution_bundle/workspaces/*/agent_stdout.log
+execution_bundle/workspaces/*/agent_stderr.log
+execution_bundle/workspaces/*/runtime_case_spec.json
+
 # Historical/debug logs are large and not part of the portable runner package
 sessions/
 openclaw_vllm_request.json

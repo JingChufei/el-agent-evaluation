@@ -1,0 +1,53 @@
+{
+  "case_id": "EL260529F-0013",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 15,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "ijp-blue-oled-rca",
+  "skill_description": "IJP/溶液法蓝光 OLED 器件失效与性能根因分析。",
+  "user_query": "相同一套材料体系下，蓝光 TOP emission 器件比 bottom emission器件的J25 寿命低 30-40% 的原因可能是什么？",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "结论先说：最可能不是材料本征差，而是 TOP 结构引入的电极界面、微腔、电荷平衡和热效应共同导致蓝光 EML 加速老化。\n\n我会把贡献拆成：\nTOP 半透明阴极沉积损伤 / 金属扩散：25–35%\nTOP 微腔导致复合区与光场分布改变：20–30%\n电荷平衡变化，复合区靠近界面：20–25%\nTOP 器件功耗与热管理差异：10–15%\nCPL / 封装 / 顶电极稳定性影响：5–10%\n合计约 100%。\n1. TOP 半透明阴极沉积损伤 / 金属扩散：25–35%\n\nTOP emission 通常需要在有机层上方蒸镀半透明阴极和 CPL。相比 bottom emission，TOP 对上电极界面更敏感。\n\n可能机制：\nAg、Mg:Ag、Al/Ag 等金属原子向 ETL/EIL 甚至 EML 渗透；\n阴极蒸镀高能粒子损伤有机层；\n半透明阴极成膜不连续，形成局部高场点；\nEIL/ETL 被金属污染后形成陷阱；\n蓝光高能激子更容易被界面缺陷淬灭。\n验证特征：\nTOP 初始电压偏高；\n漏电或低电流区 J-V 异常；\n老化后暗点/局部失效增加；\n增加保护层、加厚 EIL/ETL 后寿命恢复；\n更温和阴极沉积条件下寿命改善。\n2. 微腔导致复合区/光场分布变化：20–30%\n\nTOP emission 是强微腔结构。即使材料相同，光学环境和发光区位置也不同。\n\n可能机制：\nEML 内光场峰值位置改变；\n发光区靠近金属半透明阴极，metal quenching 增强；\nPurcell effect 改变辐射/非辐射竞争；\nplasmon loss 增强；\n局部光热或高激子密度区域加剧老化。\n特别是蓝光能量高，靠近金属或界面时更容易发生非辐射损耗和界面降解。\n\n验证特征：\n改变 spacer 厚度后，TOP 寿命明显变化；\nEL 光谱随角度变化明显；\nTOP 的光谱峰位/FWHM/CIEy 与 bottom 明显不同；\n模拟得到发光区与光场峰值或金属界面距离不匹配。\n3. 电荷平衡变化，复合区靠近界面：20–25%\n\n虽然材料体系相同，但 TOP 和 bottom 的厚度设计通常不同。厚度变化会改变电场、电荷传输和复合区位置。\n\n可能机制：\nHTL/ETL 厚度为配合微腔被调整；\n电子/空穴平衡被破坏；\n复合区变窄；\n复合区靠近 HTL/EML 或 EML/ETL 界面；\n局部 exciton-polaron quenching、TTA/TPA 增强；\n蓝光 emitter、sensitizer 或 host 局部老化加速。\n验证特征：\nTOP roll-off 更严重；\nJ25 下 EQE 或 CE 下降更快；\n老化后 EL 光谱出现长波肩峰或界面发光；\n改 ETL/HTL 厚度、电荷传输层迁移率后寿命有明显响应。\n4. 功耗和热管理差异：10–15%\n\nJ25 是固定电流密度测试。如果 TOP 器件电压更高，则同样 J25 下功耗更高：\n\nP ≈ J × V\n\n即使电压只高 0.2–0.5 V，也可能导致蓝光 EML 局部温升和寿命下降。\n\n可能机制：\nTOP 半透明电极片阻较高；\nCPL/阴极结构导致散热路径变化；\n电荷注入差导致驱动电压升高；\n高温加速 host、BD、sensitizer 或界面降解。\n验证特征：\nTOP J25 电压明显高于 bottom；\n同 J 下 TOP 表面温升更高；\n等功耗或等亮度测试时寿命差距缩小；\n加强电极导电性或降低电压后寿命改善。\n5. CPL / 顶电极 / 封装稳定性影响：5–10%\n\nTOP emission 多了 CPL 和半透明电极组合，可能引入额外不稳定因素。\n\n可能机制：\nCPL 与阴极界面反应；\nCPL 吸收蓝光或导致局部热；\n顶电极表面粗糙度/连续性差；\n封装后水氧路径不同；\n顶部膜层应力导致微裂纹或暗点。\n验证特征：\n更换 CPL 后寿命大幅变化；\n不同 Ag 厚度或 CPL 厚度寿命差异明显；\n封装前后或高温高湿后 TOP 衰减更快。\n建议的验证 DOE\n\n第一组：确认是否是电极界面问题\n变量：EIL/ETL 厚度、阴极前保护层、Ag 厚度、蒸镀速率；\n响应：J25 电压、LT95/LT97、漏电、暗点、EQE roll-off；\n判断：如果加保护层或降低金属损伤后寿命恢复，主因就是 top cathode damage / diffusion。\n第二组：确认是否是复合区位置问题\n变量：HTL/ETL 厚度、B-prime/EBL/HBL 厚度、EML 中 ET/HT 比例；\n响应：EL 光谱、roll-off、老化光谱、J-V-L；\n判断：如果寿命随电荷平衡调节强烈变化，主因是 RZ 偏移或界面复合。\n第三组：确认是否是微腔/金属近场问题\n变量：EML 到 top cathode 距离、optical spacer 厚度、CPL 厚度；\n响应：EQE、EL spectrum、角度光谱、LT；\n判断：如果电学相近但寿命随 optical spacer 明显变化，说明光学腔/金属近场贡献大。\n第四组：确认热效应\n对比同 J25、同 L0、同功耗三种寿命；\n记录 J25 电压和表面温升；\n判断：如果同功耗下寿命 gap 缩小，热是重要贡献。\n最关键的判据\n\n不要只比较 J25 寿命，建议同时比较：\nJ25 电压；\nJ25 初始亮度；\n等亮度寿命；\n等功耗寿命；\n老化前后 EL 光谱；\nEQE roll-off；\n暗点/漏电变化；\nTOP/bottom 的实际 EML 到阴极距离。\n最终判断\n\n如果 TOP 蓝光 J25 寿命比 bottom 低 30–40%，我会优先排查：\n\ntop cathode 沉积损伤/金属扩散 ＞ 微腔与金属近场效应 ＞ 电荷平衡和复合区偏移 ＞ 功耗热效应 ＞ CPL/封装稳定性。\n\n也就是说，这更像是 TOP 器件结构带来的界面 + 光学 + 电学耦合失效，而不是“同一套蓝光材料本身在 TOP 里天然寿命差”。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "ijp-blue-oled-rca"
+        ],
+        "step_type": "skill"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "ijp-blue-oled-rca",
+    "Tool": "无",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0013"
+}

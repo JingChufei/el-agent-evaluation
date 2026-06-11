@@ -1,0 +1,125 @@
+{
+  "case_id": "EL260529F-0020",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 22,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "lt-lifetime-plotter",
+  "skill_description": "生成寿命、LT95、亮度衰减、电压变化曲线。",
+  "user_query": "请对比分析这两个器件的LT曲线数据",
+  "input_file_cell": "CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv\n\nCH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+  "attachments": [
+    {
+      "name": "CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "original_relative_path": "测试集相关文件/器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "mime_type": "text/csv",
+      "extension": ".csv",
+      "size_bytes": 17927,
+      "sha256": "5f57238b6b8fdcada37d892d573e6c888357e49db8b94d5901b3e0be5d0f9ab1",
+      "preflight": {
+        "kind": "csv",
+        "readable": true,
+        "encoding": "gb18030",
+        "rows": 234,
+        "max_columns": 8,
+        "sample_header": [
+          "[CC] 0.785000mA",
+          ""
+        ],
+        "errors": []
+      },
+      "source_token": "CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "sandbox_repo_relative_path": "execution_bundle/workspaces/EL260529F-0020/inputs/CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "sandbox_relative_path": "inputs/CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "materialized": false
+    },
+    {
+      "name": "CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "original_relative_path": "测试集相关文件/器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "mime_type": "text/csv",
+      "extension": ".csv",
+      "size_bytes": 17927,
+      "sha256": "e1a17f5e670d5c3823c56767ea550a70c0b197e456f41a63a8b842cf3666b330",
+      "preflight": {
+        "kind": "csv",
+        "readable": true,
+        "encoding": "gb18030",
+        "rows": 234,
+        "max_columns": 8,
+        "sample_header": [
+          "[CC] 0.785000mA",
+          ""
+        ],
+        "errors": []
+      },
+      "source_token": "CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "sandbox_repo_relative_path": "execution_bundle/workspaces/EL260529F-0020/inputs/CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "sandbox_relative_path": "inputs/CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "materialized": false
+    }
+  ],
+  "attachment_errors": [],
+  "reference_answer": "",
+  "answer_image": "",
+  "target_state": {
+    "required_files": [
+      {
+        "path": "{input_path.stem}_IVL曲线.xlsx",
+        "must_exist": true,
+        "source": "file_state"
+      }
+    ],
+    "required_db_states": [],
+    "required_tool_artifacts": [],
+    "forbidden_states": []
+  },
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "lt-lifetime-plotter"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "process_lt_data.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": true,
+  "expected_answer": null,
+  "d3_candidate": false,
+  "d3_priority": "not_applicable",
+  "raw_annotations": {
+    "文件状态": "{input_path.stem}_IVL曲线.xlsx",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "lt-lifetime-plotter",
+    "Tool": "process_lt_data.py",
+    "是否可明确匹配的": "是",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [
+    "d2_expected_answer_missing"
+  ],
+  "evaluable_dimensions": [
+    "D1",
+    "D2",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0020"
+}

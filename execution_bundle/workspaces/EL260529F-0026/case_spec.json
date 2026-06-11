@@ -1,0 +1,61 @@
+{
+  "case_id": "EL260529F-0026",
+  "source_file": "EL Agent测试集_260529_筛选后.xlsx",
+  "source_sheet": "Sheet1",
+  "source_row": 28,
+  "task_type": "单任务",
+  "requires_skill": true,
+  "skill_name": "molecular-structure-generator",
+  "skill_description": "调用分子生成模型根据约束条件生成OLED分子",
+  "user_query": "请根据以下分子和条件，生成5个新的分子。\n“c1ccc(N2c3ccccc3B3c4ccccc4N(c4ccccc4)c4cccc2c43)cc1”；\"HOMO\": -5.4,\n\"LUMO\": -2.45,\n\"S1\": 2.74,\n\"T1\": 2.93",
+  "input_file_cell": "",
+  "attachments": [],
+  "attachment_errors": [],
+  "reference_answer": "已基于原始 B/N 多重共振骨架生成 5 个候选分子，并用 RDKit 做了 SMILES 可解析校验。注意：下面的 HOMO/LUMO/S1/T1 只是设计趋势判断，精确值需要 DFT/TD-DFT 计算确认；另外你给的 T1 = 2.93 eV > S1 = 2.74 eV 比较反常，后续建议重点复核计算方法或态标记。\n\n母体设计逻辑：\n保留核心 MR 骨架，只改外围 N-aryl 苯环取代基，用 F / CF3 / tBu / Me 调控能级、刚性、溶解性和聚集行为。\nM1｜单氟取代，轻度降低 HOMO\n\nSMILES：\nFc1ccc(N2c3ccccc3B3c4ccccc4N(c4ccccc4)c4cccc2c43)cc1\n\n设计目的：\nF 轻微吸电子，预计 HOMO 略降；\n对 S1/T1 扰动较小；\n可作为接近母体能级的低风险改造。\nFormula / MW / clogP：C30H20BFN2 / 438.31 / 5.91\nM2｜CF3 取代，增强吸电子、降低 LUMO\n\nSMILES：\nc1ccc(N2c3ccccc3B3c4ccccc4N(c4ccc(C(F)(F)F)cc4)c4cccc2c43)cc1\n\n设计目的：\nCF3 可明显拉低 LUMO，同时降低 HOMO；\n可能提高电子稳定性；\n但需关注发射是否蓝移过多、分子量和疏水性增加。\nFormula / MW / clogP：C31H20BF3N2 / 488.32 / 6.79\nM3｜双叔丁基取代，提高溶解性并抑制聚集\n\nSMILES：\nCC(C)(C)c1cc(C(C)(C)C)cc(N2c3ccccc3B3c4ccccc4N(c4ccccc4)c4cccc2c43)c1\nAgent: main | Model: gpt-5.5 | Provider: openai\n设计目的：\ntBu 增大空间位阻，降低 π-π 堆积和 excimer 风险；\n提升溶解性，适合 IJP/湿法工艺；\n预计 HOMO 略升，S1 可能轻微红移。\nFormula / MW / clogP：C38H37BN2 / 532.54 / 8.36\nM4｜双芳环多氟化，偏深蓝/高稳定方向\n\nSMILES：\nFc1cc(F)cc(N2c3ccccc3B3c4ccccc4N(c4cc(F)cc(F)c4)c4cccc2c43)c1\n\n设计目的：\n多 F 取代整体降低 HOMO/LUMO；\n有利于降低 HOMO 至接近 -5.4 eV 或更深；\n预计 S1/T1 保持较高，适合作为深蓝候选；\n需关注薄膜中取向和 PLQY。\nFormula / MW / clogP：C30H17BF4N2 / 492.28 / 6.33\nM5｜双芳环二甲基取代，提升位阻与成膜性\n\nSMILES：\nCc1cc(C)cc(N2c3ccccc3B3c4ccccc4N(c4cc(C)cc(C)c4)c4cccc2c43)c1\n\n设计目的：\nMe 提供温和给电子和空间位阻；\n有助于抑制聚集、改善湿法成膜；\n预计 HOMO 略升，LUMO 变化较小；\n可作为兼顾溶解性和窄谱发射的候选。\nFormula / MW / clogP：C34H29BN2 / 476.43 / 7.00\n我建议优先级：\nM4：最贴近高 S1/T1、深蓝和低 HOMO 方向。\nM1：低风险微调，适合作为对照。\nM5：适合 IJP 成膜和抗聚集验证。\nM3：溶解性/抗聚集强，但\nAgent: main | Model: gpt-5.5 | Provider: openai\nclogP 偏高。\n5. M2：电子效应强，值得算，但需小心过度吸电子导致发光性质变化。",
+  "answer_image": "",
+  "target_state": null,
+  "gold_chain": {
+    "stages": [
+      {
+        "type": "unordered",
+        "steps": [
+          "molecular-structure-generator"
+        ],
+        "step_type": "skill"
+      },
+      {
+        "type": "unordered",
+        "steps": [
+          "analyze_generated_smiles.py",
+          "client_mol_gen.py"
+        ],
+        "step_type": "tool"
+      }
+    ],
+    "forbidden": [],
+    "allow_extra": true,
+    "recovery_window": 3
+  },
+  "d2_enabled": false,
+  "expected_answer": null,
+  "d3_candidate": true,
+  "d3_priority": "primary",
+  "raw_annotations": {
+    "文件状态": "无",
+    "数据库状态": "无",
+    "工具产物": "无",
+    "禁止状态": "无",
+    "Skill": "molecular-structure-generator",
+    "Tool": "analyze_generated_smiles.py\nclient_mol_gen.py",
+    "是否可明确匹配的": "否",
+    "若是，答案是什么": ""
+  },
+  "annotation_status": [],
+  "evaluable_dimensions": [
+    "D3",
+    "D4",
+    "D5",
+    "D8"
+  ],
+  "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0026"
+}

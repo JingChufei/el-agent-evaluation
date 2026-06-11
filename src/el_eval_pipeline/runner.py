@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import shlex
 import subprocess
 import time
@@ -73,6 +74,34 @@ def _render_command_template(template: str, values: dict[str, str]) -> str:
     for key, value in values.items():
         command = command.replace("{" + key + "}", shlex.quote(value))
     return command
+
+
+def _materialize_attachments(case: dict[str, Any], workspace: Path, repo_root: Path) -> dict[str, Any]:
+    attachments: list[dict[str, Any]] = []
+    for attachment in case.get("attachments", []):
+        source = resolve_repo_path(attachment.get("original_relative_path"), repo_root)
+        if source is None:
+            source = Path(attachment["original_path"])
+        if not source.exists():
+            raise FileNotFoundError(f"attachment source not found for {case['case_id']}: {source}")
+
+        sandbox_relative_path = attachment.get("sandbox_relative_path") or f"inputs/{attachment['name']}"
+        dest = workspace / sandbox_relative_path
+        ensure_dir(dest.parent)
+        if not dest.exists() or sha256_file(dest) != attachment.get("sha256"):
+            shutil.copy2(source, dest)
+
+        materialized = {
+            **attachment,
+            "original_relative_path": as_posix_relative(source, repo_root),
+            "sandbox_path": str(dest.resolve()),
+            "sandbox_repo_relative_path": as_posix_relative(dest, repo_root),
+            "sandbox_relative_path": dest.relative_to(workspace).as_posix(),
+            "sandbox_sha256": sha256_file(dest),
+            "materialized": True,
+        }
+        attachments.append(materialized)
+    return {**case, "workspace_path": str(workspace.resolve()), "attachments": attachments}
 
 
 def _normalize_trajectory(
@@ -151,7 +180,9 @@ def run_agent_cases(
         workspace = resolve_repo_path(manifest_row.get("workspace_repo_relative_path"), repo_root) or Path(manifest_row["workspace_path"])
         prompt_path = resolve_repo_path(manifest_row.get("prompt_repo_relative_path"), repo_root) or Path(manifest_row["prompt_path"])
         case_spec_path = resolve_repo_path(manifest_row.get("case_spec_repo_relative_path"), repo_root) or workspace / "case_spec.json"
-        case = _load_json(case_spec_path)
+        case = _materialize_attachments(_load_json(case_spec_path), workspace, repo_root)
+        runtime_case_spec_path = workspace / "runtime_case_spec.json"
+        write_json(runtime_case_spec_path, case)
         prompt = prompt_path.read_text(encoding="utf-8")
         agent_output_path = workspace / "agent_output.json"
         stdout_path = workspace / "agent_stdout.log"
@@ -165,7 +196,7 @@ def run_agent_cases(
                 "EL_EVAL_RUN_ID": str(manifest_row.get("run_id") or ""),
                 "EL_EVAL_WORKSPACE": str(workspace.resolve()),
                 "EL_EVAL_PROMPT_PATH": str(prompt_path.resolve()),
-                "EL_EVAL_CASE_SPEC": str(case_spec_path.resolve()),
+                "EL_EVAL_CASE_SPEC": str(runtime_case_spec_path.resolve()),
                 "EL_EVAL_AGENT_OUTPUT": str(agent_output_path.resolve()),
                 "EL_EVAL_ATTACHMENTS_JSON": json.dumps(case.get("attachments", []), ensure_ascii=False),
             }
@@ -177,7 +208,7 @@ def run_agent_cases(
                 "run_id": str(manifest_row.get("run_id") or ""),
                 "workspace": str(workspace.resolve()),
                 "prompt_path": str(prompt_path.resolve()),
-                "case_spec": str(case_spec_path.resolve()),
+                "case_spec": str(runtime_case_spec_path.resolve()),
                 "agent_output": str(agent_output_path.resolve()),
             },
         )
