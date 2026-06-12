@@ -1,0 +1,19 @@
+{
+  "task_type": "单任务",
+  "user_query": "用这个数据画出LT曲线。",
+  "case_id": "EL260529F-0018",
+  "attachments": [
+    {
+      "size_bytes": 17927,
+      "extension": ".csv",
+      "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH164-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-4-1-CC0.79mA.csv",
+      "mime_type": "text/csv",
+      "sandbox_relative_path": "inputs/CH164-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-4-1-CC0.79mA.csv",
+      "sha256": "341b9775a9037e0632aed1d22402c0a63ded2dd808d73d81fcaccbbfb86fbd65",
+      "source_token": "CH164-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-4-1-CC0.79mA.csv",
+      "name": "CH164-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-4-1-CC0.79mA.csv",
+      "original_relative_path": "attachments/341b9775a903_CH164-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-4-1-CC0.79mA.csv",
+      "materialized": false
+    }
+  ]
+}

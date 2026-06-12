@@ -1,0 +1,19 @@
+{
+  "task_type": "单任务",
+  "user_query": "请帮我总结下面这份报告的主要信息，要求逻辑框架清晰，关键数据充分。",
+  "case_id": "EL260529F-0023",
+  "attachments": [
+    {
+      "size_bytes": 774457,
+      "extension": ".docx",
+      "relative_path": "印刷蓝光OLED材料项目技术开发报告.docx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "sandbox_relative_path": "inputs/印刷蓝光OLED材料项目技术开发报告.docx",
+      "sha256": "5eda6ef6eac4855775632d81ec7ba08966a114be97ad6cdd275adcc8864184f3",
+      "source_token": "印刷蓝光OLED材料项目技术开发报告.docx",
+      "name": "印刷蓝光OLED材料项目技术开发报告.docx",
+      "original_relative_path": "attachments/5eda6ef6eac4_印刷蓝光OLED材料项目技术开发报告.docx",
+      "materialized": false
+    }
+  ]
+}

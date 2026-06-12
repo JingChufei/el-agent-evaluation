@@ -1,0 +1,31 @@
+{
+  "task_type": "单任务",
+  "user_query": "请对比分析这两个器件的LT曲线数据",
+  "case_id": "EL260529F-0020",
+  "attachments": [
+    {
+      "size_bytes": 17927,
+      "extension": ".csv",
+      "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "mime_type": "text/csv",
+      "sandbox_relative_path": "inputs/CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "sha256": "5f57238b6b8fdcada37d892d573e6c888357e49db8b94d5901b3e0be5d0f9ab1",
+      "source_token": "CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "name": "CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "original_relative_path": "attachments/5f57238b6b8f_CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv",
+      "materialized": false
+    },
+    {
+      "size_bytes": 17927,
+      "extension": ".csv",
+      "relative_path": "器件IVL-LT数据样本/20260401-CIC-SHB-96-087 041A-TE/CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "mime_type": "text/csv",
+      "sandbox_relative_path": "inputs/CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "sha256": "e1a17f5e670d5c3823c56767ea550a70c0b197e456f41a63a8b842cf3666b330",
+      "source_token": "CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "name": "CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "original_relative_path": "attachments/e1a17f5e670d_CH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
+      "materialized": false
+    }
+  ]
+}

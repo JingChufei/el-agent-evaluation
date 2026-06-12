@@ -1,0 +1,5 @@
+请根据以下分子和条件，生成5个新的分子。 "c1ccc2c(-c3ccc4c(c3)Sc3c(ccc5ccc6ccccc6c35)O4)cccc2c1“
+"HOMO": -5.20,
+"LUMO": -2.70,
+"S1": 2.93,
+"T1": 2.54

@@ -1,0 +1,19 @@
+{
+  "task_type": "单任务",
+  "user_query": "请将图片中的BD分子式转成SMILES表达式，并进行能级预测。",
+  "case_id": "EL260529F-0001",
+  "attachments": [
+    {
+      "size_bytes": 5787,
+      "extension": ".png",
+      "relative_path": "EL260529F-0001 输入图片.png",
+      "mime_type": "image/png",
+      "sandbox_relative_path": "inputs/EL260529F-0001 输入图片.png",
+      "sha256": "94b59bae57d5ad6d5cdd7bcb9e156e1e3a9e30c729b6e97cced5343504b84b73",
+      "source_token": "EL260529F-0001 输入图片.png",
+      "name": "EL260529F-0001 输入图片.png",
+      "original_relative_path": "attachments/94b59bae57d5_EL260529F-0001 输入图片.png",
+      "materialized": false
+    }
+  ]
+}

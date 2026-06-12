@@ -1,0 +1,2 @@
+请帮我画出这个smiles式对应的分子结构。
+Smiles式：C1=CC=C(C=C1)C2=C3C=CC=CC3=C(C4=C2C=CC=C4)C5=C6C7=C(C8=C(C=CC=C8)C=C7)OC6=CC=C5

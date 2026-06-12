@@ -1,0 +1,19 @@
+{
+  "task_type": "单任务",
+  "user_query": "画出12-P2, 13-P3, 14-P2 的CE-J曲线",
+  "case_id": "EL260529F-0017",
+  "attachments": [
+    {
+      "size_bytes": 8586277,
+      "extension": ".xlsx",
+      "relative_path": "器件IVL-LT数据样本/TE-SHB-96测试原始数据.xlsx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "sandbox_relative_path": "inputs/TE-SHB-96测试原始数据.xlsx",
+      "sha256": "4d91710eb382b989b63db37123cb8a4ffc3398fa7c8ba9b44ccae2f892bea71b",
+      "source_token": "TE-SHB-96测试原始数据.xlsx",
+      "name": "TE-SHB-96测试原始数据.xlsx",
+      "original_relative_path": "attachments/4d91710eb382_TE-SHB-96测试原始数据.xlsx",
+      "materialized": false
+    }
+  ]
+}

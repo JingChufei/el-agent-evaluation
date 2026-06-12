@@ -1,0 +1,19 @@
+{
+  "task_type": "单任务",
+  "user_query": "请分析我接下来上传的一份报告，解释为什么EML 厚度变化没有明显改变发光主体光谱，峰位和半峰宽？",
+  "case_id": "EL260529F-0022",
+  "attachments": [
+    {
+      "size_bytes": 1836856,
+      "extension": ".pptx",
+      "relative_path": "EML膜层厚度对比实验.pptx",
+      "mime_type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "sandbox_relative_path": "inputs/EML膜层厚度对比实验.pptx",
+      "sha256": "126d36943317853ab537b88aa4e0043c6f2029d70e1ca4f38e2ea194cf800698",
+      "source_token": "EML膜层厚度对比实验.pptx",
+      "name": "EML膜层厚度对比实验.pptx",
+      "original_relative_path": "attachments/126d36943317_EML膜层厚度对比实验.pptx",
+      "materialized": false
+    }
+  ]
+}

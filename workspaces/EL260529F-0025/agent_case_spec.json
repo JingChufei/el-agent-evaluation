@@ -1,0 +1,19 @@
+{
+  "task_type": "单任务",
+  "user_query": "针对我即将发送的一份报告，请调用“gh-blend-design-advisor”这个skill进行分析和解读。然后输出⼀个最优绿光 EML 层组合⽅案，表格列出。要求：(1) ⻓寿命⽅案 效率>210 cd/A、LT95@J25>90h；(2) ⾼效率⽅案 效率>240 cd/A、LT95@J25>70h。",
+  "case_id": "EL260529F-0025",
+  "attachments": [
+    {
+      "size_bytes": 3915684,
+      "extension": ".pdf",
+      "relative_path": "02 多组分GH报告.pdf",
+      "mime_type": "application/pdf",
+      "sandbox_relative_path": "inputs/02 多组分GH报告.pdf",
+      "sha256": "0fef14bf9030788063c1a54d9590e286f64a9ac00bcf41dbd737ef078fb904ce",
+      "source_token": "02 多组分GH报告.pdf",
+      "name": "02 多组分GH报告.pdf",
+      "original_relative_path": "attachments/0fef14bf9030_02 多组分GH报告.pdf",
+      "materialized": false
+    }
+  ]
+}

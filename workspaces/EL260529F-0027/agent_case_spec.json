@@ -1,0 +1,6 @@
+{
+  "task_type": "单任务",
+  "user_query": "请根据以下分子和条件，生成5个新的分子。“c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1”\n\"HOMO\": -5.55,\n\"LUMO\": -2.73,\n\"S1\": 3.09,\n\"T1\": 1.65",
+  "case_id": "EL260529F-0027",
+  "attachments": []
+}

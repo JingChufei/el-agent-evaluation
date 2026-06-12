@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "case_count": 35,
+  "attachment_count": 9,
+  "forbidden_keys": [
+    "annotation_status",
+    "answer_image",
+    "d2_enabled",
+    "d3_candidate",
+    "d3_priority",
+    "evaluable_dimensions",
+    "expected_answer",
+    "gold_chain",
+    "raw_annotations",
+    "reference_answer",
+    "reference_artifacts",
+    "supplemental_annotation",
+    "target_state"
+  ],
+  "findings": [],
+  "include_code": true
+}

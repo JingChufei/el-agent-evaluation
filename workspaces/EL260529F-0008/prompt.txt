@@ -1,0 +1,3 @@
+O=C(NCC1=CC=CC=C1)C2=CC=C(N3CCN(C4=CC=CC=C4)CC3)C=C2
+
+这是一个什么分子？
