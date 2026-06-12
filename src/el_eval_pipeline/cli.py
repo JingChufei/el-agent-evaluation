@@ -97,6 +97,7 @@ def cmd_prepare_execution_bundle(args: argparse.Namespace) -> None:
         args.bundle_dir,
         copy_attachments=False,
         portable_paths=True,
+        stable_run_ids=True,
     )
     write_d3_rubric_inputs(cases_path, args.bundle_dir / "d3_rubric_inputs.json")
     print(

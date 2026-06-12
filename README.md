@@ -41,7 +41,7 @@ flowchart TD
   B --> K["数据质量报告<br/>data_quality_report.json"]
   J --> Y["D3 候选导出<br/>D2=否"]
   Y --> Z["一次性 rubric 合成输入<br/>d3_rubric_inputs.json"]
-  Z --> AA["LLM 合成 + 人工复核<br/>fixed_d3_rubrics.json"]
+  Z --> AA["LLM 合成 + 人工复核<br/>rubrics/fixed_d3_rubrics_expert.json"]
 
   J --> L["准备 portable execution bundle<br/>prepare-execution-bundle"]
   D --> L
@@ -352,13 +352,13 @@ Windows 执行机器可使用等价命令，例如 `py -m el_eval_pipeline.cli .
 
 - `prepare-d3-rubric-inputs` 只导出 `d3_candidate=true` 的 case。
 - 输出结构与当前目录下的 `synthesize_rubrics.py` 兼容，包含 `id`、`case_id`、`question`、`reference_answer`、`images`、`rubrics`。
-- 使用 LLM 对 `d3_rubric_inputs.json` 做 rubric 合成后，需要人工复核并固化为 `fixed_d3_rubrics.json`。
+- 使用 LLM 对 `d3_rubric_inputs.json` 做 rubric 合成后，需要人工复核并固化为 `rubrics/fixed_d3_rubrics_expert.json`。
 - 后续每次评测都复用固定 rubrics，不重新抽取。
 
 输出形式：
 
 - `outputs/pipeline/d3_rubric_inputs.json`：一次性 rubric 合成输入。
-- `fixed_d3_rubrics.json`：人工复核后的固定 rubric 文件，路径由评测命令传入。
+- `rubrics/fixed_d3_rubrics_expert.json`：专家复核后的固定 rubric 文件，路径由评测命令传入。
 
 ## 输出产物
 
@@ -403,7 +403,7 @@ PYTHONPATH=src python3 -m el_eval_pipeline.cli parse-vllm
 PYTHONPATH=src python3 -m el_eval_pipeline.cli prepare-d3-rubric-inputs
 PYTHONPATH=src python3 -m el_eval_pipeline.cli prepare-execution-bundle
 PYTHONPATH=src python3 -m el_eval_pipeline.cli prepare-agent-execution-bundle
-PYTHONPATH=src python3 -m el_eval_pipeline.cli summarize-d3-rubrics --d3-rubrics path/to/fixed_d3_rubrics.json
+PYTHONPATH=src python3 -m el_eval_pipeline.cli summarize-d3-rubrics --d3-rubrics rubrics/fixed_d3_rubrics_expert.json
 PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent --manifest agent_execution_bundle/run_manifest.json --command 'python scripts/openclaw_runner.py'
 PYTHONPATH=src python3 -m el_eval_pipeline.cli evaluate
 ```
@@ -424,7 +424,7 @@ PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent \
 ```bash
 python3 synthesize_rubrics.py \
   --input outputs/pipeline/d3_rubric_inputs.json \
-  --output path/to/fixed_d3_rubrics.json \
+  --output path/to/fixed_d3_rubrics_draft.json \
   --base-url http://judge-host/v1 \
   --api-key EMPTY \
   --model qwen3.5_27b
@@ -436,7 +436,7 @@ python3 synthesize_rubrics.py \
 PYTHONPATH=src python3 -m el_eval_pipeline.cli evaluate \
   --cases outputs/pipeline/cases.jsonl \
   --trajectories path/to/trajectories.jsonl \
-  --d3-rubrics path/to/fixed_d3_rubrics.json \
+  --d3-rubrics rubrics/fixed_d3_rubrics_expert.json \
   --d3-judge-base-url http://judge-host/v1 \
   --d3-judge-api-key EMPTY \
   --d3-judge-model qwen3.5_27b \

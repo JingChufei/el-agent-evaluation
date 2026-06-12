@@ -100,7 +100,7 @@
       "case_id": "EL260529F-0023",
       "source_row": 25,
       "skill": "private-document-parser",
-      "user_query": "我将上传一份报告，是关于GH组分变化验证的， 请你帮忙解读和分析，重点指出电压，效率和寿命的差异的原因。",
+      "user_query": "请帮我总结下面这份报告的主要信息，要求逻辑框架清晰，关键数据充分。",
       "d3_priority": "secondary_to_d1"
     },
     {

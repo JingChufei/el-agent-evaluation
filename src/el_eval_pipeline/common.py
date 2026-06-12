@@ -81,7 +81,7 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
 def write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> None:
     ensure_dir(path.parent)
     with path.open("w", encoding="utf-8-sig", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore")
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -91,4 +91,3 @@ def strip_think_blocks(text: str) -> str:
     if "</think>" not in text:
         return text.strip()
     return text.split("</think>", 1)[1].strip()
-

@@ -23,6 +23,7 @@ def prepare_case_workspaces(
     repo_root: Path | None = None,
     copy_attachments: bool = True,
     portable_paths: bool = False,
+    stable_run_ids: bool = False,
 ) -> list[dict[str, Any]]:
     repo_root = repo_root or Path.cwd()
     cases = read_jsonl(cases_path)
@@ -75,7 +76,7 @@ def prepare_case_workspaces(
         prepared_cases.append(prepared_case)
         manifest_row = {
             "case_id": case["case_id"],
-            "run_id": f"run-{case['case_id'].lower()}-{uuid.uuid4().hex[:8]}",
+            "run_id": f"run-{case['case_id'].lower()}" if stable_run_ids else f"run-{case['case_id'].lower()}-{uuid.uuid4().hex[:8]}",
             "workspace_repo_relative_path": as_posix_relative(case_workspace, repo_root),
             "prompt_repo_relative_path": as_posix_relative(case_workspace / "prompt.txt", repo_root),
             "case_spec_repo_relative_path": as_posix_relative(case_workspace / "case_spec.json", repo_root),

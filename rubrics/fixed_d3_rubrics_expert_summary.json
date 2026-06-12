@@ -1,0 +1,173 @@
+{
+  "case_count_with_rubrics": 19,
+  "rubric_count": 94,
+  "cases": [
+    {
+      "case_id": "EL260529F-0010",
+      "rubric_count": 6,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0011",
+      "rubric_count": 4,
+      "categories": [
+        "core",
+        "major"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0012",
+      "rubric_count": 6,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0013",
+      "rubric_count": 6,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0014",
+      "rubric_count": 6,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0022",
+      "rubric_count": 4,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0023",
+      "rubric_count": 4,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0024",
+      "rubric_count": 5,
+      "categories": [
+        "core",
+        "major"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0025",
+      "rubric_count": 6,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0026",
+      "rubric_count": 5,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0027",
+      "rubric_count": 6,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0028",
+      "rubric_count": 5,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0029",
+      "rubric_count": 5,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0030",
+      "rubric_count": 4,
+      "categories": [
+        "core",
+        "major"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0031",
+      "rubric_count": 5,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0032",
+      "rubric_count": 4,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0033",
+      "rubric_count": 4,
+      "categories": [
+        "core",
+        "major"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0034",
+      "rubric_count": 5,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    },
+    {
+      "case_id": "EL260529F-0035",
+      "rubric_count": 4,
+      "categories": [
+        "core",
+        "major",
+        "minor"
+      ]
+    }
+  ]
+}

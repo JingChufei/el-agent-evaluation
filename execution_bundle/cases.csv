@@ -24,7 +24,7 @@ EL260529F-0019,21,lt-lifetime-plotter,True,True,True,True,False,not_applicable,3
 EL260529F-0020,22,lt-lifetime-plotter,True,False,True,True,False,not_applicable,2,d2_expected_answer_missing,请对比分析这两个器件的LT曲线数据
 EL260529F-0021,23,private-document-parser,True,True,True,True,False,not_applicable,1,,请分析请解读接下来上传的这份报告，EML厚度的变化对器件的哪些性能产生了影响。
 EL260529F-0022,24,private-document-parser,False,False,True,True,True,secondary_to_d1,1,,请分析我接下来上传的一份报告，解释为什么EML 厚度变化没有明显改变发光主体光谱，峰位和半峰宽？
-EL260529F-0023,25,private-document-parser,False,False,True,True,True,secondary_to_d1,1,,我将上传一份报告，是关于GH组分变化验证的， 请你帮忙解读和分析，重点指出电压，效率和寿命的差异的原因。
+EL260529F-0023,25,private-document-parser,False,False,True,True,True,secondary_to_d1,1,,请帮我总结下面这份报告的主要信息，要求逻辑框架清晰，关键数据充分。
 EL260529F-0024,26,ijp-blue-oled-rca,False,False,False,True,True,primary,1,,请解读接下来上传的这份报告， 从根因分析的角度，剖析说明厚度变化对BI和寿命变化影响的底层原因。
 EL260529F-0025,27,gh-blend-design-advisor,False,False,False,True,True,primary,1,,针对我即将发送的一份报告，请调用“gh-blend-design-advisor”这个skill进行分析和解读。然后输出⼀个最优绿光 EML 层组合⽅案，表格列出。要求：(1) ⻓寿命⽅案 效率>210 cd/A、LT95@J25>90h；(2) ⾼效率⽅案 效率>240 cd/A、LT95@J25>70h。
 EL260529F-0026,28,molecular-structure-generator,False,False,False,True,True,primary,0,,"请根据以下分子和条件，生成5个新的分子。
