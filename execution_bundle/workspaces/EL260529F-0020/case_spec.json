@@ -98,7 +98,90 @@
     "recovery_window": 3
   },
   "d2_enabled": true,
-  "expected_answer": null,
+  "expected_answer": {
+    "type": "multi_assertion",
+    "raw": "CH167 与 CH168 的 LT 曲线对比：CH167 寿命略优于 CH168；CH167 LT97 约 14.91 h，CH168 LT97 约 13.66 h；CH167 LT95 约 31.46 h，CH168 LT95 约 29.61 h；CH168 的电压上升更大。",
+    "assertions": [
+      {
+        "type": "text_contains_all",
+        "values": [
+          "CH167",
+          "CH168"
+        ],
+        "raw": "回答需要同时提及 CH167 和 CH168。"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "CH167 LT97",
+        "value": 14.91,
+        "unit": "h",
+        "tolerance": {
+          "abs": 0.3,
+          "rel": 0.03
+        },
+        "raw": "CH167 LT97 约 14.91 h"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "CH168 LT97",
+        "value": 13.66,
+        "unit": "h",
+        "tolerance": {
+          "abs": 0.3,
+          "rel": 0.03
+        },
+        "raw": "CH168 LT97 约 13.66 h"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "CH167 LT95",
+        "value": 31.46,
+        "unit": "h",
+        "tolerance": {
+          "abs": 0.5,
+          "rel": 0.03
+        },
+        "raw": "CH167 LT95 约 31.46 h"
+      },
+      {
+        "type": "numeric_contains",
+        "label": "CH168 LT95",
+        "value": 29.61,
+        "unit": "h",
+        "tolerance": {
+          "abs": 0.5,
+          "rel": 0.03
+        },
+        "raw": "CH168 LT95 约 29.61 h"
+      },
+      {
+        "type": "text_contains_any",
+        "values": [
+          "CH167寿命略优",
+          "CH167 寿命略优",
+          "CH167的寿命略优",
+          "CH167 的寿命略优",
+          "CH167衰减更慢",
+          "CH167 衰减更慢",
+          "CH168衰减更快",
+          "CH168 衰减更快"
+        ],
+        "raw": "回答需要指出 CH167 寿命略优或 CH167 衰减更慢。"
+      },
+      {
+        "type": "text_contains_any",
+        "values": [
+          "CH168电压上升更大",
+          "CH168 电压上升更大",
+          "CH168电压升高更明显",
+          "CH168 电压升高更明显",
+          "CH167电压上升更小",
+          "CH167 电压上升更小"
+        ],
+        "raw": "回答需要指出 CH168 电压上升更大或 CH167 电压上升更小。"
+      }
+    ]
+  },
   "d3_candidate": false,
   "d3_priority": "not_applicable",
   "raw_annotations": {
@@ -112,7 +195,8 @@
     "若是，答案是什么": ""
   },
   "annotation_status": [
-    "d2_expected_answer_missing"
+    "d2_expected_answer_supplemented",
+    "d1_reference_artifact_added"
   ],
   "evaluable_dimensions": [
     "D1",
@@ -120,6 +204,24 @@
     "D4",
     "D5",
     "D8"
+  ],
+  "supplemental_annotation": {
+    "case_id": "EL260529F-0020",
+    "decision": "D1+D2",
+    "reason": "任务既要求生成 LT 对比曲线文件，也要求对比分析两个器件的 LT 曲线数据，因此保留 D1 产物检查，并补充 D2 文本/数值断言检查最终分析结论。",
+    "d2_enabled": true
+  },
+  "reference_artifacts": [
+    {
+      "path": "0020 输出 xlsx 中曲线绘制.png",
+      "kind": "expected_xlsx_chart_screenshot",
+      "role": "d1_visual_reference",
+      "description": "CH167 与 CH168 LT 曲线对比参考截图。",
+      "relative_path": "D2 缺答案补充数据/0020 输出 xlsx 中曲线绘制.png",
+      "exists": true,
+      "size_bytes": 24280,
+      "sha256": "dcb523a6f70971dc113fab1e032ed393e94065cc38f41f4a60620c5a19552019"
+    }
   ],
   "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0020"
 }

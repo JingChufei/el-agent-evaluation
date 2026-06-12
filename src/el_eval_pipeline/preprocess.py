@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 from collections import Counter
 from pathlib import Path
@@ -8,10 +9,12 @@ from typing import Any
 from openpyxl import load_workbook
 
 from .attachments import build_attachment_manifest, resolve_attachment_cell
-from .common import is_blankish, normalize_space, split_multiline, write_csv, write_json, write_jsonl
+from .common import is_blankish, normalize_space, sha256_file, split_multiline, write_csv, write_json, write_jsonl
 from .d3 import d3_priority, is_d3_candidate
 from .paths import as_posix_relative
 from .registry import load_domain_skill_registry, load_runtime_skill_registry
+
+SUPPLEMENTAL_ANNOTATIONS_DIR = Path("D2 缺答案补充数据")
 
 
 def _truthy_yes(value: Any) -> bool:
@@ -74,6 +77,78 @@ def _parse_expected_answer(value: str) -> dict[str, Any] | None:
     return {"type": "multi_assertion", "raw": value, "assertions": assertions}
 
 
+def _load_supplemental_annotations(path: Path, repo_root: Path) -> dict[str, dict[str, Any]]:
+    manifest_path = path / "manifest.json"
+    if not manifest_path.exists():
+        return {}
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    records: dict[str, dict[str, Any]] = {}
+    for record in manifest.get("cases", []):
+        if not isinstance(record, dict) or not record.get("case_id"):
+            continue
+        normalized = dict(record)
+        artifacts: list[dict[str, Any]] = []
+        for artifact in record.get("reference_artifacts", []):
+            if not isinstance(artifact, dict) or not artifact.get("path"):
+                continue
+            artifact_item = dict(artifact)
+            artifact_path = path / artifact_item["path"]
+            artifact_item["relative_path"] = as_posix_relative(artifact_path, repo_root)
+            artifact_item["exists"] = artifact_path.exists()
+            if artifact_path.exists():
+                artifact_item["size_bytes"] = artifact_path.stat().st_size
+                artifact_item["sha256"] = sha256_file(artifact_path)
+            artifacts.append(artifact_item)
+        normalized["reference_artifacts"] = artifacts
+        records[str(record["case_id"])] = normalized
+    return records
+
+
+def _apply_supplemental_annotation(case: dict[str, Any], supplemental: dict[str, Any]) -> None:
+    if not supplemental:
+        return
+    case["supplemental_annotation"] = {
+        key: value
+        for key, value in supplemental.items()
+        if key not in {"expected_answer", "reference_artifacts", "annotation_status"}
+    }
+    if supplemental.get("reference_artifacts"):
+        case["reference_artifacts"] = supplemental["reference_artifacts"]
+
+    if "d2_enabled" in supplemental:
+        case["d2_enabled"] = bool(supplemental["d2_enabled"])
+        if not case["d2_enabled"]:
+            case["expected_answer"] = None
+            case["d3_candidate"] = False
+            case["d3_priority"] = "not_applicable"
+    if supplemental.get("expected_answer"):
+        case["expected_answer"] = supplemental["expected_answer"]
+        case["d2_enabled"] = True
+        case["d3_candidate"] = False
+        case["d3_priority"] = "not_applicable"
+
+    extra_status = [str(item) for item in supplemental.get("annotation_status", []) if item]
+    case["annotation_status"] = [
+        status
+        for status in case.get("annotation_status", [])
+        if status != "d2_expected_answer_missing" or not case.get("expected_answer") and case.get("d2_enabled")
+    ]
+    for status in extra_status:
+        if status not in case["annotation_status"]:
+            case["annotation_status"].append(status)
+
+    evaluable_dimensions = {"D5", "D8"}
+    if case.get("target_state"):
+        evaluable_dimensions.add("D1")
+    if case.get("d2_enabled"):
+        evaluable_dimensions.add("D2")
+    if case.get("d3_candidate"):
+        evaluable_dimensions.add("D3")
+    if case.get("gold_chain"):
+        evaluable_dimensions.add("D4")
+    case["evaluable_dimensions"] = sorted(evaluable_dimensions)
+
+
 def _parse_gold_chain(skill_value: str, tool_value: str) -> dict[str, Any] | None:
     skills = [part for part in split_multiline(skill_value) if not is_blankish(part)]
     tools = [part for part in split_multiline(tool_value) if not is_blankish(part)]
@@ -105,8 +180,11 @@ def load_cases_from_excel(
     *,
     case_prefix: str = "EL260529F",
     repo_root: Path | None = None,
+    supplemental_annotations_dir: Path | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
     repo_root = repo_root or Path.cwd()
+    supplemental_annotations_dir = supplemental_annotations_dir or repo_root / SUPPLEMENTAL_ANNOTATIONS_DIR
+    supplemental_annotations = _load_supplemental_annotations(supplemental_annotations_dir, repo_root)
     workbook = load_workbook(excel_path, read_only=True, data_only=True)
     sheet = workbook[workbook.sheetnames[0]]
     headers = [normalize_space(cell.value) for cell in sheet[2]]
@@ -155,8 +233,7 @@ def load_cases_from_excel(
         if gold_chain:
             evaluable_dimensions.append("D4")
 
-        cases.append(
-            {
+        case = {
                 "case_id": case_id,
                 "source_file": as_posix_relative(excel_path, repo_root),
                 "source_sheet": sheet.title,
@@ -190,7 +267,8 @@ def load_cases_from_excel(
                 "annotation_status": annotation_status,
                 "evaluable_dimensions": sorted(evaluable_dimensions),
             }
-        )
+        _apply_supplemental_annotation(case, supplemental_annotations.get(case_id, {}))
+        cases.append(case)
     workbook.close()
     return cases, manifest, attachment_errors
 
@@ -239,6 +317,15 @@ def build_quality_report(
         "D5": len(cases),
         "D8": len(cases),
     }
+    supplemental_cases = [
+        {
+            "case_id": case["case_id"],
+            "decision": case.get("supplemental_annotation", {}).get("decision"),
+            "reference_artifact_count": len(case.get("reference_artifacts", [])),
+        }
+        for case in cases
+        if case.get("supplemental_annotation") or case.get("reference_artifacts")
+    ]
     return {
         "case_count": len(cases),
         "attachment_count": len(manifest),
@@ -254,6 +341,8 @@ def build_quality_report(
         "unknown_skill_count": len(unknown_skills),
         "unknown_skills": unknown_skills,
         "skill_counts": dict(skill_counter),
+        "supplemental_annotation_count": len(supplemental_cases),
+        "supplemental_annotation_cases": supplemental_cases,
         "attachment_errors": attachment_errors,
         "ignored_attachment_rule": "files named ~$* or .DS_Store are ignored",
     }
@@ -271,6 +360,11 @@ def _portable_cases(cases: list[dict[str, Any]]) -> list[dict[str, Any]]:
         for attachment in case.get("attachments", []):
             portable_attachments.append({key: value for key, value in attachment.items() if key != "original_path"})
         portable_case["attachments"] = portable_attachments
+        if portable_case.get("reference_artifacts"):
+            portable_case["reference_artifacts"] = [
+                {key: value for key, value in artifact.items() if key != "absolute_path"}
+                for artifact in portable_case["reference_artifacts"]
+            ]
         portable_cases.append(portable_case)
     return portable_cases
 
@@ -315,6 +409,7 @@ def preprocess_dataset(
                 "d3_candidate": case.get("d3_candidate"),
                 "d3_priority": case.get("d3_priority"),
                 "attachment_count": len(case["attachments"]),
+                "reference_artifact_count": len(case.get("reference_artifacts", [])),
                 "annotation_status": ";".join(case["annotation_status"]),
                 "user_query": case["user_query"],
             }
@@ -331,6 +426,7 @@ def preprocess_dataset(
             "d3_candidate",
             "d3_priority",
             "attachment_count",
+            "reference_artifact_count",
             "annotation_status",
             "user_query",
         ],

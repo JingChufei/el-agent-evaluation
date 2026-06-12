@@ -46,7 +46,7 @@
     "allow_extra": true,
     "recovery_window": 3
   },
-  "d2_enabled": true,
+  "d2_enabled": false,
   "expected_answer": null,
   "d3_candidate": false,
   "d3_priority": "not_applicable",
@@ -61,14 +61,31 @@
     "若是，答案是什么": ""
   },
   "annotation_status": [
-    "d2_expected_answer_missing"
+    "d2_reclassified_to_d1_reference_artifact"
   ],
   "evaluable_dimensions": [
     "D1",
-    "D2",
     "D4",
     "D5",
     "D8"
+  ],
+  "supplemental_annotation": {
+    "case_id": "EL260529F-0009",
+    "decision": "D1",
+    "reason": "任务目标是生成带原子编号的 DABNA-1 分子结构图，核心判定应为产物是否存在且编号图是否正确；最终文字回复不适合作为主判。",
+    "d2_enabled": false
+  },
+  "reference_artifacts": [
+    {
+      "path": "0009 输出图片.png",
+      "kind": "expected_output_image",
+      "role": "d1_visual_reference",
+      "description": "带原子编号的 DABNA-1 分子结构图参考输出。",
+      "relative_path": "D2 缺答案补充数据/0009 输出图片.png",
+      "exists": true,
+      "size_bytes": 9921,
+      "sha256": "3c32d0bd05155dbbf83806be0a8f162f877db5330d6745c51033cdc541413d26"
+    }
   ],
   "workspace_repo_relative_path": "execution_bundle/workspaces/EL260529F-0009"
 }

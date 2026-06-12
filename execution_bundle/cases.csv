@@ -1,51 +1,51 @@
-﻿case_id,source_row,skill_name,d2_enabled,has_expected_answer,has_target_state,has_gold_chain,d3_candidate,d3_priority,attachment_count,annotation_status,user_query
-EL260529F-0001,3,ept-service-user,True,True,False,True,False,not_applicable,1,,请将图片中的BD分子式转成SMILES表达式，并进行能级预测。
-EL260529F-0002,4,ept-service-user,True,True,False,True,False,not_applicable,0,,帮我预测“c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1”这个BH分子的能级
-EL260529F-0003,5,ept-service-user,True,True,False,True,False,not_applicable,0,,帮我预测ht材料c1ccc(N(c2ccccc2)c2cccc(N(c3ccccc3)c3cc(N(c4ccccc4)c4ccccc4)c4c(ccc5ccccc54)c3)c2)cc1的能级
-EL260529F-0004,6,setfos-user,True,True,True,True,False,not_applicable,0,,请用蓝光的标准器件对应的par文件进行光学仿真，并返回结果。
-EL260529F-0005,7,setfos-user,True,True,True,True,False,not_applicable,0,,请用红光的标准器件对应的par文件进行光学仿真，并返回结果。
-EL260529F-0006,8,setfos-user,True,True,True,True,False,not_applicable,0,,请用绿光的标准器件对应的par文件进行光学仿真，并返回结果。
-EL260529F-0007,9,rdkit-molecule-drawer,True,False,True,True,False,not_applicable,0,d2_expected_answer_missing,"请帮我画出这个smiles式对应的分子结构。
+﻿case_id,source_row,skill_name,d2_enabled,has_expected_answer,has_target_state,has_gold_chain,d3_candidate,d3_priority,attachment_count,reference_artifact_count,annotation_status,user_query
+EL260529F-0001,3,ept-service-user,True,True,False,True,False,not_applicable,1,0,,请将图片中的BD分子式转成SMILES表达式，并进行能级预测。
+EL260529F-0002,4,ept-service-user,True,True,False,True,False,not_applicable,0,0,,帮我预测“c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1”这个BH分子的能级
+EL260529F-0003,5,ept-service-user,True,True,False,True,False,not_applicable,0,0,,帮我预测ht材料c1ccc(N(c2ccccc2)c2cccc(N(c3ccccc3)c3cc(N(c4ccccc4)c4ccccc4)c4c(ccc5ccccc54)c3)c2)cc1的能级
+EL260529F-0004,6,setfos-user,True,True,True,True,False,not_applicable,0,0,,请用蓝光的标准器件对应的par文件进行光学仿真，并返回结果。
+EL260529F-0005,7,setfos-user,True,True,True,True,False,not_applicable,0,0,,请用红光的标准器件对应的par文件进行光学仿真，并返回结果。
+EL260529F-0006,8,setfos-user,True,True,True,True,False,not_applicable,0,0,,请用绿光的标准器件对应的par文件进行光学仿真，并返回结果。
+EL260529F-0007,9,rdkit-molecule-drawer,False,False,True,True,False,not_applicable,0,1,d2_reclassified_to_d1_reference_artifact,"请帮我画出这个smiles式对应的分子结构。
 Smiles式：C1=CC=C(C=C1)C2=C3C=CC=CC3=C(C4=C2C=CC=C4)C5=C6C7=C(C8=C(C=CC=C8)C=C7)OC6=CC=C5"
-EL260529F-0008,10,rdkit-molecule-drawer,True,True,False,True,False,not_applicable,0,,"O=C(NCC1=CC=CC=C1)C2=CC=C(N3CCN(C4=CC=CC=C4)CC3)C=C2
+EL260529F-0008,10,rdkit-molecule-drawer,True,True,False,True,False,not_applicable,0,0,,"O=C(NCC1=CC=CC=C1)C2=CC=C(N3CCN(C4=CC=CC=C4)CC3)C=C2
 
 这是一个什么分子？"
-EL260529F-0009,11,rdkit-molecule-drawer,True,False,True,True,False,not_applicable,0,d2_expected_answer_missing,请你画出带原子编号的 DABNA-1 分子结构， 以图片的形式发给我。
-EL260529F-0010,12,ijp-blue-material-advisor,False,False,False,True,True,primary,0,,在当前的印刷蓝光器件中，降低b-prime的HOMO能级可能会带来效果和风险？
-EL260529F-0011,13,ijp-blue-material-advisor,False,False,False,True,True,primary,0,,DABNA-1在B原子的对位连接二苯胺单元，会对分子整体结构有何影响？
-EL260529F-0012,14,ijp-blue-material-advisor,False,False,False,True,True,primary,0,,如何设计BH分子，帮助溶液法IJP OLED的EML中的BD分子获得更高水平取向度？
-EL260529F-0013,15,ijp-blue-oled-rca,False,False,False,True,True,primary,0,,相同一套材料体系下，蓝光 TOP emission 器件比 bottom emission器件的J25 寿命低 30-40% 的原因可能是什么？
-EL260529F-0014,16,ijp-blue-oled-rca,False,False,False,True,True,primary,0,,使用根因分析技能基于以前的经验和最近的验证实验结果分析B-prime层研发没有达到预期效果的原因
-EL260529F-0015,17,ivl-chart-generator,True,False,True,True,False,not_applicable,1,d2_expected_answer_missing,请在同一个图内绘出12-P4和15-P1的IVL曲线
-EL260529F-0016,18,ivl-chart-generator,True,True,True,True,False,not_applicable,1,,18-P1和20-P1，哪个J10电压更高？
-EL260529F-0017,19,ivl-chart-generator,True,False,True,True,False,not_applicable,1,d2_expected_answer_missing,"画出12-P2, 13-P3, 14-P2 的CE-J曲线"
-EL260529F-0018,20,lt-lifetime-plotter,True,False,True,True,False,not_applicable,1,d2_expected_answer_missing,用这个数据画出LT曲线。
-EL260529F-0019,21,lt-lifetime-plotter,True,True,True,True,False,not_applicable,3,,这个器件的LT97是多少？
-EL260529F-0020,22,lt-lifetime-plotter,True,False,True,True,False,not_applicable,2,d2_expected_answer_missing,请对比分析这两个器件的LT曲线数据
-EL260529F-0021,23,private-document-parser,True,True,True,True,False,not_applicable,1,,请分析请解读接下来上传的这份报告，EML厚度的变化对器件的哪些性能产生了影响。
-EL260529F-0022,24,private-document-parser,False,False,True,True,True,secondary_to_d1,1,,请分析我接下来上传的一份报告，解释为什么EML 厚度变化没有明显改变发光主体光谱，峰位和半峰宽？
-EL260529F-0023,25,private-document-parser,False,False,True,True,True,secondary_to_d1,1,,请帮我总结下面这份报告的主要信息，要求逻辑框架清晰，关键数据充分。
-EL260529F-0024,26,ijp-blue-oled-rca,False,False,False,True,True,primary,1,,请解读接下来上传的这份报告， 从根因分析的角度，剖析说明厚度变化对BI和寿命变化影响的底层原因。
-EL260529F-0025,27,gh-blend-design-advisor,False,False,False,True,True,primary,1,,针对我即将发送的一份报告，请调用“gh-blend-design-advisor”这个skill进行分析和解读。然后输出⼀个最优绿光 EML 层组合⽅案，表格列出。要求：(1) ⻓寿命⽅案 效率>210 cd/A、LT95@J25>90h；(2) ⾼效率⽅案 效率>240 cd/A、LT95@J25>70h。
-EL260529F-0026,28,molecular-structure-generator,False,False,False,True,True,primary,0,,"请根据以下分子和条件，生成5个新的分子。
+EL260529F-0009,11,rdkit-molecule-drawer,False,False,True,True,False,not_applicable,0,1,d2_reclassified_to_d1_reference_artifact,请你画出带原子编号的 DABNA-1 分子结构， 以图片的形式发给我。
+EL260529F-0010,12,ijp-blue-material-advisor,False,False,False,True,True,primary,0,0,,在当前的印刷蓝光器件中，降低b-prime的HOMO能级可能会带来效果和风险？
+EL260529F-0011,13,ijp-blue-material-advisor,False,False,False,True,True,primary,0,0,,DABNA-1在B原子的对位连接二苯胺单元，会对分子整体结构有何影响？
+EL260529F-0012,14,ijp-blue-material-advisor,False,False,False,True,True,primary,0,0,,如何设计BH分子，帮助溶液法IJP OLED的EML中的BD分子获得更高水平取向度？
+EL260529F-0013,15,ijp-blue-oled-rca,False,False,False,True,True,primary,0,0,,相同一套材料体系下，蓝光 TOP emission 器件比 bottom emission器件的J25 寿命低 30-40% 的原因可能是什么？
+EL260529F-0014,16,ijp-blue-oled-rca,False,False,False,True,True,primary,0,0,,使用根因分析技能基于以前的经验和最近的验证实验结果分析B-prime层研发没有达到预期效果的原因
+EL260529F-0015,17,ivl-chart-generator,False,False,True,True,False,not_applicable,1,1,d2_reclassified_to_d1_reference_artifact,请在同一个图内绘出12-P4和15-P1的IVL曲线
+EL260529F-0016,18,ivl-chart-generator,True,True,True,True,False,not_applicable,1,0,,18-P1和20-P1，哪个J10电压更高？
+EL260529F-0017,19,ivl-chart-generator,False,False,True,True,False,not_applicable,1,1,d2_reclassified_to_d1_reference_artifact,"画出12-P2, 13-P3, 14-P2 的CE-J曲线"
+EL260529F-0018,20,lt-lifetime-plotter,False,False,True,True,False,not_applicable,1,1,d2_reclassified_to_d1_reference_artifact,用这个数据画出LT曲线。
+EL260529F-0019,21,lt-lifetime-plotter,True,True,True,True,False,not_applicable,3,0,,这个器件的LT97是多少？
+EL260529F-0020,22,lt-lifetime-plotter,True,True,True,True,False,not_applicable,2,1,d2_expected_answer_supplemented;d1_reference_artifact_added,请对比分析这两个器件的LT曲线数据
+EL260529F-0021,23,private-document-parser,True,True,True,True,False,not_applicable,1,0,,请分析请解读接下来上传的这份报告，EML厚度的变化对器件的哪些性能产生了影响。
+EL260529F-0022,24,private-document-parser,False,False,True,True,True,secondary_to_d1,1,0,,请分析我接下来上传的一份报告，解释为什么EML 厚度变化没有明显改变发光主体光谱，峰位和半峰宽？
+EL260529F-0023,25,private-document-parser,False,False,True,True,True,secondary_to_d1,1,0,,请帮我总结下面这份报告的主要信息，要求逻辑框架清晰，关键数据充分。
+EL260529F-0024,26,ijp-blue-oled-rca,False,False,False,True,True,primary,1,0,,请解读接下来上传的这份报告， 从根因分析的角度，剖析说明厚度变化对BI和寿命变化影响的底层原因。
+EL260529F-0025,27,gh-blend-design-advisor,False,False,False,True,True,primary,1,0,,针对我即将发送的一份报告，请调用“gh-blend-design-advisor”这个skill进行分析和解读。然后输出⼀个最优绿光 EML 层组合⽅案，表格列出。要求：(1) ⻓寿命⽅案 效率>210 cd/A、LT95@J25>90h；(2) ⾼效率⽅案 效率>240 cd/A、LT95@J25>70h。
+EL260529F-0026,28,molecular-structure-generator,False,False,False,True,True,primary,0,0,,"请根据以下分子和条件，生成5个新的分子。
 “c1ccc(N2c3ccccc3B3c4ccccc4N(c4ccccc4)c4cccc2c43)cc1”；""HOMO"": -5.4,
 ""LUMO"": -2.45,
 ""S1"": 2.74,
 ""T1"": 2.93"
-EL260529F-0027,29,molecular-structure-generator,False,False,False,True,True,primary,0,,"请根据以下分子和条件，生成5个新的分子。“c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1”
+EL260529F-0027,29,molecular-structure-generator,False,False,False,True,True,primary,0,0,,"请根据以下分子和条件，生成5个新的分子。“c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1”
 ""HOMO"": -5.55,
 ""LUMO"": -2.73,
 ""S1"": 3.09,
 ""T1"": 1.65"
-EL260529F-0028,30,molecular-structure-generator,False,False,False,True,True,primary,0,,"请根据以下分子和条件，生成5个新的分子。 ""c1ccc2c(-c3ccc4c(c3)Sc3c(ccc5ccc6ccccc6c35)O4)cccc2c1“
+EL260529F-0028,30,molecular-structure-generator,False,False,False,True,True,primary,0,0,,"请根据以下分子和条件，生成5个新的分子。 ""c1ccc2c(-c3ccc4c(c3)Sc3c(ccc5ccc6ccccc6c35)O4)cccc2c1“
 ""HOMO"": -5.20,
 ""LUMO"": -2.70,
 ""S1"": 2.93,
 ""T1"": 2.54"
-EL260529F-0029,31,,False,False,False,False,True,primary,0,,HOMO 能级深浅与氧化难易到底是什么关系？同时，为什么蓝光 OLED 材料在器件中仍然常被认为稳定性更差？
-EL260529F-0030,32,,False,False,False,False,True,primary,0,,蓝光 OLED 器件是否可以取消 L-aging / electrical aging？应该如何判断 aging 带来的寿命、稳定性和良率收益，是否值得用效率损失、产线时间和部分寿命消耗来交换？
-EL260529F-0031,33,,False,False,False,False,True,primary,0,,印刷 OLED 的真正瓶颈，是发光材料本身，还是“墨水化之后的成膜物理”？
-EL260529F-0032,34,,False,False,False,False,True,primary,0,,对印刷 RGB OLED 来说，蓝光寿命问题是否仍然是决定产业化节奏的第一瓶颈？
-EL260529F-0033,35,,False,False,False,False,True,primary,0,,正交溶剂体系是否足以解决多层印刷 OLED 的界面问题？
-EL260529F-0034,36,,False,False,False,False,True,primary,0,,印刷 OLED 的发光层，是应该追求“均匀混合”，还是有意利用可控相分离？
-EL260529F-0035,37,,False,False,False,False,True,primary,0,,IJP OLED 的优势到底是低成本，还是它能打开蒸镀 OLED 做不到的新器件/像素设计？
+EL260529F-0029,31,,False,False,False,False,True,primary,0,0,,HOMO 能级深浅与氧化难易到底是什么关系？同时，为什么蓝光 OLED 材料在器件中仍然常被认为稳定性更差？
+EL260529F-0030,32,,False,False,False,False,True,primary,0,0,,蓝光 OLED 器件是否可以取消 L-aging / electrical aging？应该如何判断 aging 带来的寿命、稳定性和良率收益，是否值得用效率损失、产线时间和部分寿命消耗来交换？
+EL260529F-0031,33,,False,False,False,False,True,primary,0,0,,印刷 OLED 的真正瓶颈，是发光材料本身，还是“墨水化之后的成膜物理”？
+EL260529F-0032,34,,False,False,False,False,True,primary,0,0,,对印刷 RGB OLED 来说，蓝光寿命问题是否仍然是决定产业化节奏的第一瓶颈？
+EL260529F-0033,35,,False,False,False,False,True,primary,0,0,,正交溶剂体系是否足以解决多层印刷 OLED 的界面问题？
+EL260529F-0034,36,,False,False,False,False,True,primary,0,0,,印刷 OLED 的发光层，是应该追求“均匀混合”，还是有意利用可控相分离？
+EL260529F-0035,37,,False,False,False,False,True,primary,0,0,,IJP OLED 的优势到底是低成本，还是它能打开蒸镀 OLED 做不到的新器件/像素设计？

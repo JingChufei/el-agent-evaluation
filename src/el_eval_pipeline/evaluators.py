@@ -21,12 +21,34 @@ def _trajectory_by_case(path: Path | None) -> dict[str, dict[str, Any]]:
     return {row["case_id"]: row for row in rows if row.get("case_id")}
 
 
+def _reference_artifact_details(case: dict[str, Any]) -> dict[str, Any]:
+    artifacts = case.get("reference_artifacts") or []
+    if not artifacts:
+        return {}
+    return {
+        "reference_artifact_count": len(artifacts),
+        "reference_artifacts": [
+            {
+                "relative_path": artifact.get("relative_path"),
+                "role": artifact.get("role"),
+                "kind": artifact.get("kind"),
+                "description": artifact.get("description"),
+                "sha256": artifact.get("sha256"),
+            }
+            for artifact in artifacts
+            if isinstance(artifact, dict)
+        ],
+        "needs_artifact_quality_review": True,
+    }
+
+
 def evaluate_d1(case: dict[str, Any], trajectory: dict[str, Any] | None) -> dict[str, Any]:
     target = case.get("target_state")
     if not target:
         return _result("D1", "not_applicable", None, "no_target_state")
+    reference_details = _reference_artifact_details(case)
     if not trajectory:
-        return _result("D1", "blocked", None, "blocked_by_missing_trajectory")
+        return _result("D1", "blocked", None, "blocked_by_missing_trajectory", reference_details)
     final_files = trajectory.get("sandbox_final_files") or []
     if isinstance(final_files, list) and final_files:
         missing_from_snapshot: list[str] = []
@@ -38,15 +60,21 @@ def evaluate_d1(case: dict[str, Any], trajectory: dict[str, Any] | None) -> dict
                 if Path(pattern).name not in file_names:
                     missing_from_snapshot.append(pattern)
         if not missing_from_snapshot:
-            return _result("D1", "pass", 1.0, "required_files_found_in_snapshot")
+            return _result("D1", "pass", 1.0, "required_files_found_in_snapshot", reference_details)
         total = max(len(target.get("required_files", [])), 1)
-        return _result("D1", "fail", 1 - len(missing_from_snapshot) / total, "required_files_missing_in_snapshot", {"missing": missing_from_snapshot})
+        return _result(
+            "D1",
+            "fail",
+            1 - len(missing_from_snapshot) / total,
+            "required_files_missing_in_snapshot",
+            {"missing": missing_from_snapshot, **reference_details},
+        )
     workspace = trajectory.get("workspace_path") or trajectory.get("sandbox_final_snapshot_ref")
     if not workspace:
-        return _result("D1", "blocked", None, "blocked_by_missing_workspace")
+        return _result("D1", "blocked", None, "blocked_by_missing_workspace", reference_details)
     workspace_path = Path(workspace)
     if not workspace_path.exists():
-        return _result("D1", "blocked", None, "workspace_not_found", {"workspace_path": workspace})
+        return _result("D1", "blocked", None, "workspace_not_found", {"workspace_path": workspace, **reference_details})
 
     missing: list[str] = []
     for required in target.get("required_files", []):
@@ -61,8 +89,8 @@ def evaluate_d1(case: dict[str, Any], trajectory: dict[str, Any] | None) -> dict
             missing.append(pattern)
     if missing:
         total = max(len(target.get("required_files", [])), 1)
-        return _result("D1", "fail", 1 - len(missing) / total, "required_files_missing", {"missing": missing})
-    return _result("D1", "pass", 1.0, "required_files_found")
+        return _result("D1", "fail", 1 - len(missing) / total, "required_files_missing", {"missing": missing, **reference_details})
+    return _result("D1", "pass", 1.0, "required_files_found", reference_details)
 
 
 def _number_present(value: float, text: str, tolerance: dict[str, float]) -> bool:
@@ -92,6 +120,14 @@ def evaluate_d2(case: dict[str, Any], trajectory: dict[str, Any] | None) -> dict
         elif assertion["type"] == "text_contains":
             if assertion["value"] not in response:
                 failures.append(assertion)
+        elif assertion["type"] == "text_contains_any":
+            if not any(value in response for value in assertion.get("values", [])):
+                failures.append(assertion)
+        elif assertion["type"] == "text_contains_all":
+            if not all(value in response for value in assertion.get("values", [])):
+                failures.append(assertion)
+        else:
+            failures.append({**assertion, "error": "unsupported_assertion_type"})
     if failures:
         total = max(len(expected.get("assertions", [])), 1)
         return _result("D2", "fail", 1 - len(failures) / total, "expected_answer_not_matched", {"failures": failures})

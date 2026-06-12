@@ -22,3 +22,11 @@ el-eval-pipeline = "el_eval_pipeline.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.pytest.ini_options]
+norecursedirs = [
+  "agent_execution_bundle",
+  "execution_bundle",
+  "outputs",
+  "sessions",
+]

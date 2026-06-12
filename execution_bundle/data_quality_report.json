@@ -5,53 +5,16 @@
   "attachment_error_count": 0,
   "coverage": {
     "D1": 14,
-    "D2": 16,
-    "D2_runnable": 10,
+    "D2": 11,
+    "D2_runnable": 11,
     "D3": 19,
     "D3_rubric_synthesis_ready": 19,
     "D4": 28,
     "D5": 35,
     "D8": 35
   },
-  "d2_missing_answer_count": 6,
-  "d2_missing_answer_cases": [
-    {
-      "case_id": "EL260529F-0007",
-      "source_row": 9,
-      "skill": "rdkit-molecule-drawer",
-      "user_query": "请帮我画出这个smiles式对应的分子结构。\nSmiles式：C1=CC=C(C=C1)C2=C3C=CC=CC3=C(C4=C2C=CC=C4)C5=C6C7=C(C8=C(C=CC=C8)C=C7)OC6=CC=C5"
-    },
-    {
-      "case_id": "EL260529F-0009",
-      "source_row": 11,
-      "skill": "rdkit-molecule-drawer",
-      "user_query": "请你画出带原子编号的 DABNA-1 分子结构， 以图片的形式发给我。"
-    },
-    {
-      "case_id": "EL260529F-0015",
-      "source_row": 17,
-      "skill": "ivl-chart-generator",
-      "user_query": "请在同一个图内绘出12-P4和15-P1的IVL曲线"
-    },
-    {
-      "case_id": "EL260529F-0017",
-      "source_row": 19,
-      "skill": "ivl-chart-generator",
-      "user_query": "画出12-P2, 13-P3, 14-P2 的CE-J曲线"
-    },
-    {
-      "case_id": "EL260529F-0018",
-      "source_row": 20,
-      "skill": "lt-lifetime-plotter",
-      "user_query": "用这个数据画出LT曲线。"
-    },
-    {
-      "case_id": "EL260529F-0020",
-      "source_row": 22,
-      "skill": "lt-lifetime-plotter",
-      "user_query": "请对比分析这两个器件的LT曲线数据"
-    }
-  ],
+  "d2_missing_answer_count": 0,
+  "d2_missing_answer_cases": [],
   "d3_candidate_count": 19,
   "d3_candidates": [
     {
@@ -207,6 +170,39 @@
     "molecular-structure-generator": 3,
     "": 7
   },
+  "supplemental_annotation_count": 6,
+  "supplemental_annotation_cases": [
+    {
+      "case_id": "EL260529F-0007",
+      "decision": "D1",
+      "reference_artifact_count": 1
+    },
+    {
+      "case_id": "EL260529F-0009",
+      "decision": "D1",
+      "reference_artifact_count": 1
+    },
+    {
+      "case_id": "EL260529F-0015",
+      "decision": "D1",
+      "reference_artifact_count": 1
+    },
+    {
+      "case_id": "EL260529F-0017",
+      "decision": "D1",
+      "reference_artifact_count": 1
+    },
+    {
+      "case_id": "EL260529F-0018",
+      "decision": "D1",
+      "reference_artifact_count": 1
+    },
+    {
+      "case_id": "EL260529F-0020",
+      "decision": "D1+D2",
+      "reference_artifact_count": 1
+    }
+  ],
   "attachment_errors": [],
   "ignored_attachment_rule": "files named ~$* or .DS_Store are ignored"
 }

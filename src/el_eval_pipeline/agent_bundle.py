@@ -18,7 +18,9 @@ FORBIDDEN_AGENT_KEYS = {
     "expected_answer",
     "gold_chain",
     "raw_annotations",
+    "reference_artifacts",
     "reference_answer",
+    "supplemental_annotation",
     "target_state",
 }
 

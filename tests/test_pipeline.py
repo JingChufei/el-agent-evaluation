@@ -12,7 +12,7 @@ from el_eval_pipeline.agent_bundle import (
 )
 from el_eval_pipeline.attachments import build_attachment_manifest
 from el_eval_pipeline.d3 import build_d3_rubric_items, evaluate_d3, normalize_rubrics
-from el_eval_pipeline.evaluators import evaluate_cases
+from el_eval_pipeline.evaluators import evaluate_cases, evaluate_d1
 from el_eval_pipeline.parsers import parse_session_file, parse_vllm_responses
 from el_eval_pipeline.preprocess import load_cases_from_excel
 from el_eval_pipeline.runner import run_agent_cases
@@ -42,6 +42,30 @@ def test_filtered_dataset_preprocesses_35_cases_and_resolves_attachments() -> No
     d3_candidates = [case for case in cases if case["d3_candidate"]]
     assert len(d3_candidates) == 19
     assert all("D3" in case["evaluable_dimensions"] for case in d3_candidates)
+
+
+def test_supplemental_d2_missing_answers_are_reclassified() -> None:
+    cases, _, _ = load_cases_from_excel(
+        ROOT / "EL Agent测试集_260529_筛选后.xlsx",
+        ROOT / "测试集相关文件",
+    )
+    by_id = {case["case_id"]: case for case in cases}
+    d1_only = ["EL260529F-0007", "EL260529F-0009", "EL260529F-0015", "EL260529F-0017", "EL260529F-0018"]
+    for case_id in d1_only:
+        case = by_id[case_id]
+        assert case["d2_enabled"] is False
+        assert "D2" not in case["evaluable_dimensions"]
+        assert "D1" in case["evaluable_dimensions"]
+        assert case["reference_artifacts"][0]["exists"] is True
+        assert "d2_reclassified_to_d1_reference_artifact" in case["annotation_status"]
+
+    comparison = by_id["EL260529F-0020"]
+    assert comparison["d2_enabled"] is True
+    assert "D1" in comparison["evaluable_dimensions"]
+    assert "D2" in comparison["evaluable_dimensions"]
+    assert comparison["expected_answer"]["assertions"]
+    assert "d2_expected_answer_missing" not in comparison["annotation_status"]
+    assert "d2_expected_answer_supplemented" in comparison["annotation_status"]
 
 
 def test_multi_csv_attachment_order_is_preserved() -> None:
@@ -217,6 +241,55 @@ def test_d3_evaluate_cases_blocks_without_judge_config(tmp_path: Path) -> None:
     assert summary["dimensions"]["D3"]["blocked"] == 1
 
 
+def test_d2_supports_any_and_all_text_assertions(tmp_path: Path) -> None:
+    cases_path = tmp_path / "cases.jsonl"
+    trajectories_path = tmp_path / "trajectories.jsonl"
+    output_dir = tmp_path / "out"
+    case = {
+        "case_id": "c1",
+        "source_row": 3,
+        "skill_name": "lt-lifetime-plotter",
+        "d2_enabled": True,
+        "d3_candidate": False,
+        "expected_answer": {
+            "assertions": [
+                {"type": "text_contains_all", "values": ["CH167", "CH168"]},
+                {"type": "text_contains_any", "values": ["CH167 寿命略优", "CH167 衰减更慢"]},
+            ]
+        },
+        "target_state": None,
+        "gold_chain": None,
+    }
+    trajectory = {"case_id": "c1", "final_response": "CH167 与 CH168 对比，CH167 衰减更慢。", "tool_calls": [], "tool_results": []}
+    cases_path.write_text(json.dumps(case, ensure_ascii=False) + "\n", encoding="utf-8")
+    trajectories_path.write_text(json.dumps(trajectory, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    rows = evaluate_cases(cases_path, output_dir, trajectories_path)
+    d2_result = next(result for result in rows[0]["results"] if result["dimension"] == "D2")
+    assert d2_result["status"] == "pass"
+
+
+def test_d1_includes_reference_artifact_details() -> None:
+    case = {
+        "case_id": "c1",
+        "target_state": {"required_files": [{"path": "result.png"}]},
+        "reference_artifacts": [
+            {
+                "relative_path": "D2 缺答案补充数据/0007 输出图片.png",
+                "role": "d1_visual_reference",
+                "kind": "expected_output_image",
+                "description": "参考图",
+                "sha256": "abc",
+            }
+        ],
+    }
+    trajectory = {"case_id": "c1", "sandbox_final_files": [{"path": "result.png"}]}
+    result = evaluate_d1(case, trajectory)
+    assert result["status"] == "pass"
+    assert result["details"]["reference_artifact_count"] == 1
+    assert result["details"]["needs_artifact_quality_review"] is True
+
+
 def test_run_agent_cases_uses_external_command_and_writes_trajectory(tmp_path: Path) -> None:
     attachment = tmp_path / "input.txt"
     attachment.write_text("attachment", encoding="utf-8")
@@ -287,6 +360,8 @@ def test_prepare_agent_execution_bundle_removes_gt_and_retargets_manifest(tmp_pa
         "gold_chain": {"stages": [{"steps": ["secret_tool"]}]},
         "target_state": {"required_files": [{"path": "secret.txt"}]},
         "raw_annotations": {"Tool": "secret_tool"},
+        "reference_artifacts": [{"relative_path": "D2 缺答案补充数据/secret.png"}],
+        "supplemental_annotation": {"decision": "D1"},
         "attachments": [
             {
                 "name": "input.txt",
@@ -316,6 +391,8 @@ def test_prepare_agent_execution_bundle_removes_gt_and_retargets_manifest(tmp_pa
     assert "reference_answer" not in agent_spec
     assert "expected_answer" not in agent_spec
     assert "gold_chain" not in agent_spec
+    assert "reference_artifacts" not in agent_spec
+    assert "supplemental_annotation" not in agent_spec
     assert agent_spec["attachments"][0]["original_relative_path"].startswith("attachments/")
     assert (agent_bundle / agent_spec["attachments"][0]["original_relative_path"]).exists()
     assert scan_agent_bundle_for_forbidden_keys(agent_bundle) == []
@@ -323,4 +400,4 @@ def test_prepare_agent_execution_bundle_removes_gt_and_retargets_manifest(tmp_pa
 
 def test_agent_spec_sanitizer_rejects_gt_keys() -> None:
     with pytest.raises(ValueError, match="forbidden GT keys"):
-        assert_agent_spec_is_sanitized({"case_id": "c1", "reference_answer": "secret"})
+        assert_agent_spec_is_sanitized({"case_id": "c1", "reference_artifacts": [{"path": "secret.png"}]})

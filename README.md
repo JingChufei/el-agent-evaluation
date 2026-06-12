@@ -20,6 +20,7 @@ PYTHONPATH=src python3 -m pytest -q
 
 - `EL Agent测试集_260529_筛选后.xlsx`：筛选后的正式测试集入口。
 - `测试集相关文件/`：测试集中所有文件型输入的附件根目录。
+- `D2 缺答案补充数据/`：专家补充的评测侧参考产物与补充断言，不作为 Agent 输入。
 - `EL agent 专业技能清单.xlsx`：垂域专业 skill registry。
 - `sessions/`：历史 OpenClaw session 日志，用于验证和调试 session parser。
 - `openclaw_vllm_responses.jsonl`：历史 vLLM SSE 日志，用于验证和调试 vLLM chunk parser。
@@ -95,14 +96,26 @@ flowchart TD
 - 将 D1 的 `文件状态` 转成 `target_state.required_files[]`。
 - 将 D4 的 `Skill` / `Tool` 转成 `gold_chain.stages[]`。
 - 将 D2 的标准答案转成 `expected_answer.assertions[]`；可解析数值时转为 `numeric_contains`，否则转为 `text_contains`。
-- 对 D2=是但缺少答案的 case 标记 `d2_expected_answer_missing`。
+- 对 D2=是但缺少答案的 case 标记 `d2_expected_answer_missing`；若 `D2 缺答案补充数据/manifest.json` 提供了补充决策，则按 manifest 重分类或补充 `expected_answer`。
 - 对 `是否可明确匹配的` 标注为 `否` 的 case 标记 `d3_candidate=true`，后续进入 D3 答案质量评估。
+- 对画图、生成 xlsx 曲线等产物型 case，补充截图会写入 `reference_artifacts[]`，作为 D1 产物质量参考，不传给真实 Agent。
 
 输出形式：
 
 - `outputs/pipeline/cases.jsonl`：完整标准化 `CaseSpec`，一行一个 case。
 - `outputs/pipeline/cases.csv`：便于人工检查的简化表。
 - `outputs/pipeline/data_quality_report.json`：数据质量与覆盖率报告。
+
+当前 6 条原 D2 缺答案 case 的处理决策：
+
+| case_id | 类型 | 决策 |
+| --- | --- | --- |
+| `EL260529F-0007` | RDKit 分子结构图 | 改为 D1 主判，参考图仅用于评测侧复核 |
+| `EL260529F-0009` | RDKit 带编号分子结构图 | 改为 D1 主判，参考图仅用于评测侧复核 |
+| `EL260529F-0015` | IVL xlsx 曲线 | 改为 D1 主判，参考截图用于曲线产物复核 |
+| `EL260529F-0017` | CE-J xlsx 曲线 | 改为 D1 主判，参考截图用于曲线产物复核 |
+| `EL260529F-0018` | LT xlsx 曲线 | 改为 D1 主判，参考截图用于曲线产物复核 |
+| `EL260529F-0020` | LT 曲线对比分析 | D1+D2：检查 xlsx 曲线产物，同时检查最终回答中的 LT97/LT95 与对比结论 |
 
 ### 2. 扫描与预检附件
 
@@ -327,7 +340,7 @@ Windows 执行机器可使用等价命令，例如 `py -m el_eval_pipeline.cli .
 
 - 按 `case_id` 将 CaseSpec 与 trajectory 对齐。
 - D1：读取 `target_state.required_files[]`，在 workspace 或 sandbox final snapshot 下检查目标产物是否存在。
-- D2：读取 `expected_answer.assertions[]`，在 `final_response` 中做数值或文本匹配。
+- D2：读取 `expected_answer.assertions[]`，在 `final_response` 中做数值或文本匹配；支持 `numeric_contains`、`text_contains`、`text_contains_any`、`text_contains_all`。
 - D3：仅对 `d3_candidate=true` 的 case 运行。先用固定 rubrics 拆成逐条 rubric 判断，再按权重汇总；core rubric 失败会阻断通过，默认通过阈值为 `0.75`。
 - D4：读取 `gold_chain.stages[]`，检查 trajectory 中是否覆盖 required skill/tool。
 - D5：检查 `tool_calls[]` 的工具名和参数 JSON 是否可解析。
