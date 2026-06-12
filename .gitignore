@@ -25,6 +25,7 @@ env/
 
 # Generated pipeline outputs
 outputs/
+agent_execution_bundle/
 
 # Runtime artifacts produced when executing the portable bundle
 execution_bundle/workspaces/*/inputs/

@@ -181,18 +181,28 @@ flowchart TD
 
 输入形式：
 
-- 每条 case 的 portable workspace。
+- 推荐输入为评估机器生成的脱敏执行包 `agent_execution_bundle/`。
+- 每条 case 的 agent-only portable workspace。
 - `prompt.txt`。
-- repo 中的原始附件目录 `测试集相关文件/`。
+- 脱敏后的 `agent_case_spec.json`。
+- 脱敏包中的 `attachments/` 附件副本。
 - `run_manifest.json` 中的 `case_id` / `run_id`。
-- 一条开发同事提供的 EL Agent / OpenClaw 启动命令。
+- 一条开发同事提供或本仓库内置的 EL Agent / OpenClaw 启动命令。
+
+防作弊约束：
+
+- 真实 Agent 执行机器不应 clone 或接收含 GT 的完整 repo。
+- `execution_bundle/cases.jsonl`、`execution_bundle/workspaces/<case_id>/case_spec.json`、原始 Excel、D3 rubric 输入等评估/标注文件只留在评估机器。
+- 执行机器只接收 `agent_execution_bundle/`。该包只包含 prompt、脱敏 spec、附件、runner 代码和执行清单。
+- `scripts/openclaw_runner.py` 会拒绝包含 `reference_answer`、`expected_answer`、`gold_chain`、`target_state` 等字段的 agent-visible spec，防止误把 GT 传给 Agent。
 
 处理逻辑：
 
-- `run-agent` 会逐条读取 `execution_bundle/run_manifest.json`。
-- bundle 中默认不提交重复附件副本，因此每条 case 执行前，runner 会根据 `case_spec.json` 中的 `original_relative_path` 自动把附件复制到当前 workspace 的 `inputs/`。
-- runner 会生成运行时 `runtime_case_spec.json`，其中包含 materialized 后的 `sandbox_path`、`sandbox_relative_path` 和 sha256；外部命令拿到的 `EL_EVAL_CASE_SPEC` 指向这个运行时文件。
-- 每条 case 在自己的 workspace 下执行，命令的工作目录就是 `execution_bundle/workspaces/<case_id>/`。
+- 评估机器先运行 `prepare-agent-execution-bundle`，从 full `execution_bundle/` 生成 GT-free `agent_execution_bundle/`，并执行泄露扫描。
+- `run-agent` 在执行机器上逐条读取 `agent_execution_bundle/run_manifest.json`。
+- 每条 case 执行前，runner 会根据脱敏 `agent_case_spec.json` 中的附件路径，把附件复制到当前 workspace 的 `inputs/`。
+- runner 会生成运行时 `runtime_case_spec.json`，其中只包含脱敏字段、materialized 后的 `sandbox_path`、`sandbox_relative_path` 和 sha256；外部命令拿到的 `EL_EVAL_CASE_SPEC` 指向这个运行时文件。
+- 每条 case 在自己的 workspace 下执行，命令的工作目录就是 `agent_execution_bundle/workspaces/<case_id>/`。
 - runner 会通过环境变量把执行上下文传给外部命令：
   - `EL_EVAL_CASE_ID`
   - `EL_EVAL_RUN_ID`
@@ -203,6 +213,7 @@ flowchart TD
   - `EL_EVAL_ATTACHMENTS_JSON`
 - 外部命令应读取 `EL_EVAL_PROMPT_PATH` 和 `EL_EVAL_CASE_SPEC`，调用 EL Agent / OpenClaw，并把结果写入 `EL_EVAL_AGENT_OUTPUT` 指向的 JSON 文件。
 - `EL_EVAL_AGENT_OUTPUT` 建议包含 `final_response`、`session_id`、`turn_id`、`steps[]`、`tool_calls[]`、`tool_results[]`、`model_calls[]`。
+- 本仓库内置的 `scripts/openclaw_runner.py` 会调用 `openclaw agent --local --json`，并解析 OpenClaw session JSONL，把真实 `tool_calls[]`、`tool_results[]`、`steps[]`、`model_calls[]` 回填到 `agent_output.json`。
 - 如果外部命令没有写完整 trajectory，runner 也会根据 `agent_output.json`、stdout/stderr 和 workspace 文件清单生成兜底 trajectory。
 - runner 会扫描执行前后的 workspace 文件，写入 `sandbox_initial_files[]` 和 `sandbox_final_files[]`；D1 可以基于这个文件清单检查产物，不强制要求开发同事打包完整 workspace。
 
@@ -228,12 +239,24 @@ flowchart TD
 
 示例命令：
 
+评估机器生成脱敏执行包：
+
+```bash
+PYTHONPATH=src python3 -m el_eval_pipeline.cli prepare-agent-execution-bundle \
+  --source-bundle-dir execution_bundle \
+  --output-dir agent_execution_bundle
+```
+
+执行机器运行真实 Agent：
+
 ```bash
 PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent \
-  --manifest execution_bundle/run_manifest.json \
+  --manifest agent_execution_bundle/run_manifest.json \
   --output outputs/pipeline/trajectories.jsonl \
-  --command 'python /path/to/openclaw_runner.py --case-spec "$EL_EVAL_CASE_SPEC" --prompt "$EL_EVAL_PROMPT_PATH" --output "$EL_EVAL_AGENT_OUTPUT"'
+  --command 'python scripts/openclaw_runner.py'
 ```
+
+Windows 执行机器可使用等价命令，例如 `py -m el_eval_pipeline.cli ...` 或 `.venv\Scripts\python.exe scripts\openclaw_runner.py`。`scripts/openclaw_runner.py` 默认从当前用户的 `~/.openclaw/agents/<agent>/sessions` 解析 OpenClaw session JSONL；如果真实业务机器的 OpenClaw 日志位置不同，可在 command 中追加 `--sessions-dir <path>`。
 
 外部 OpenClaw runner 的输出 JSON 最小格式：
 
@@ -356,10 +379,19 @@ PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent \
 portable 执行包目录：`execution_bundle/`。
 
 - `execution_bundle/cases.jsonl`：可跨机器使用的标准化 case，不包含本机绝对附件路径。
-- `execution_bundle/run_manifest.json`：开发同事直接用于 `run-agent` 的执行清单。
+- `execution_bundle/run_manifest.json`：评估机器上的 full 执行清单，用于生成脱敏执行包。
 - `execution_bundle/workspaces/<case_id>/prompt.txt`：每题 prompt。
-- `execution_bundle/workspaces/<case_id>/case_spec.json`：每题执行规格，附件通过 `original_relative_path` 指向 repo 内的 `测试集相关文件/`。
+- `execution_bundle/workspaces/<case_id>/case_spec.json`：每题 full 执行规格，包含评估标注/GT，只能留在评估机器。
 - `execution_bundle/workspaces/<case_id>/inputs/`：不入库，`run-agent` 在目标机器执行前自动生成。
+
+真实 Agent 执行包目录：`agent_execution_bundle/`，由 `prepare-agent-execution-bundle` 生成，不入库。
+
+- `agent_execution_bundle/run_manifest.json`：执行机器用于 `run-agent` 的清单。
+- `agent_execution_bundle/workspaces/<case_id>/prompt.txt`：每题 prompt。
+- `agent_execution_bundle/workspaces/<case_id>/agent_case_spec.json`：脱敏执行规格，不含 `reference_answer` / `expected_answer` / `gold_chain` / `target_state` 等 GT 字段。
+- `agent_execution_bundle/attachments/`：执行所需附件副本。
+- `agent_execution_bundle/leak_scan_report.json`：脱敏包泄露扫描报告，`status` 必须为 `passed`。
+- `agent_execution_bundle/src/`、`agent_execution_bundle/scripts/openclaw_runner.py`、`agent_execution_bundle/pyproject.toml`：执行机器运行所需代码。
 
 ## 常用命令
 
@@ -370,21 +402,22 @@ PYTHONPATH=src python3 -m el_eval_pipeline.cli parse-sessions
 PYTHONPATH=src python3 -m el_eval_pipeline.cli parse-vllm
 PYTHONPATH=src python3 -m el_eval_pipeline.cli prepare-d3-rubric-inputs
 PYTHONPATH=src python3 -m el_eval_pipeline.cli prepare-execution-bundle
+PYTHONPATH=src python3 -m el_eval_pipeline.cli prepare-agent-execution-bundle
 PYTHONPATH=src python3 -m el_eval_pipeline.cli summarize-d3-rubrics --d3-rubrics path/to/fixed_d3_rubrics.json
-PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent --manifest execution_bundle/run_manifest.json --command 'python /path/to/openclaw_runner.py'
+PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent --manifest agent_execution_bundle/run_manifest.json --command 'python scripts/openclaw_runner.py'
 PYTHONPATH=src python3 -m el_eval_pipeline.cli evaluate
 ```
 
-跨机器运行时，开发同事 clone repo 后可以直接执行：
+跨机器运行时，开发同事不应 clone full repo。评估机器生成脱敏包后，将 `agent_execution_bundle/` 交给真实执行机器。在执行机器的脱敏包根目录运行：
 
 ```bash
 PYTHONPATH=src python3 -m el_eval_pipeline.cli run-agent \
-  --manifest execution_bundle/run_manifest.json \
+  --manifest run_manifest.json \
   --output outputs/pipeline/trajectories.jsonl \
-  --command 'python /path/to/openclaw_runner.py --case-spec "$EL_EVAL_CASE_SPEC" --prompt "$EL_EVAL_PROMPT_PATH" --output "$EL_EVAL_AGENT_OUTPUT"'
+  --command 'python scripts/openclaw_runner.py'
 ```
 
-只有在筛选后 Excel 或附件发生变化时，才需要重新执行 `prepare-execution-bundle`。portable bundle 使用 repo 相对路径，例如 `workspace_repo_relative_path`、`prompt_repo_relative_path`、`original_relative_path`，不依赖本机绝对路径。
+只有在筛选后 Excel 或附件发生变化时，才需要重新执行 `prepare-execution-bundle` 和 `prepare-agent-execution-bundle`。full `execution_bundle/` 使用 repo 相对路径；agent-only bundle 使用包内相对路径，不依赖评估机器绝对路径。
 
 如果使用当前目录下的 `synthesize_rubrics.py` 合成 D3 rubrics，可以把 `outputs/pipeline/d3_rubric_inputs.json` 作为输入：
 

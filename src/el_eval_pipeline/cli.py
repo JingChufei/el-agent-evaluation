@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from .agent_bundle import prepare_agent_execution_bundle
 from .d3 import write_d3_rubric_inputs, write_d3_rubric_summary
 from .evaluators import evaluate_cases
 from .parsers import parse_sessions_dir, parse_vllm_responses
@@ -14,6 +15,7 @@ DEFAULT_EXCEL = Path("EL Agent测试集_260529_筛选后.xlsx")
 DEFAULT_ATTACHMENTS = Path("测试集相关文件")
 DEFAULT_OUTPUT = Path("outputs/pipeline")
 DEFAULT_BUNDLE = Path("execution_bundle")
+DEFAULT_AGENT_BUNDLE = Path("agent_execution_bundle")
 
 
 def _add_common_paths(parser: argparse.ArgumentParser) -> None:
@@ -103,6 +105,18 @@ def cmd_prepare_execution_bundle(args: argparse.Namespace) -> None:
     )
 
 
+def cmd_prepare_agent_execution_bundle(args: argparse.Namespace) -> None:
+    report = prepare_agent_execution_bundle(
+        source_bundle_dir=args.source_bundle_dir,
+        output_dir=args.output_dir,
+        include_code=not args.no_code,
+    )
+    print(
+        f"prepared GT-free agent execution bundle under {args.output_dir}; "
+        f"cases={report['case_count']} attachments={report['attachment_count']} leak_scan={report['status']}"
+    )
+
+
 def cmd_run_agent(args: argparse.Namespace) -> None:
     case_ids = set(args.case_id or []) or None
     trajectories = run_agent_cases(
@@ -182,6 +196,12 @@ def build_parser() -> argparse.ArgumentParser:
     bundle.add_argument("--skills-workbook", type=Path, default=Path("EL agent 专业技能清单.xlsx"))
     bundle.add_argument("--sessions-json", type=Path, default=Path("sessions/sessions.json"))
     bundle.set_defaults(func=cmd_prepare_execution_bundle)
+
+    agent_bundle = subparsers.add_parser("prepare-agent-execution-bundle", help="Build a GT-free bundle for the real Agent execution machine")
+    agent_bundle.add_argument("--source-bundle-dir", type=Path, default=DEFAULT_BUNDLE)
+    agent_bundle.add_argument("--output-dir", type=Path, default=DEFAULT_AGENT_BUNDLE)
+    agent_bundle.add_argument("--no-code", action="store_true", help="Do not copy src/, pyproject.toml, or scripts/openclaw_runner.py")
+    agent_bundle.set_defaults(func=cmd_prepare_agent_execution_bundle)
 
     run_agent = subparsers.add_parser("run-agent", help="Run prepared cases through an external EL Agent/OpenClaw command")
     run_agent.add_argument("--manifest", type=Path, default=DEFAULT_BUNDLE / "run_manifest.json")

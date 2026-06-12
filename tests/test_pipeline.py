@@ -3,6 +3,13 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
+from el_eval_pipeline.agent_bundle import (
+    assert_agent_spec_is_sanitized,
+    prepare_agent_execution_bundle,
+    scan_agent_bundle_for_forbidden_keys,
+)
 from el_eval_pipeline.attachments import build_attachment_manifest
 from el_eval_pipeline.d3 import build_d3_rubric_items, evaluate_d3, normalize_rubrics
 from el_eval_pipeline.evaluators import evaluate_cases
@@ -99,6 +106,8 @@ def test_session_parser_groups_tool_calls_and_results(tmp_path: Path) -> None:
 
 
 def test_vllm_parser_reconstructs_first_tool_call(tmp_path: Path) -> None:
+    if not (ROOT / "openclaw_vllm_responses.jsonl").exists():
+        pytest.skip("historical vLLM response fixture is not checked in")
     output = tmp_path / "vllm.jsonl"
     calls = parse_vllm_responses(ROOT / "openclaw_vllm_responses.jsonl", output)
     first = calls[0]
@@ -260,3 +269,58 @@ def test_run_agent_cases_uses_external_command_and_writes_trajectory(tmp_path: P
     assert any(item["path"] == "inputs/input.txt" for item in trajectory["sandbox_initial_files"])
     assert any(item["path"] == "result.txt" for item in trajectory["sandbox_final_files"])
     assert (output_dir / "trajectories.jsonl").exists()
+
+
+def test_prepare_agent_execution_bundle_removes_gt_and_retargets_manifest(tmp_path: Path) -> None:
+    attachment = tmp_path / "input.txt"
+    attachment.write_text("attachment", encoding="utf-8")
+    cases_path = tmp_path / "cases.jsonl"
+    source_bundle = tmp_path / "execution_bundle"
+    agent_bundle = tmp_path / "agent_execution_bundle"
+    case = {
+        "case_id": "c1",
+        "source_row": 1,
+        "task_type": "qa",
+        "user_query": "hello",
+        "reference_answer": "secret answer",
+        "expected_answer": {"type": "text_contains", "value": "secret"},
+        "gold_chain": {"stages": [{"steps": ["secret_tool"]}]},
+        "target_state": {"required_files": [{"path": "secret.txt"}]},
+        "raw_annotations": {"Tool": "secret_tool"},
+        "attachments": [
+            {
+                "name": "input.txt",
+                "original_relative_path": "input.txt",
+                "original_path": str(attachment),
+                "mime_type": "text/plain",
+                "sha256": "abcdef123456",
+            }
+        ],
+    }
+    cases_path.write_text(json.dumps(case, ensure_ascii=False) + "\n", encoding="utf-8")
+    prepare_case_workspaces(cases_path, source_bundle, repo_root=tmp_path, copy_attachments=False, portable_paths=True)
+
+    report = prepare_agent_execution_bundle(
+        source_bundle_dir=source_bundle,
+        output_dir=agent_bundle,
+        repo_root=tmp_path,
+        include_code=False,
+    )
+
+    agent_spec_path = agent_bundle / "workspaces" / "c1" / "agent_case_spec.json"
+    manifest = json.loads((agent_bundle / "run_manifest.json").read_text(encoding="utf-8"))
+    agent_spec = json.loads(agent_spec_path.read_text(encoding="utf-8"))
+
+    assert report["status"] == "passed"
+    assert manifest[0]["case_spec_repo_relative_path"] == "workspaces/c1/agent_case_spec.json"
+    assert "reference_answer" not in agent_spec
+    assert "expected_answer" not in agent_spec
+    assert "gold_chain" not in agent_spec
+    assert agent_spec["attachments"][0]["original_relative_path"].startswith("attachments/")
+    assert (agent_bundle / agent_spec["attachments"][0]["original_relative_path"]).exists()
+    assert scan_agent_bundle_for_forbidden_keys(agent_bundle) == []
+
+
+def test_agent_spec_sanitizer_rejects_gt_keys() -> None:
+    with pytest.raises(ValueError, match="forbidden GT keys"):
+        assert_agent_spec_is_sanitized({"case_id": "c1", "reference_answer": "secret"})

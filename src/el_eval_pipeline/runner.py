@@ -81,7 +81,11 @@ def _materialize_attachments(case: dict[str, Any], workspace: Path, repo_root: P
     for attachment in case.get("attachments", []):
         source = resolve_repo_path(attachment.get("original_relative_path"), repo_root)
         if source is None:
+            source = resolve_repo_path(attachment.get("agent_bundle_relative_path"), repo_root)
+        if source is None and attachment.get("original_path"):
             source = Path(attachment["original_path"])
+        if source is None:
+            raise FileNotFoundError(f"attachment source is not defined for {case['case_id']}: {attachment}")
         if not source.exists():
             raise FileNotFoundError(f"attachment source not found for {case['case_id']}: {source}")
 
