@@ -55,12 +55,29 @@ def _build_message(prompt: str, case_spec: dict[str, Any]) -> str:
 def _parse_openclaw_json(output: str) -> dict[str, Any]:
     text = output.strip()
     if text.startswith("{"):
-        return json.loads(text)
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            pass
 
-    start = text.find("{")
-    end = text.rfind("}")
-    if start >= 0 and end > start:
-        return json.loads(text[start : end + 1])
+    decoder = json.JSONDecoder()
+    candidates: list[dict[str, Any]] = []
+    for start, char in enumerate(text):
+        if char != "{":
+            continue
+        try:
+            parsed, end = decoder.raw_decode(text[start:])
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(parsed, dict):
+            continue
+        if not text[start + end :].strip():
+            return parsed
+        candidates.append(parsed)
+
+    for parsed in reversed(candidates):
+        if "payloads" in parsed or "meta" in parsed:
+            return parsed
 
     raise ValueError("openclaw did not return JSON")
 
