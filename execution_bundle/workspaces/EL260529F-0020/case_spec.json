@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "lt-lifetime-plotter",
   "skill_description": "生成寿命、LT95、亮度衰减、电压变化曲线。",
-  "user_query": "请对比分析这两个器件的LT曲线数据",
+  "user_query": "请使用 技能 skill 完成任务: 请对比分析这两个器件的LT曲线数据",
   "input_file_cell": "CH167-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-7-3-CC0.79mA.csv\n\nCH168-HR-CIC2-260331-HRF494WCJ094 030031-XBY-260401-8-1-CC0.79mA.csv",
   "attachments": [
     {

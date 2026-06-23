@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "ivl-chart-generator",
   "skill_description": "从 OLED 实验 Excel 生成 IVL 曲线工作簿。",
-  "user_query": "画出12-P2, 13-P3, 14-P2 的CE-J曲线",
+  "user_query": "请使用 技能 skill 完成任务: 画出12-P2, 13-P3, 14-P2 的CE-J曲线",
   "input_file_cell": "TE-SHB-96测试原始数据.xlsx",
   "attachments": [
     {

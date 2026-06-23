@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "ijp-blue-material-advisor",
   "skill_description": "IJP 蓝光 OLED 材料设计与优化建议。",
-  "user_query": "DABNA-1在B原子的对位连接二苯胺单元，会对分子整体结构有何影响？",
+  "user_query": "请使用 技能 skill 完成任务: DABNA-1在B原子的对位连接二苯胺单元，会对分子整体结构有何影响？",
   "input_file_cell": "",
   "attachments": [],
   "attachment_errors": [],

@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "ijp-blue-material-advisor",
   "skill_description": "IJP 蓝光 OLED 材料设计与优化建议。",
-  "user_query": "如何设计BH分子，帮助溶液法IJP OLED的EML中的BD分子获得更高水平取向度？",
+  "user_query": "请使用 技能 skill 完成任务: 如何设计BH分子，帮助溶液法IJP OLED的EML中的BD分子获得更高水平取向度？",
   "input_file_cell": "",
   "attachments": [],
   "attachment_errors": [],

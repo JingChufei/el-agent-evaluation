@@ -35,6 +35,9 @@ def test_filtered_dataset_preprocesses_35_cases_and_resolves_attachments() -> No
     assert all(not entry["basename"].startswith("~$") for entry in manifest)
     assert cases[0]["attachments"][0]["name"] == "EL260529F-0001 输入图片.png"
     assert cases[0]["attachments"][0]["mime_type"] == "image/png"
+    assert cases[0]["user_query"].startswith("请使用 技能 skill 完成任务: ")
+    no_skill_case = next(case for case in cases if case["case_id"] == "EL260529F-0029")
+    assert not no_skill_case["user_query"].startswith("请使用 技能 ")
     first_assertions = cases[0]["expected_answer"]["assertions"]
     assert first_assertions[0]["type"] == "numeric_contains"
     assert first_assertions[0]["label"] == "HOMO"

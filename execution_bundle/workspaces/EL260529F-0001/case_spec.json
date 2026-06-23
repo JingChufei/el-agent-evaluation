@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "ept-service-user",
   "skill_description": "发光材料能级预测，支持 SMILES/CSV/分子结构图。",
-  "user_query": "请将图片中的BD分子式转成SMILES表达式，并进行能级预测。",
+  "user_query": "请使用 技能 skill 完成任务: 请将图片中的BD分子式转成SMILES表达式，并进行能级预测。",
   "input_file_cell": "EL260529F-0001 输入图片.png",
   "attachments": [
     {

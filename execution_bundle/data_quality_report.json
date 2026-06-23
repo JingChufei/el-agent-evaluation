@@ -21,84 +21,84 @@
       "case_id": "EL260529F-0010",
       "source_row": 12,
       "skill": "ijp-blue-material-advisor",
-      "user_query": "在当前的印刷蓝光器件中，降低b-prime的HOMO能级可能会带来效果和风险？",
+      "user_query": "请使用 技能 skill 完成任务: 在当前的印刷蓝光器件中，降低b-prime的HOMO能级可能会带来效果和风险？",
       "d3_priority": "primary"
     },
     {
       "case_id": "EL260529F-0011",
       "source_row": 13,
       "skill": "ijp-blue-material-advisor",
-      "user_query": "DABNA-1在B原子的对位连接二苯胺单元，会对分子整体结构有何影响？",
+      "user_query": "请使用 技能 skill 完成任务: DABNA-1在B原子的对位连接二苯胺单元，会对分子整体结构有何影响？",
       "d3_priority": "primary"
     },
     {
       "case_id": "EL260529F-0012",
       "source_row": 14,
       "skill": "ijp-blue-material-advisor",
-      "user_query": "如何设计BH分子，帮助溶液法IJP OLED的EML中的BD分子获得更高水平取向度？",
+      "user_query": "请使用 技能 skill 完成任务: 如何设计BH分子，帮助溶液法IJP OLED的EML中的BD分子获得更高水平取向度？",
       "d3_priority": "primary"
     },
     {
       "case_id": "EL260529F-0013",
       "source_row": 15,
       "skill": "ijp-blue-oled-rca",
-      "user_query": "相同一套材料体系下，蓝光 TOP emission 器件比 bottom emission器件的J25 寿命低 30-40% 的原因可能是什么？",
+      "user_query": "请使用 技能 skill 完成任务: 相同一套材料体系下，蓝光 TOP emission 器件比 bottom emission器件的J25 寿命低 30-40% 的原因可能是什么？",
       "d3_priority": "primary"
     },
     {
       "case_id": "EL260529F-0014",
       "source_row": 16,
       "skill": "ijp-blue-oled-rca",
-      "user_query": "使用根因分析技能基于以前的经验和最近的验证实验结果分析B-prime层研发没有达到预期效果的原因",
+      "user_query": "请使用 技能 skill 完成任务: 使用根因分析技能基于以前的经验和最近的验证实验结果分析B-prime层研发没有达到预期效果的原因",
       "d3_priority": "primary"
     },
     {
       "case_id": "EL260529F-0022",
       "source_row": 24,
       "skill": "private-document-parser",
-      "user_query": "请分析我接下来上传的一份报告，解释为什么EML 厚度变化没有明显改变发光主体光谱，峰位和半峰宽？",
+      "user_query": "请使用 技能 skill 完成任务: 请分析我接下来上传的一份报告，解释为什么EML 厚度变化没有明显改变发光主体光谱，峰位和半峰宽？",
       "d3_priority": "secondary_to_d1"
     },
     {
       "case_id": "EL260529F-0023",
       "source_row": 25,
       "skill": "private-document-parser",
-      "user_query": "请帮我总结下面这份报告的主要信息，要求逻辑框架清晰，关键数据充分。",
+      "user_query": "请使用 技能 skill 完成任务: 请帮我总结下面这份报告的主要信息，要求逻辑框架清晰，关键数据充分。",
       "d3_priority": "secondary_to_d1"
     },
     {
       "case_id": "EL260529F-0024",
       "source_row": 26,
       "skill": "ijp-blue-oled-rca",
-      "user_query": "请解读接下来上传的这份报告， 从根因分析的角度，剖析说明厚度变化对BI和寿命变化影响的底层原因。",
+      "user_query": "请使用 技能 skill 完成任务: 请解读接下来上传的这份报告， 从根因分析的角度，剖析说明厚度变化对BI和寿命变化影响的底层原因。",
       "d3_priority": "primary"
     },
     {
       "case_id": "EL260529F-0025",
       "source_row": 27,
       "skill": "gh-blend-design-advisor",
-      "user_query": "针对我即将发送的一份报告，请调用“gh-blend-design-advisor”这个skill进行分析和解读。然后输出⼀个最优绿光 EML 层组合⽅案，表格列出。要求：(1) ⻓寿命⽅案 效率>210 cd/A、LT95@J25>90h；(2) ⾼效率⽅案 效率>240 cd/A、LT95@J25>70h。",
+      "user_query": "请使用 技能 skill 完成任务: 针对我即将发送的一份报告，请调用“gh-blend-design-advisor”这个skill进行分析和解读。然后输出⼀个最优绿光 EML 层组合⽅案，表格列出。要求：(1) ⻓寿命⽅案 效率>210 cd/A、LT95@J25>90h；(2) ⾼效率⽅案 效率>240 cd/A、LT95@J25>70h。",
       "d3_priority": "primary"
     },
     {
       "case_id": "EL260529F-0026",
       "source_row": 28,
       "skill": "molecular-structure-generator",
-      "user_query": "请根据以下分子和条件，生成5个新的分子。\n“c1ccc(N2c3ccccc3B3c4ccccc4N(c4ccccc4)c4cccc2c43)cc1”；\"HOMO\": -5.4,\n\"LUMO\": -2.45,\n\"S1\": 2.74,\n\"T1\": 2.93",
+      "user_query": "请使用 技能 skill 完成任务: 请根据以下分子和条件，生成5个新的分子。\n“c1ccc(N2c3ccccc3B3c4ccccc4N(c4ccccc4)c4cccc2c43)cc1”；\"HOMO\": -5.4,\n\"LUMO\": -2.45,\n\"S1\": 2.74,\n\"T1\": 2.93",
       "d3_priority": "primary"
     },
     {
       "case_id": "EL260529F-0027",
       "source_row": 29,
       "skill": "molecular-structure-generator",
-      "user_query": "请根据以下分子和条件，生成5个新的分子。“c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1”\n\"HOMO\": -5.55,\n\"LUMO\": -2.73,\n\"S1\": 3.09,\n\"T1\": 1.65",
+      "user_query": "请使用 技能 skill 完成任务: 请根据以下分子和条件，生成5个新的分子。“c1ccc(-c2ccc(-c3c4ccccc4c(-c4cccc5oc6ccccc6c45)c4ccccc34)c3oc4ccccc4c23)cc1”\n\"HOMO\": -5.55,\n\"LUMO\": -2.73,\n\"S1\": 3.09,\n\"T1\": 1.65",
       "d3_priority": "primary"
     },
     {
       "case_id": "EL260529F-0028",
       "source_row": 30,
       "skill": "molecular-structure-generator",
-      "user_query": "请根据以下分子和条件，生成5个新的分子。 \"c1ccc2c(-c3ccc4c(c3)Sc3c(ccc5ccc6ccccc6c35)O4)cccc2c1“\n\"HOMO\": -5.20,\n\"LUMO\": -2.70,\n\"S1\": 2.93,\n\"T1\": 2.54",
+      "user_query": "请使用 技能 skill 完成任务: 请根据以下分子和条件，生成5个新的分子。 \"c1ccc2c(-c3ccc4c(c3)Sc3c(ccc5ccc6ccccc6c35)O4)cccc2c1“\n\"HOMO\": -5.20,\n\"LUMO\": -2.70,\n\"S1\": 2.93,\n\"T1\": 2.54",
       "d3_priority": "primary"
     },
     {

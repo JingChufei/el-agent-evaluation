@@ -15,6 +15,8 @@ from .paths import as_posix_relative
 from .registry import load_domain_skill_registry, load_runtime_skill_registry
 
 SUPPLEMENTAL_ANNOTATIONS_DIR = Path("D2 缺答案补充数据")
+SKILL_QUERY_PREFIX = "请使用 技能 skill 完成任务: "
+SKILL_QUERY_PREFIX_PATTERN = re.compile(r"^请使用\s+技能\s+.+?\s+完成任务[:：]\s*")
 
 
 def _truthy_yes(value: Any) -> bool:
@@ -23,6 +25,14 @@ def _truthy_yes(value: Any) -> bool:
 
 def _truthy_no(value: Any) -> bool:
     return normalize_space(value) == "否"
+
+
+def add_skill_instruction_to_query(user_query: str, requires_skill: bool) -> str:
+    if not requires_skill:
+        return user_query
+    stripped_query = user_query.strip()
+    stripped_query = SKILL_QUERY_PREFIX_PATTERN.sub("", stripped_query)
+    return f"{SKILL_QUERY_PREFIX}{stripped_query}"
 
 
 def _cell_map(headers: list[str], row_values: tuple[Any, ...]) -> dict[str, str]:
@@ -232,6 +242,9 @@ def load_cases_from_excel(
             evaluable_dimensions.append("D3")
         if gold_chain:
             evaluable_dimensions.append("D4")
+        requires_skill = _truthy_yes(row.get("需要skill", ""))
+        skill_name = row.get("关于skill", "")
+        user_query = add_skill_instruction_to_query(row.get("输入（文本）", ""), requires_skill)
 
         case = {
                 "case_id": case_id,
@@ -239,10 +252,10 @@ def load_cases_from_excel(
                 "source_sheet": sheet.title,
                 "source_row": excel_row,
                 "task_type": task_type or row.get("任务类型", ""),
-                "requires_skill": _truthy_yes(row.get("需要skill", "")),
-                "skill_name": row.get("关于skill", ""),
+                "requires_skill": requires_skill,
+                "skill_name": skill_name,
                 "skill_description": row.get("skill描述", ""),
-                "user_query": row.get("输入（文本）", ""),
+                "user_query": user_query,
                 "input_file_cell": row.get("输入（图片/文件）", ""),
                 "attachments": attachments,
                 "attachment_errors": errors,

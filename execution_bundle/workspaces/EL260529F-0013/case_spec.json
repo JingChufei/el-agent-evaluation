@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "ijp-blue-oled-rca",
   "skill_description": "IJP/溶液法蓝光 OLED 器件失效与性能根因分析。",
-  "user_query": "相同一套材料体系下，蓝光 TOP emission 器件比 bottom emission器件的J25 寿命低 30-40% 的原因可能是什么？",
+  "user_query": "请使用 技能 skill 完成任务: 相同一套材料体系下，蓝光 TOP emission 器件比 bottom emission器件的J25 寿命低 30-40% 的原因可能是什么？",
   "input_file_cell": "",
   "attachments": [],
   "attachment_errors": [],

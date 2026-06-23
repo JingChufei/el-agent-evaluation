@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "ijp-blue-material-advisor",
   "skill_description": "IJP 蓝光 OLED 材料设计与优化建议。",
-  "user_query": "在当前的印刷蓝光器件中，降低b-prime的HOMO能级可能会带来效果和风险？",
+  "user_query": "请使用 技能 skill 完成任务: 在当前的印刷蓝光器件中，降低b-prime的HOMO能级可能会带来效果和风险？",
   "input_file_cell": "",
   "attachments": [],
   "attachment_errors": [],

@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "ijp-blue-oled-rca",
   "skill_description": "",
-  "user_query": "使用根因分析技能基于以前的经验和最近的验证实验结果分析B-prime层研发没有达到预期效果的原因",
+  "user_query": "请使用 技能 skill 完成任务: 使用根因分析技能基于以前的经验和最近的验证实验结果分析B-prime层研发没有达到预期效果的原因",
   "input_file_cell": "",
   "attachments": [],
   "attachment_errors": [],

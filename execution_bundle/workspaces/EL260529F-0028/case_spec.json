@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "molecular-structure-generator",
   "skill_description": "调用分子生成模型根据约束条件生成OLED分子",
-  "user_query": "请根据以下分子和条件，生成5个新的分子。 \"c1ccc2c(-c3ccc4c(c3)Sc3c(ccc5ccc6ccccc6c35)O4)cccc2c1“\n\"HOMO\": -5.20,\n\"LUMO\": -2.70,\n\"S1\": 2.93,\n\"T1\": 2.54",
+  "user_query": "请使用 技能 skill 完成任务: 请根据以下分子和条件，生成5个新的分子。 \"c1ccc2c(-c3ccc4c(c3)Sc3c(ccc5ccc6ccccc6c35)O4)cccc2c1“\n\"HOMO\": -5.20,\n\"LUMO\": -2.70,\n\"S1\": 2.93,\n\"T1\": 2.54",
   "input_file_cell": "",
   "attachments": [],
   "attachment_errors": [],

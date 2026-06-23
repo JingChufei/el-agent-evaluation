@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "rdkit-molecule-drawer",
   "skill_description": "用 RDKit 根据 SMILES 绘制分子结构图。",
-  "user_query": "请你画出带原子编号的 DABNA-1 分子结构， 以图片的形式发给我。",
+  "user_query": "请使用 技能 skill 完成任务: 请你画出带原子编号的 DABNA-1 分子结构， 以图片的形式发给我。",
   "input_file_cell": "",
   "attachments": [],
   "attachment_errors": [],

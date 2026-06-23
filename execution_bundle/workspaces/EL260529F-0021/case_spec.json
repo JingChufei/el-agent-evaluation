@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "private-document-parser",
   "skill_description": "解析图片、Word、PPT、Excel、PDF私有文档。",
-  "user_query": "请分析请解读接下来上传的这份报告，EML厚度的变化对器件的哪些性能产生了影响。",
+  "user_query": "请使用 技能 skill 完成任务: 请分析请解读接下来上传的这份报告，EML厚度的变化对器件的哪些性能产生了影响。",
   "input_file_cell": "EML膜层厚度对比实验.pptx",
   "attachments": [
     {

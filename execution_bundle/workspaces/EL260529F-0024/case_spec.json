@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "ijp-blue-oled-rca",
   "skill_description": "IJP/溶液法蓝光 OLED 器件失效与性能根因分析。",
-  "user_query": "请解读接下来上传的这份报告， 从根因分析的角度，剖析说明厚度变化对BI和寿命变化影响的底层原因。",
+  "user_query": "请使用 技能 skill 完成任务: 请解读接下来上传的这份报告， 从根因分析的角度，剖析说明厚度变化对BI和寿命变化影响的底层原因。",
   "input_file_cell": "EML膜层厚度对比实验.pptx",
   "attachments": [
     {

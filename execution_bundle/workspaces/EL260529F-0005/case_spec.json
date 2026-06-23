@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "setfos-user",
   "skill_description": "Setfos光学模拟",
-  "user_query": "请用红光的标准器件对应的par文件进行光学仿真，并返回结果。",
+  "user_query": "请使用 技能 skill 完成任务: 请用红光的标准器件对应的par文件进行光学仿真，并返回结果。",
   "input_file_cell": "",
   "attachments": [],
   "attachment_errors": [],

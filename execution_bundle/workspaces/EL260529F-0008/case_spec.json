@@ -7,7 +7,7 @@
   "requires_skill": true,
   "skill_name": "rdkit-molecule-drawer",
   "skill_description": "用 RDKit 根据 SMILES 绘制分子结构图。",
-  "user_query": "O=C(NCC1=CC=CC=C1)C2=CC=C(N3CCN(C4=CC=CC=C4)CC3)C=C2\n\n这是一个什么分子？",
+  "user_query": "请使用 技能 skill 完成任务: O=C(NCC1=CC=CC=C1)C2=CC=C(N3CCN(C4=CC=CC=C4)CC3)C=C2\n\n这是一个什么分子？",
   "input_file_cell": "",
   "attachments": [],
   "attachment_errors": [],
