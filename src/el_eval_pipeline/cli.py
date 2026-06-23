@@ -63,6 +63,8 @@ def cmd_evaluate(args: argparse.Namespace) -> None:
         d3_judge_base_url=args.d3_judge_base_url,
         d3_judge_api_key=args.d3_judge_api_key,
         d3_judge_model=args.d3_judge_model,
+        d3_judge_timeout_seconds=args.d3_judge_timeout_seconds,
+        d3_judge_max_tokens=args.d3_judge_max_tokens,
         d3_pass_threshold=args.d3_pass_threshold,
     )
     print(f"evaluated {len(rows)} cases to {args.output_dir}")
@@ -177,6 +179,8 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate.add_argument("--d3-judge-base-url", default=None, help="OpenAI-compatible judge base URL; can also use D3_JUDGE_BASE_URL")
     evaluate.add_argument("--d3-judge-api-key", default=None, help="judge API key; can also use D3_JUDGE_API_KEY")
     evaluate.add_argument("--d3-judge-model", default=None, help="judge model; can also use D3_JUDGE_MODEL")
+    evaluate.add_argument("--d3-judge-timeout-seconds", type=int, default=None, help="per-rubric judge request timeout; can also use D3_JUDGE_TIMEOUT_SECONDS")
+    evaluate.add_argument("--d3-judge-max-tokens", type=int, default=None, help="judge response max_tokens; can also use D3_JUDGE_MAX_TOKENS")
     evaluate.add_argument("--d3-pass-threshold", type=float, default=0.75)
     evaluate.set_defaults(func=cmd_evaluate)
 

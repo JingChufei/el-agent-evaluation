@@ -11,8 +11,8 @@ from el_eval_pipeline.agent_bundle import (
     scan_agent_bundle_for_forbidden_keys,
 )
 from el_eval_pipeline.attachments import build_attachment_manifest
-from el_eval_pipeline.d3 import build_d3_rubric_items, evaluate_d3, normalize_rubrics
-from el_eval_pipeline.evaluators import evaluate_cases, evaluate_d1
+from el_eval_pipeline.d3 import build_d3_rubric_items, evaluate_d3, make_judge_client_from_config, normalize_rubrics
+from el_eval_pipeline.evaluators import evaluate_cases, evaluate_d1, evaluate_d4
 from el_eval_pipeline.parsers import parse_session_file, parse_vllm_responses
 from el_eval_pipeline.preprocess import load_cases_from_excel
 from el_eval_pipeline.runner import run_agent_cases
@@ -241,6 +241,19 @@ def test_d3_evaluate_cases_blocks_without_judge_config(tmp_path: Path) -> None:
     assert summary["dimensions"]["D3"]["blocked"] == 1
 
 
+def test_d3_judge_client_accepts_timeout_and_max_tokens() -> None:
+    client = make_judge_client_from_config(
+        base_url="http://judge.example/v1",
+        api_key="EMPTY",
+        model="judge-model",
+        timeout=600,
+        max_tokens=256,
+    )
+    assert client is not None
+    assert client.timeout == 600
+    assert client.max_tokens == 256
+
+
 def test_d2_supports_any_and_all_text_assertions(tmp_path: Path) -> None:
     cases_path = tmp_path / "cases.jsonl"
     trajectories_path = tmp_path / "trajectories.jsonl"
@@ -269,6 +282,204 @@ def test_d2_supports_any_and_all_text_assertions(tmp_path: Path) -> None:
     assert d2_result["status"] == "pass"
 
 
+def test_evaluation_summary_reports_d8_scores(tmp_path: Path) -> None:
+    cases_path = tmp_path / "cases.jsonl"
+    trajectories_path = tmp_path / "trajectories.jsonl"
+    output_dir = tmp_path / "out"
+    cases = [
+        {"case_id": "c1", "source_row": 1, "skill_name": "s", "d2_enabled": False, "d3_candidate": False, "target_state": None, "gold_chain": None},
+        {"case_id": "c2", "source_row": 2, "skill_name": "s", "d2_enabled": False, "d3_candidate": False, "target_state": None, "gold_chain": None},
+    ]
+    trajectories = [
+        {
+            "case_id": "c1",
+            "final_response": "Alpha 100",
+            "tool_results": [{"content": "Alpha 100"}],
+            "tool_calls": [],
+            "steps": [],
+        },
+        {
+            "case_id": "c2",
+            "final_response": "Alpha 100 Beta 200",
+            "tool_results": [{"content": "Alpha 100"}],
+            "tool_calls": [],
+            "steps": [],
+        },
+    ]
+    cases_path.write_text("\n".join(json.dumps(case, ensure_ascii=False) for case in cases) + "\n", encoding="utf-8")
+    trajectories_path.write_text("\n".join(json.dumps(trajectory, ensure_ascii=False) for trajectory in trajectories) + "\n", encoding="utf-8")
+
+    evaluate_cases(cases_path, output_dir, trajectories_path)
+    summary = json.loads((output_dir / "evaluation_summary.json").read_text(encoding="utf-8"))
+    d8_summary = summary["dimensions"]["D8"]
+    assert d8_summary["pass"] == 1
+    assert d8_summary["fail"] == 1
+    assert d8_summary["statuses"] == {"fail": 1, "pass": 1}
+    assert d8_summary["scores"]["scored_count"] == 2
+    assert d8_summary["scores"]["average"] == 0.75
+
+
+def test_d4_matches_required_skills_and_tools_inside_steps_and_tool_calls() -> None:
+    case = {
+        "case_id": "c1",
+        "gold_chain": {
+            "stages": [
+                {"type": "unordered", "steps": ["ivl-chart-generator"], "step_type": "skill"},
+                {"type": "unordered", "steps": ["ivl_pipeline.py"], "step_type": "tool"},
+            ]
+        },
+    }
+    trajectory = {
+        "case_id": "c1",
+        "steps": [
+            {
+                "type": "tool",
+                "name": "read",
+                "args": {"path": r"C:\Users\whtcl\.agents\skills\ivl-chart-generator\SKILL.md"},
+            }
+        ],
+        "tool_calls": [
+            {
+                "name": "exec",
+                "args": {"command": "python scripts/ivl_pipeline.py --input raw.xlsx --output-dir outputs"},
+            }
+        ],
+    }
+    result = evaluate_d4(case, trajectory)
+    assert result["status"] == "pass"
+    assert result["details"]["matched"]["ivl-chart-generator"]["source"] == "step"
+    assert result["details"]["matched"]["ivl_pipeline.py"]["source"] == "tool_call"
+    assert result["details"]["skills"]["status"] == "pass"
+    assert result["details"]["skills"]["score"] == 1.0
+    assert result["details"]["tools"]["status"] == "pass"
+    assert result["details"]["tools"]["score"] == 1.0
+
+
+def test_d4_reports_skill_and_tool_subscores_separately() -> None:
+    case = {
+        "case_id": "c1",
+        "gold_chain": {
+            "stages": [
+                {"type": "unordered", "steps": ["ivl-chart-generator"], "step_type": "skill"},
+                {"type": "unordered", "steps": ["ivl_pipeline.py"], "step_type": "tool"},
+            ]
+        },
+    }
+    trajectory = {
+        "case_id": "c1",
+        "steps": [
+            {
+                "type": "tool",
+                "name": "read",
+                "args": {"path": r"C:\Users\whtcl\.agents\skills\ivl-chart-generator\SKILL.md"},
+            }
+        ],
+        "tool_calls": [],
+    }
+    result = evaluate_d4(case, trajectory)
+    assert result["status"] == "fail"
+    assert result["score"] == 0.5
+    assert result["details"]["skills"]["status"] == "pass"
+    assert result["details"]["skills"]["missing"] == []
+    assert result["details"]["tools"]["status"] == "fail"
+    assert result["details"]["tools"]["missing"] == ["ivl_pipeline.py"]
+
+
+def test_d4_weights_skill_and_tool_groups_equally() -> None:
+    case = {
+        "case_id": "c1",
+        "gold_chain": {
+            "stages": [
+                {"type": "unordered", "steps": ["ijp-blue-oled-rca"], "step_type": "skill"},
+                {
+                    "type": "unordered",
+                    "steps": ["root_cause_scoring.py", "contribution_analysis.py", "evidence_weight_update.py"],
+                    "step_type": "tool",
+                },
+            ]
+        },
+    }
+    trajectory = {
+        "case_id": "c1",
+        "steps": [
+            {
+                "type": "tool",
+                "name": "read",
+                "args": {"path": r"C:\Users\whtcl\.agents\skills\ijp-blue-oled-rca\SKILL.md"},
+            }
+        ],
+        "tool_calls": [],
+    }
+    result = evaluate_d4(case, trajectory)
+    assert result["status"] == "fail"
+    assert result["score"] == 0.5
+    assert result["details"]["skills"]["score"] == 1.0
+    assert result["details"]["tools"]["score"] == 0.0
+
+
+def test_evaluation_summary_reports_d4_skill_and_tool_subscores(tmp_path: Path) -> None:
+    cases_path = tmp_path / "cases.jsonl"
+    trajectories_path = tmp_path / "trajectories.jsonl"
+    output_dir = tmp_path / "out"
+    cases = [
+        {
+            "case_id": "c1",
+            "source_row": 1,
+            "skill_name": "ivl-chart-generator",
+            "d2_enabled": False,
+            "d3_candidate": False,
+            "target_state": None,
+            "gold_chain": {
+                "stages": [
+                    {"type": "unordered", "steps": ["ivl-chart-generator"], "step_type": "skill"},
+                    {"type": "unordered", "steps": ["ivl_pipeline.py"], "step_type": "tool"},
+                ]
+            },
+        },
+        {
+            "case_id": "c2",
+            "source_row": 2,
+            "skill_name": "ivl-chart-generator",
+            "d2_enabled": False,
+            "d3_candidate": False,
+            "target_state": None,
+            "gold_chain": {
+                "stages": [
+                    {"type": "unordered", "steps": ["ivl-chart-generator"], "step_type": "skill"},
+                    {"type": "unordered", "steps": ["ivl_pipeline.py"], "step_type": "tool"},
+                ]
+            },
+        },
+    ]
+    trajectories = [
+        {
+            "case_id": "c1",
+            "final_response": "",
+            "steps": [{"name": "read", "args": {"path": r"C:\.agents\skills\ivl-chart-generator\SKILL.md"}}],
+            "tool_calls": [{"name": "exec", "args": {"command": "python scripts/ivl_pipeline.py"}}],
+            "tool_results": [],
+        },
+        {
+            "case_id": "c2",
+            "final_response": "",
+            "steps": [{"name": "read", "args": {"path": r"C:\.agents\skills\ivl-chart-generator\SKILL.md"}}],
+            "tool_calls": [],
+            "tool_results": [],
+        },
+    ]
+    cases_path.write_text("\n".join(json.dumps(case, ensure_ascii=False) for case in cases) + "\n", encoding="utf-8")
+    trajectories_path.write_text("\n".join(json.dumps(trajectory, ensure_ascii=False) for trajectory in trajectories) + "\n", encoding="utf-8")
+
+    evaluate_cases(cases_path, output_dir, trajectories_path)
+    summary = json.loads((output_dir / "evaluation_summary.json").read_text(encoding="utf-8"))
+    d4 = summary["dimensions"]["D4"]
+    assert d4["scores"]["average"] == 0.75
+    assert d4["subscores"]["skills"]["average"] == 1.0
+    assert d4["subscores"]["skills"]["scored_count"] == 2
+    assert d4["subscores"]["tools"]["average"] == 0.5
+    assert d4["subscores"]["tools"]["scored_count"] == 2
+
+
 def test_d1_includes_reference_artifact_details() -> None:
     case = {
         "case_id": "c1",
@@ -288,6 +499,65 @@ def test_d1_includes_reference_artifact_details() -> None:
     assert result["status"] == "pass"
     assert result["details"]["reference_artifact_count"] == 1
     assert result["details"]["needs_artifact_quality_review"] is True
+
+
+def test_d1_matches_required_files_from_tool_evidence() -> None:
+    case = {
+        "case_id": "c1",
+        "target_state": {
+            "required_files": [
+                {"path": "generated_par/<color>_<run_id>.par"},
+                {"path": "reports/<color>_<run_id>_metrics.json"},
+                {"path": "optical_results/<run_id>/opt2D.txt"},
+            ]
+        },
+    }
+    trajectory = {
+        "case_id": "c1",
+        "sandbox_final_files": [{"path": "agent_output.json"}],
+        "tool_calls": [
+            {
+                "name": "exec",
+                "args": {
+                    "command": r"setfos-kernel.exe --par-file C:\runs\generated_par\R_001.par --output-dir C:\runs\optical_results\R_001"
+                },
+            }
+        ],
+        "tool_results": [
+            {
+                "content": r'{"metrics_path":"C:\\runs\\reports\\R_001_metrics.json","output":"C:\\runs\\optical_results\\R_001\\opt2D.txt"}'
+            }
+        ],
+    }
+    result = evaluate_d1(case, trajectory)
+    assert result["status"] == "pass"
+    assert result["score"] == 1.0
+    assert sorted(result["details"]["matched"]) == [
+        "generated_par/*_*.par",
+        "optical_results/*/opt2D.txt",
+        "reports/*_*_metrics.json",
+    ]
+
+
+def test_d1_scores_partial_file_matches_from_tool_evidence() -> None:
+    case = {
+        "case_id": "c1",
+        "target_state": {
+            "required_files": [
+                {"path": "汇总.xlsx"},
+                {"path": "TE-SHB-96测试原始数据_IVL曲线.xlsx"},
+            ]
+        },
+    }
+    trajectory = {
+        "case_id": "c1",
+        "sandbox_final_files": [{"path": "agent_output.json"}],
+        "tool_results": [{"content": r"output file: C:\workspace\outputs\汇总.xlsx"}],
+    }
+    result = evaluate_d1(case, trajectory)
+    assert result["status"] == "fail"
+    assert result["score"] == 0.5
+    assert result["details"]["missing"] == ["TE-SHB-96测试原始数据_IVL曲线.xlsx"]
 
 
 def test_run_agent_cases_uses_external_command_and_writes_trajectory(tmp_path: Path) -> None:

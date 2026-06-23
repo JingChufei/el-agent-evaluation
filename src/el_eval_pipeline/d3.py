@@ -218,14 +218,16 @@ class OpenAICompatibleJudgeClient:
         base_url: str,
         api_key: str,
         model: str,
-        timeout: int = 120,
+        timeout: int = 300,
         temperature: float = 0.0,
+        max_tokens: int = 512,
     ) -> None:
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.model = model
         self.timeout = timeout
         self.temperature = temperature
+        self.max_tokens = max_tokens
 
     def judge_rubric(self, *, query: str, reference_answer: str, final_response: str, rubric: dict[str, Any]) -> dict[str, Any]:
         prompt = build_d3_judge_prompt(
@@ -238,6 +240,7 @@ class OpenAICompatibleJudgeClient:
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": self.temperature,
+            "max_tokens": self.max_tokens,
             "response_format": {"type": "json_object"},
         }
         request = urllib.request.Request(
@@ -264,13 +267,23 @@ def make_judge_client_from_config(
     base_url: str | None,
     api_key: str | None,
     model: str | None,
+    timeout: int | None = None,
+    max_tokens: int | None = None,
 ) -> OpenAICompatibleJudgeClient | None:
     base_url = base_url or os.environ.get("D3_JUDGE_BASE_URL")
     api_key = api_key or os.environ.get("D3_JUDGE_API_KEY")
     model = model or os.environ.get("D3_JUDGE_MODEL")
+    timeout = timeout or int(os.environ.get("D3_JUDGE_TIMEOUT_SECONDS", "300"))
+    max_tokens = max_tokens or int(os.environ.get("D3_JUDGE_MAX_TOKENS", "512"))
     if not base_url or not model:
         return None
-    return OpenAICompatibleJudgeClient(base_url=base_url, api_key=api_key or "EMPTY", model=model)
+    return OpenAICompatibleJudgeClient(
+        base_url=base_url,
+        api_key=api_key or "EMPTY",
+        model=model,
+        timeout=timeout,
+        max_tokens=max_tokens,
+    )
 
 
 def evaluate_d3(
